@@ -1,194 +1,194 @@
-# Hotel Grano de Oro Reputation Intelligence Guide
+# Guía de Inteligencia de Reputación para Hotel Grano de Oro
 
-This dashboard turns guest reviews into an operating system for hospitality teams. It is built around one default property, Hotel Grano de Oro, and loads the enriched review dataset from `./data/hotel_grano_de_oro_reviews_llm.json`.
+Este dashboard convierte reseñas de huéspedes en un sistema operativo para equipos hoteleros. Está construido alrededor de una propiedad por defecto, Hotel Grano de Oro, y carga el dataset enriquecido desde `./data/hotel_grano_de_oro_reviews_llm.json`.
 
-## What the data is
+## Qué es esta información
 
-The primary dataset in this demo comes from a TripAdvisor review export for Hotel Grano de Oro. The file contains 1,891 reviews in the current export, with 510 reviews enriched by the local Ollama pipeline at the time of the latest sync. The dashboard keeps the original review text, star rating, date, author, URL and business metadata, then adds structured AI fields for operational analysis.
+El dataset principal de esta demo proviene de un export de reseñas de TripAdvisor para Hotel Grano de Oro. El archivo contiene 1,891 reseñas en el export actual, con 510 reseñas enriquecidas por la tubería local de Ollama al momento de la última sincronización. El dashboard conserva el texto original de cada reseña, la calificación, la fecha, el autor, la URL y los metadatos del negocio, y luego añade campos estructurados de IA para análisis operativo.
 
-The enrichment layer is local and private:
+La capa de enriquecimiento es local y privada:
 
-- `qwen3.5:9b` runs in Ollama on your machine.
-- Reviews are processed one by one, cached locally, and deduplicated by review identity and text.
-- The output is a JSON file that can be loaded by the dashboard or exported to other systems.
+- `qwen3.5:9b` corre en Ollama en tu propia máquina.
+- Las reseñas se procesan una por una, se cachean localmente y se deduplican por identidad y texto.
+- El resultado es un JSON que puede cargarse en el dashboard o exportarse a otros sistemas.
 
-## What the dashboard shows
+## Qué muestra el dashboard
 
 ### Overview
 
-The top KPI row is the management summary. It answers:
+La fila superior de KPI es el resumen ejecutivo. Responde:
 
-- What is the average rating?
-- How much review volume is in the filtered dataset?
-- How many reviews are promotable positive feedback?
-- How many need service recovery?
-- How much of the dataset has already been enriched by LLM?
-- How many sources and guest segments are being tracked?
+- ¿Cuál es la calificación promedio?
+- ¿Cuánto volumen de reseñas hay en el dataset filtrado?
+- ¿Cuántas reseñas son elogios promocionables?
+- ¿Cuántas necesitan recuperación de servicio?
+- ¿Qué parte del dataset ya fue enriquecida con LLM?
+- ¿Cuántas fuentes y segmentos de huéspedes se están rastreando?
 
-Interpretation:
+Cómo interpretarlo:
 
-- A high average rating with low LLM coverage is a partial picture.
-- A lower average rating with high recovery volume signals immediate operational risk.
-- Response rate tells you whether the hotel is closing the loop with guests or leaving reputation unattended.
+- Un promedio alto con baja cobertura LLM es una imagen parcial.
+- Un promedio más bajo con un volumen alto de recuperación indica riesgo operativo inmediato.
+- La tasa de respuesta te dice si el hotel está cerrando el ciclo con los huéspedes o dejando la reputación sin seguimiento.
 
-### Rating Trend
+### Tendencia de rating
 
-The monthly trend plot shows how reputation changes over time.
+El gráfico mensual muestra cómo cambia la reputación en el tiempo.
 
-What it answers:
+Qué responde:
 
-- Is volume rising or falling?
-- Is rating improving, stable or deteriorating?
-- Are there specific months where service issues spike?
+- ¿Sube o baja el volumen?
+- ¿La calificación mejora, se mantiene o cae?
+- ¿Hay meses específicos donde se disparan los problemas de servicio?
 
-How to read it:
+Cómo leerlo:
 
-- Taller bars mean more reviews in that month.
-- The number above each bar is the average rating for that month.
-- If volume spikes while rating drops, there is likely an operational event, staffing issue, renovation problem or guest expectation mismatch.
+- Barras más altas significan más reseñas en ese mes.
+- El número arriba de cada barra es el rating promedio del mes.
+- Si el volumen sube y el rating baja, probablemente hubo un evento operativo, un problema de staffing, una remodelación o una brecha entre promesa y experiencia.
 
-### Rating Distribution
+### Distribución de ratings
 
-This panel shows the star distribution.
+Este panel muestra la distribución por estrellas.
 
-Why it matters:
+Por qué importa:
 
-- It reveals whether the average rating is broad-based or distorted by a few extremes.
-- It helps explain whether the hotel is living in the 4-star band, 5-star band, or dealing with a large tail of poor reviews.
+- Revela si el promedio está sostenido por una base amplia o distorsionado por pocos extremos.
+- Ayuda a entender si el hotel vive en el rango de 4 estrellas, de 5 estrellas, o si tiene una cola larga de reseñas pobres.
 
-### Operations: Topics
+### Operaciones: Temas
 
-This section groups reviews by operational topic such as service, rooms, food, cleanliness, location, value, amenities, booking, staff, safety and noise.
+Esta sección agrupa reseñas por tema operativo: servicio, habitaciones, comida, limpieza, ubicación, valor, amenities, booking, staff, seguridad y ruido.
 
-What it answers:
+Qué responde:
 
-- What are guests talking about most?
-- Which departments are driving most of the feedback?
-- Are issues operational, commercial or brand-related?
+- ¿De qué están hablando más los huéspedes?
+- ¿Qué departamentos están generando más feedback?
+- ¿Los problemas son operativos, comerciales o de marca?
 
-Why it is useful:
+Por qué es útil:
 
-- Service and staff themes map to front office and guest relations.
-- Rooms, noise and maintenance map to housekeeping, engineering and rooms division.
-- Food maps to restaurant and breakfast operations.
-- Value and booking map to revenue, sales and distribution.
+- Servicio y staff se alinean con front office y guest relations.
+- Habitaciones, ruido y mantenimiento se alinean con housekeeping, ingeniería y rooms division.
+- Comida se alinea con restaurante y desayuno.
+- Valor y booking se alinean con revenue, ventas y distribución.
 
-### Guest Mix
+### Segmento de huéspedes
 
-This panel segments feedback by trip type or traveler profile.
+Este panel segmenta el feedback por tipo de viaje o perfil del huésped.
 
-Why it matters:
+Por qué importa:
 
-- Couples and families often complain about different things.
-- Business travelers care more about speed, quiet, reliability and process.
-- Repeat guests are stronger signals than one-off stays.
+- Parejas y familias suelen quejarse de cosas distintas.
+- Los viajeros de negocios se enfocan más en velocidad, silencio, confiabilidad y proceso.
+- Los huéspedes repetidos son señales más fuertes que una sola estancia.
 
-Operational use:
+Uso operativo:
 
-- Differentiate complaints that affect one guest segment from those that affect the whole property.
-- Tailor recovery scripts, upsell offers and marketing messages by segment.
+- Diferenciar quejas que afectan a un segmento específico de las que afectan toda la propiedad.
+- Ajustar scripts de recuperación, ofertas de upsell y mensajes de marketing según el segmento.
 
-### Executive Brief
+### Resumen ejecutivo
 
-This is the leadership summary.
+Este es el resumen para gerencia.
 
-It is designed to answer:
+Está diseñado para responder:
 
-- What should management pay attention to first?
-- Are we seeing a trend or a one-off?
-- How many issues are urgent?
-- How many cases need compensation?
-- What is the dominant risk to reputation and revenue?
+- ¿En qué debe fijarse la dirección primero?
+- ¿Estamos viendo una tendencia o un caso aislado?
+- ¿Cuántos problemas son urgentes?
+- ¿Cuántos casos necesitan compensación?
+- ¿Cuál es el riesgo dominante para reputación y revenue?
 
-The brief combines:
+El resumen combina:
 
-- LLM coverage
-- High urgency reviews
-- Compensation signals
-- Revenue risk
-- Brand gap signals
-- Positive staff recognition
+- Cobertura LLM
+- Reseñas de alta urgencia
+- Señales de compensación
+- Riesgo de revenue
+- Señales de brecha de marca
+- Reconocimiento positivo al staff
 
-### Revenue Impact
+### Impacto comercial
 
-This panel estimates whether a review can affect future revenue.
+Este panel estima si una reseña puede afectar el ingreso futuro.
 
-How to interpret it:
+Cómo interpretarlo:
 
-- High impact reviews typically mention pricing disputes, trust issues, safety problems, cleanliness failures or service breakdowns.
-- Medium impact usually means operational frustration that can still depress conversion if repeated.
-- Low impact is usually praise or a minor issue.
+- Las reseñas de alto impacto suelen mencionar disputas de precio, problemas de confianza, seguridad, limpieza severa o fallas de servicio.
+- El impacto medio normalmente implica frustración operativa que puede seguir bajando la conversión si se repite.
+- El impacto bajo suele ser elogio o un problema menor.
 
-Why it matters:
+Por qué importa:
 
-- Revenue teams care not only about rating, but about whether a review damages rate integrity and booking confidence.
-- A review about an overcharge can hurt conversion more than a generic complaint.
+- Revenue no solo mira rating, también quiere saber si una reseña daña la integridad de tarifas y la confianza para reservar.
+- Una reseña sobre un cobro indebido puede afectar la conversión más que una queja genérica.
 
-### Root Cause Map
+### Mapa de causa raíz
 
-This is one of the most important operational views.
+Esta es una de las vistas operativas más importantes.
 
-It converts free text into likely root-cause classes:
+Convierte texto libre en clases probables de causa raíz:
 
-- Service failure
-- Room quality
-- Noise
-- Cleanliness
-- Food quality
-- Billing and pricing
-- Booking expectation mismatch
-- Maintenance
-- Safety and security
-- Location and access
-- Amenities gap
-- Staff recognition
-- Brand promise mismatch
+- Fallo de servicio
+- Calidad de la habitación
+- Ruido
+- Limpieza
+- Calidad de alimentos
+- Facturación y precios
+- Expectativa de reserva
+- Mantenimiento
+- Seguridad
+- Ubicación y acceso
+- Brecha de amenities
+- Reconocimiento al staff
+- Brecha de promesa de marca
 
-How to use it:
+Cómo usarlo:
 
-- Use the root-cause distribution as an agenda for daily or weekly ops review.
-- Look for clusters rather than isolated comments.
-- If the same root cause repeats across many reviews, the issue is systemic, not anecdotal.
+- Usa la distribución de causa raíz como agenda de revisión operativa diaria o semanal.
+- Busca clústeres, no comentarios aislados.
+- Si la misma causa se repite en muchas reseñas, el problema es sistémico, no anecdótico.
 
-### Pattern Examples
+### Ejemplos de patrones
 
-This panel gives concrete examples behind the root cause map.
+Este panel muestra ejemplos concretos detrás del mapa de causa raíz.
 
-Use it to:
+Úsalo para:
 
-- Verify that the model is classifying correctly.
-- Show stakeholders the actual guest language behind the trend.
-- Decide whether the issue needs a tactical fix, a policy change or a capital project.
+- Verificar que el modelo clasifica correctamente.
+- Mostrar a los stakeholders el lenguaje real del huésped detrás de la tendencia.
+- Decidir si el problema requiere una corrección táctica, un cambio de política o una inversión de capital.
 
-### AI Insights
+### Insights de IA
 
-This section shows the LLM-enriched reviews.
+Esta sección muestra las reseñas enriquecidas por LLM.
 
-Each insight includes:
+Cada insight incluye:
 
-- sentiment
-- urgency
-- summary
-- action recommendation
+- sentimiento
+- urgencia
+- resumen
+- acción recomendada
 
-Why it matters:
+Por qué importa:
 
-- It transforms reviews from raw text into work items.
-- It helps operations teams go from reading to acting.
+- Transforma reseñas de texto libre en trabajo concreto.
+- Ayuda a los equipos operativos a pasar de leer a actuar.
 
-### Sentiment IA
+### Sentimiento IA
 
-This is semantic sentiment, not just star rating.
+Esto es sentimiento semántico, no solo rating.
 
-Why it is better than a star count:
+Por qué es mejor que un conteo de estrellas:
 
-- A 5-star review can still contain a hidden complaint.
-- A 3-star review can be mostly praise with one critical issue.
-- The model can detect mixed sentiment and urgency more reliably than a simple rating threshold.
+- Una reseña de 5 estrellas puede contener una queja oculta.
+- Una reseña de 3 estrellas puede ser casi todo elogio con un solo punto crítico.
+- El modelo detecta sentimiento mixto y urgencia con más precisión que un umbral simple de rating.
 
-### Routing by Department
+### Routing por departamento
 
-This section assigns a likely owner:
+Esta sección asigna un dueño probable:
 
 - Front Desk
 - Housekeeping
@@ -201,119 +201,119 @@ This section assigns a likely owner:
 - Security
 - Spa & Wellness
 
-Why it matters:
+Por qué importa:
 
-- Reputation work fails when everything goes to one inbox.
-- Ownership makes the feedback actionable.
-- Department routing is what turns sentiment analysis into an operational workflow.
+- La gestión de reputación falla cuando todo termina en una sola bandeja de entrada.
+- La propiedad del caso vuelve el feedback accionable.
+- El routing por departamento convierte el análisis de sentimiento en un flujo operativo.
 
-### CRM Workbench
+### Mesa de CRM
 
-This is the action queue.
+Esta es la cola de acciones.
 
-Each item can include:
+Cada item puede incluir:
 
-- urgency
+- urgencia
 - SLA
-- recommended owner
-- compensation requirement
-- next step
-- response draft
+- dueño recomendado
+- requerimiento de compensación
+- siguiente paso
+- borrador de respuesta
 
-How to use it:
+Cómo usarlo:
 
-- High urgency means immediate attention.
-- Medium urgency means same-day or next-day follow-up.
-- Low urgency means queue for normal service review or future opportunity.
+- Urgencia alta significa atención inmediata.
+- Urgencia media significa seguimiento el mismo día o al día siguiente.
+- Urgencia baja significa cola normal de revisión o futura oportunidad.
 
-### Revenue Protection
+### Protección de Revenue
 
-This panel highlights reviews likely to affect conversion, pricing confidence or repeat booking.
+Este panel resalta reseñas que probablemente afecten la conversión, la confianza en precios o la repetición de reservas.
 
-Typical examples:
+Ejemplos típicos:
 
-- billing disputes
-- overcharges
-- false promises
-- poor room quality
-- safety concerns
-- repeated noise issues
+- disputas de facturación
+- cobros indebidos
+- promesas falsas
+- mala calidad de habitación
+- problemas de seguridad
+- quejas repetidas de ruido
 
 ### Benchmark
 
-If you load multiple datasets or properties, this section compares them.
+Si cargas varios datasets o propiedades, esta sección los compara.
 
-It is designed for:
+Está pensada para:
 
-- portfolio managers
-- regional managers
-- hotel groups
-- franchise operations
+- managers de portafolio
+- managers regionales
+- grupos hoteleros
+- operaciones de franquicia
 
-Metrics shown:
+Métricas mostradas:
 
-- volume
-- average rating
-- recovery rate
-- IA-positive ratio
+- volumen
+- rating promedio
+- tasa de recuperación
+- proporción de sentimiento positivo en IA
 
-### Competitive Intel
+### Inteligencia competitiva
 
-This signals whether the review language suggests:
+Esto indica si el lenguaje de las reseñas sugiere:
 
-- advantage
-- parity
-- disadvantage
-- competitor mentions
+- ventaja
+- paridad
+- desventaja
+- menciones de competidores
 
-Use it to detect:
+Sirve para detectar:
 
-- where a hotel beats expectations
-- where it lags competitors
-- whether the market is framing the property as better or worse than alternatives
+- dónde el hotel supera expectativas
+- dónde queda por debajo de la competencia
+- si el mercado lo está comparando favorablemente o no
 
-### Compliance and Safety
+### Cumplimiento y seguridad
 
-This panel is for reviews that can become legal, safety or reputation issues.
+Este panel es para reseñas que pueden convertirse en problemas legales, de seguridad o reputación.
 
-Examples:
+Ejemplos:
 
-- security concerns
-- health or hygiene concerns
-- fraud or billing disputes
-- privacy issues
-- discrimination
+- seguridad
+- salud o higiene
+- fraude o disputas de cobro
+- privacidad
+- discriminación
 
-Why it matters:
+Por qué importa:
 
-- These items should not be buried inside ordinary customer service workflows.
-- They need escalation paths and traceability.
+- Estos casos no deben perderse dentro del flujo normal de atención.
+- Requieren rutas de escalamiento y trazabilidad.
 
-### Brand Voice and Marketing
+### Brand Voice y Marketing
 
-This section does two jobs:
+Esta sección hace dos cosas:
 
-1. Generates a draft public response in a consistent brand voice.
-2. Highlights positive reviews that can be amplified in marketing.
+1. Genera un borrador de respuesta pública con una voz de marca consistente.
+2. Destaca reseñas positivas que pueden amplificarse en marketing.
 
-It also identifies:
+También identifica:
 
-- brand promise gaps
-- staff recognition opportunities
-- language that can be reused as social proof
+- brechas de promesa de marca
+- oportunidades de reconocimiento al staff
+- lenguaje que puede reutilizarse como prueba social
 
-## How this compares to other services
+## Cómo se compara con otros servicios
 
-This dashboard borrows the operating model used by category leaders, but keeps the data flow local and flexible.
+Este dashboard toma el modelo operativo usado por líderes de categoría, pero mantiene el flujo local y flexible.
 
-| Vendor | What they emphasize | How this dashboard maps to it |
+| Proveedor | Qué enfatiza | Cómo se mapea aquí |
 |---|---|---|
-| TrustYou | AI-powered hospitality reputation management, sentiment analysis, competitor benchmarking, response AI and guest feedback centralization | The dashboard adds root-cause clustering, revenue risk, staff recognition, and a local LLM pipeline while preserving the same hospitality workflow |
-| Shiji ReviewPro | Reputation management, semantic analysis, benchmark reporting, review aggregation, brand voice and guest-experience benchmarking | This dashboard mirrors semantic analysis and benchmarking, then extends them with CRM routing and editable local outputs |
-| Birdeye | Review monitoring across many sources, AI summaries, AI responses, on-brand replies, review insights and response automation | The dashboard matches review summaries and response drafting, with added hotel-specific operational routing and compliance triage |
-| ReviewTrackers | Review analytics, NLP sentiment and trend detection, competitor insights, compliance signals, experience analysis | The dashboard aligns with review analytics and trend detection, and focuses the output on hotel departments and service recovery |
+| TrustYou | Gestión de reputación hotelera, análisis de sentimiento, benchmark competitivo, respuesta con IA y centralización del feedback | Este dashboard agrega clústeres de causa raíz, riesgo de revenue, reconocimiento al staff y una tubería LLM local, manteniendo el mismo flujo hotelero |
+| Shiji ReviewPro | Gestión de reputación, análisis semántico, benchmark de experiencia, agregación de reseñas y voz de marca | Este dashboard replica el análisis semántico y el benchmark, y los extiende con routing a CRM y salidas locales editables |
+| Birdeye | Monitoreo de reseñas en muchas fuentes, resúmenes con IA, respuestas automáticas, respuestas con voz de marca e insights | Este dashboard coincide en resúmenes y borradores de respuesta, con routing operativo y triage de compliance específico para hotelería |
+| ReviewTrackers | Analítica de reseñas, sentimiento con NLP, detección de tendencias, insights competitivos y señales de cumplimiento | Este dashboard se alinea con analítica y detección de tendencias, pero enfoca la salida en departamentos hoteleros y recuperación de servicio |
 
-Official sources:
+Fuentes oficiales:
 
 - TrustYou: [Products - Reputation Management](https://www.trustyou.com/products/reputation-management)
 - TrustYou: [AI-Powered Customer Experience Platform](https://www.trustyou.com/products/customer_experience_platform/)
@@ -326,35 +326,35 @@ Official sources:
 - ReviewTrackers: [Customer Experience Analytics Software](https://www.reviewtrackers.com/social-media-marketing/)
 - ReviewTrackers: [Pricing and Packages](https://www.reviewtrackers.com/plans/)
 
-## Why this product is different
+## Por qué este producto es diferente
 
-Most reputation tools stop at aggregation, sentiment and response management.
+La mayoría de las herramientas de reputación se quedan en agregación, sentimiento y respuesta.
 
-This dashboard goes further:
+Este dashboard va más allá:
 
-- It explains the root cause.
-- It tells you who should own the issue.
-- It estimates SLA and compensation needs.
-- It flags revenue risk and compliance risk.
-- It surfaces marketing opportunities from positive reviews.
-- It keeps the whole pipeline local and exportable.
+- Explica la causa raíz.
+- Dice quién debe hacerse cargo.
+- Estima SLA y necesidad de compensación.
+- Identifica riesgo de revenue y riesgo de compliance.
+- Revela oportunidades de marketing a partir de reseñas positivas.
+- Mantiene todo el flujo local y exportable.
 
-That makes it suitable for:
+Esto lo hace útil para:
 
-- independent hotels
-- hotel groups
-- reputation agencies
-- CRM teams
-- operations leaders
+- hoteles independientes
+- grupos hoteleros
+- agencias de reputación
+- equipos de CRM
+- líderes de operaciones
 - revenue managers
 
-## Recommended operating workflow
+## Flujo operativo recomendado
 
-1. Load or ingest review exports.
-2. Enrich them with Ollama.
-3. Review the executive brief first.
-4. Check root causes and action queue.
-5. Route issues to departments.
-6. Use compliance and revenue panels for escalation.
-7. Export the filtered dataset for reporting or CRM follow-up.
+1. Carga o ingesta exportes de reseñas.
+2. Enríquelos con Ollama.
+3. Revisa primero el resumen ejecutivo.
+4. Revisa causas raíz y la cola de acciones.
+5. Distribuye los casos por departamento.
+6. Usa los paneles de compliance y revenue para escalar.
+7. Exporta el dataset filtrado para reporting o seguimiento en CRM.
 
