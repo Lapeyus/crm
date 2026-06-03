@@ -17,11 +17,11 @@
       </div>
 
       <nav class="nav">
-        <a class="active" href="#fuente">Fuente</a>
-        <a href="#analisis">Análisis</a>
-        <a href="#comparacion">Comparación</a>
-        <a href="#flujo">Flujo</a>
-        <a href="#fuentes-oficiales">Fuentes oficiales</a>
+        <a class="active" href="#tab-fuente" data-tab="fuente">Fuente</a>
+        <a href="#tab-analisis" data-tab="analisis">Análisis</a>
+        <a href="#tab-comparacion" data-tab="comparacion">Comparación</a>
+        <a href="#tab-flujo" data-tab="flujo">Flujo</a>
+        <a href="#tab-fuentes" data-tab="fuentes">Fuentes oficiales</a>
       </nav>
 
       <section class="sidebar-panel">
@@ -38,14 +38,6 @@
           <p class="page-summary">Una guía comercial en HTML para explicar la fuente de datos, el significado de cada análisis y el valor diferencial frente a plataformas comparables.</p>
         </div>
       </header>
-
-      <div class="docs-tabs" role="tablist" aria-label="Secciones de documentación">
-        <button class="docs-tab active" type="button" role="tab" aria-selected="true" aria-controls="tab-fuente" data-tab="fuente">Fuente</button>
-        <button class="docs-tab" type="button" role="tab" aria-selected="false" aria-controls="tab-analisis" data-tab="analisis">Análisis</button>
-        <button class="docs-tab" type="button" role="tab" aria-selected="false" aria-controls="tab-comparacion" data-tab="comparacion">Comparación</button>
-        <button class="docs-tab" type="button" role="tab" aria-selected="false" aria-controls="tab-flujo" data-tab="flujo">Flujo</button>
-        <button class="docs-tab" type="button" role="tab" aria-selected="false" aria-controls="tab-fuentes" data-tab="fuentes">Fuentes oficiales</button>
-      </div>
 
       <section id="tab-fuente" class="docs-tabpanel active" role="tabpanel">
         <section id="fuente" class="section-explainer">
@@ -163,15 +155,13 @@
       </section>
     </main>
     <script>
-      const tabs = Array.from(document.querySelectorAll('.docs-tab'));
+      const tabs = Array.from(document.querySelectorAll('.docs-sidebar .nav a[data-tab]'));
       const panels = Array.from(document.querySelectorAll('.docs-tabpanel'));
 
       function activateTab(name) {
         tabs.forEach((tab) => {
           const active = tab.dataset.tab === name;
           tab.classList.toggle('active', active);
-          tab.setAttribute('aria-selected', String(active));
-          tab.tabIndex = active ? 0 : -1;
         });
 
         panels.forEach((panel) => {
@@ -180,27 +170,19 @@
           panel.hidden = !active;
         });
 
-        const target = document.getElementById(`tab-${name}`);
-        if (target) {
-          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }
+        history.replaceState(null, '', `#tab-${name}`);
       }
 
       tabs.forEach((tab) => {
-        tab.addEventListener('click', () => activateTab(tab.dataset.tab));
-      });
-
-      window.addEventListener('hashchange', () => {
-        const hash = window.location.hash.replace('#', '');
-        if (hash === 'fuente' || hash === 'analisis' || hash === 'comparacion' || hash === 'flujo') {
-          activateTab(hash);
-        }
+        tab.addEventListener('click', (event) => {
+          event.preventDefault();
+          activateTab(tab.dataset.tab);
+        });
       });
 
       const initial = window.location.hash.replace('#', '');
-      if (['fuente', 'analisis', 'comparacion', 'flujo'].includes(initial)) {
-        activateTab(initial);
-      }
+      const initialTab = initial.startsWith('tab-') ? initial.replace('tab-', '') : initial;
+      activateTab(['fuente', 'analisis', 'comparacion', 'flujo', 'fuentes'].includes(initialTab) ? initialTab : 'fuente');
     </script>
   </body>
 </html>
