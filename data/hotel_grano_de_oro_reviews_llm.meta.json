@@ -1,15 +1,408 @@
 {
-  "input": "tripadvisor_299076_hotel_grano_de_oro_reviews_selenium.json",
-  "output": "data/hotel_grano_de_oro_reviews_llm.json",
+  "input": "/Users/jvillarreal/Documents/joes/exports/tripadvisor_299076_hotel_grano_de_oro_reviews_selenium_llm.json",
+  "output": "/Users/jvillarreal/Documents/joes/exports/tripadvisor_299076_hotel_grano_de_oro_reviews_selenium_llm.json",
   "model": "qwen3.5:9b",
   "prompt_version": "hotel-reputation-v2",
-  "started_at": "2026-06-03T20:29:36.029753+00:00",
-  "updated_at": "2026-06-03T21:01:22.715224+00:00",
+  "dashboard_analysis_version": "hotel-dashboard-analysis-v1",
+  "started_at": "2026-06-03T23:52:22.134908+00:00",
+  "updated_at": "2026-06-03T23:54:23.235450+00:00",
   "reviews_total": 1891,
-  "processed": 510,
-  "cache_hits": 412,
-  "analyzed_total": 510,
+  "processed_this_run": 0,
+  "analyzed_total": 915,
+  "cache_hits": 0,
   "skipped": 0,
   "errors": 0,
-  "complete": false
+  "complete": false,
+  "dashboard_analysis": {
+    "analysis_version": "hotel-dashboard-analysis-v1",
+    "model": "qwen3.5:9b",
+    "generated_at": "2026-06-03T23:54:23.235337+00:00",
+    "aggregate": {
+      "analysis_version": "hotel-dashboard-analysis-v1",
+      "generated_at": "2026-06-03T23:52:22.140577+00:00",
+      "reviews_total": 1891,
+      "reviews_analyzed_by_llm": 915,
+      "coverage_pct": 48.39,
+      "rating_avg": 4.65,
+      "rating_distribution": {
+        "5": 1394,
+        "4": 393,
+        "3": 63,
+        "2": 21,
+        "1": 20
+      },
+      "low_rating_reviews": 104,
+      "owner_response_present": 0,
+      "sentiment_distribution": {
+        "positive": 576,
+        "mixed": 286,
+        "negative": 53
+      },
+      "urgency_distribution": {
+        "low": 714,
+        "medium": 169,
+        "high": 32
+      },
+      "revenue_impact_distribution": {
+        "high": 372,
+        "low": 346,
+        "medium": 197
+      },
+      "retention_risk_distribution": {
+        "low": 673,
+        "medium": 167,
+        "high": 75
+      },
+      "compensation_needed": 102,
+      "topics": {
+        "rooms": 459,
+        "food": 408,
+        "location": 403,
+        "service": 318,
+        "amenities": 301,
+        "value": 251,
+        "cleanliness": 143,
+        "staff": 134,
+        "booking": 58,
+        "noise": 55,
+        "safety": 52
+      },
+      "root_causes": {
+        "none": 548,
+        "booking_expectation": 171,
+        "room_quality": 134,
+        "brand_promise": 121,
+        "staff_recognition": 118,
+        "location_access": 105,
+        "amenities_gap": 102,
+        "service_failure": 96,
+        "noise": 81,
+        "maintenance": 73,
+        "food_quality": 66,
+        "billing_pricing": 48
+      },
+      "departments": {
+        "front_desk": 446,
+        "none": 417,
+        "food_beverage": 415,
+        "management": 364,
+        "rooms": 357,
+        "housekeeping": 153,
+        "revenue": 74,
+        "maintenance": 67,
+        "guest_relations": 52,
+        "security": 24,
+        "spa_wellness": 13
+      },
+      "compliance_risks": {
+        "none": 817,
+        "safety": 55,
+        "billing_dispute": 54,
+        "security": 19,
+        "health": 16,
+        "fraud": 13,
+        "discrimination": 6,
+        "privacy": 3
+      },
+      "competitive_signals": {
+        "advantage": 598,
+        "disadvantage": 224,
+        "parity": 92,
+        "unclear": 1
+      },
+      "repeat_issue_clusters": {
+        "general_feedback": 332,
+        "rooms_feedback": 67,
+        "service_feedback": 54,
+        "noise_rooms": 47,
+        "brand_promise_feedback": 40,
+        "location_access": 33,
+        "staff_recognition_feedback": 31,
+        "service_failure": 26,
+        "amenities_gap": 23,
+        "room_quality": 21,
+        "location_feedback": 14,
+        "billing_dispute": 11
+      },
+      "monthly": {
+        "2023-12": {
+          "reviews": 1,
+          "rating_avg": 5.0
+        },
+        "2024-01": {
+          "reviews": 5,
+          "rating_avg": 4.8
+        },
+        "2024-02": {
+          "reviews": 5,
+          "rating_avg": 4.8
+        },
+        "2024-03": {
+          "reviews": 3,
+          "rating_avg": 4.67
+        },
+        "2024-04": {
+          "reviews": 6,
+          "rating_avg": 4.5
+        },
+        "2024-07": {
+          "reviews": 1,
+          "rating_avg": 5.0
+        },
+        "2024-08": {
+          "reviews": 2,
+          "rating_avg": 5.0
+        },
+        "2024-09": {
+          "reviews": 2,
+          "rating_avg": 4.5
+        },
+        "2024-10": {
+          "reviews": 1,
+          "rating_avg": 5.0
+        },
+        "2024-11": {
+          "reviews": 2,
+          "rating_avg": 4.5
+        },
+        "2024-12": {
+          "reviews": 4,
+          "rating_avg": 3.75
+        },
+        "2025-01": {
+          "reviews": 1,
+          "rating_avg": 3.0
+        },
+        "2025-02": {
+          "reviews": 5,
+          "rating_avg": 4.6
+        },
+        "2025-03": {
+          "reviews": 8,
+          "rating_avg": 4.62
+        },
+        "2025-04": {
+          "reviews": 2,
+          "rating_avg": 4.0
+        },
+        "2025-05": {
+          "reviews": 2,
+          "rating_avg": 5.0
+        },
+        "2025-06": {
+          "reviews": 1,
+          "rating_avg": 5.0
+        },
+        "2025-11": {
+          "reviews": 3,
+          "rating_avg": 4.67
+        },
+        "2025-12": {
+          "reviews": 8,
+          "rating_avg": 4.12
+        },
+        "2026-01": {
+          "reviews": 4,
+          "rating_avg": 4.5
+        },
+        "2026-02": {
+          "reviews": 7,
+          "rating_avg": 4.29
+        },
+        "2026-03": {
+          "reviews": 2,
+          "rating_avg": 4.0
+        },
+        "2026-04": {
+          "reviews": 4,
+          "rating_avg": 4.75
+        },
+        "2026-05": {
+          "reviews": 1,
+          "rating_avg": 5.0
+        }
+      },
+      "evidence_reviews": [
+        {
+          "id": "985387425",
+          "rating": 1.0,
+          "date": "Dec 2024",
+          "sentiment": "negative",
+          "urgency": "high",
+          "revenue_impact": "high",
+          "root_causes": [
+            "billing_pricing",
+            "booking_expectation",
+            "service_failure"
+          ],
+          "departments": [
+            "front_desk",
+            "revenue",
+            "guest_relations"
+          ],
+          "excerpt": "Get ready to be ripped off. Avoid this place.. Hotel supposedly arranged for a taxi to pick us up. No taxi driver to be found, so we took a “regular” taxi to get to the hotel. The hotel still charged us for a taxi that...",
+          "summary": "Huésped cobrado por taxi inexistente al llegar; experiencia inicial negativa y falta de honestidad.",
+          "action": "Procesar reembolso inmediato y contactar al huésped para recuperar la confianza del cliente."
+        },
+        {
+          "id": "787655356",
+          "rating": 1.0,
+          "date": "May 2021",
+          "sentiment": "negative",
+          "urgency": "high",
+          "revenue_impact": "high",
+          "root_causes": [
+            "service_failure",
+            "staff_recognition",
+            "brand_promise"
+          ],
+          "departments": [
+            "front_desk",
+            "management",
+            "guest_relations"
+          ],
+          "excerpt": "Horrible Customer Service (DO NOT STAY HERE). The manager, Marco Montoya, is extremely rude and does not care one bit about his guests. No interest in helping the customer. He is only interested in squeezing every last...",
+          "summary": "Queja severa sobre la rudeza del gerente Marco Montoya y falta de interés en ayudar al huésped.",
+          "action": "Revisar historial de Marco Montoya y programar sesión de formación en servicio al cliente."
+        },
+        {
+          "id": "672862060",
+          "rating": 1.0,
+          "date": "May 2019",
+          "sentiment": "negative",
+          "urgency": "high",
+          "revenue_impact": "high",
+          "root_causes": [
+            "billing_pricing",
+            "room_quality",
+            "staff_recognition"
+          ],
+          "departments": [
+            "front_desk",
+            "revenue",
+            "management"
+          ],
+          "excerpt": "over charged $100 dollars plus. average small rooms-very over rated hotel. When I went to check out they billed me $300 plus dollars when I booked at $189??? Don't waste your money here the staff dosent care either!!!!...",
+          "summary": "Huésped reporta sobrecarga de $100, habitaciones pequeñas y personal indiferente en San José.",
+          "action": "Revisar facturación, contactar al huésped y ofrecer compensación para recuperar la confianza."
+        },
+        {
+          "id": "656524827",
+          "rating": 1.0,
+          "date": "Mar 2019",
+          "sentiment": "negative",
+          "urgency": "high",
+          "revenue_impact": "high",
+          "root_causes": [
+            "room_quality",
+            "maintenance",
+            "booking_expectation"
+          ],
+          "departments": [
+            "rooms",
+            "maintenance",
+            "management"
+          ],
+          "excerpt": "Prison Addition. This hotel has added a wing of rooms that are below ground with no windows. They are nothing like the rooms advertised. This is shameful. It is one of the worst rooms I’ve ever stayed in, and extremely...",
+          "summary": "Habitaciones subterráneas sin ventanas que no coinciden con la publicidad, generando quejas graves sobre seguridad y engaño.",
+          "action": "Revisar descripciones de habitaciones y preparar compensación por el fallo en la promesa de valor."
+        },
+        {
+          "id": "466995270",
+          "rating": 1.0,
+          "date": "Mar 2017",
+          "sentiment": "negative",
+          "urgency": "high",
+          "revenue_impact": "high",
+          "root_causes": [
+            "billing_pricing",
+            "booking_expectation",
+            "service_failure"
+          ],
+          "departments": [
+            "front_desk",
+            "revenue",
+            "management",
+            "guest_relations"
+          ],
+          "excerpt": "DO NOT STAY HERE!! They stole money from me and won't refund it.. I booked this hotel through Expedia for 1 night before my flight (don't bother staying in San Jose longer than this...) but something glitched on...",
+          "summary": "Huésped cobrado por fechas incorrectas sin reembolso; personal grosero; riesgo de fraude y pérdida de confianza.",
+          "action": "Revisar transacciones de Expedia, reembolsar y contactar al huésped para recuperar la confianza."
+        },
+        {
+          "id": "384156046",
+          "rating": 1.0,
+          "date": "Jun 2016",
+          "sentiment": "negative",
+          "urgency": "high",
+          "revenue_impact": "high",
+          "root_causes": [
+            "room_quality",
+            "safety_security",
+            "booking_expectation",
+            "brand_promise"
+          ],
+          "departments": [
+            "rooms",
+            "management",
+            "security",
+            "front_desk"
+          ],
+          "excerpt": "Oldfashioned. The outside and the entrance of the hotel is really impressive, but when you arrive at your room the disappointment begins. The standard room is relatively small und the interior oldfashioned, from last...",
+          "summary": "Cliente reporta inseguridad, habitaciones anticuadas y rechazo a huéspedes no registrados.",
+          "action": "Revisar políticas de seguridad y plan de renovación de habitaciones urgentemente."
+        }
+      ]
+    },
+    "headline_es": "El hotel enfrenta una crisis de confianza severa impulsada por errores críticos en facturación, promesas incumplidas sobre la calidad de las habitaciones (subterráneas) y un servicio al cliente grosero documentado.",
+    "executive_summary_es": [
+      "A pesar de un promedio general alto (4.65), el análisis revela una brecha crítica: solo el 28% de los comentarios son positivos, mientras que las reseñas con impacto financiero 'alto' representan más del 37% del total analizado.",
+      "La cobertura del LLM es parcial (915 de 1891 reseñas analizadas), lo que indica que la evidencia actual podría subestimar el volumen real de incidentes recurrentes no procesados automáticamente.",
+      "Los temas dominantes son 'rooms' y 'food', pero las causas raíz más dañinas para la reputación provienen específicamente de 'billing_pricing' (48 casos) y 'room_quality' (134 casos), incluyendo habitaciones subterráneas sin ventanas.",
+      "Existe un riesgo legal inminente: 55 incidentes clasificados como riesgos de seguridad, más 6 por discriminación y 13 por fraude, concentrados en reseñas con urgencia alta e impacto financiero alto.",
+      "La respuesta del propietario es nula (0%), lo que agrava la percepción pública ante crisis específicas como cobros fraudulentos o trato grosero del personal."
+    ],
+    "operational_diagnosis_es": [
+      "Fallo sistémico en facturación: 48 casos de 'billing_pricing' identificados, con ejemplos específicos de sobrecargas ($100-$300) y cobros por servicios no prestados (taxis).",
+      "Deficiencia grave en mantenimiento y descripción de propiedades: 73 casos de 'maintenance' y 21 de 'room_quality', destacando la existencia de alas subterráneas sin ventanas que contradicen las expectativas.",
+      "Crisis de servicio al cliente: 96 casos de 'service_failure' vinculados a personal grosero (ej. gerente Marco Montoya) y falta de interés en ayudar, con 0 respuestas del propietario registradas.",
+      "Gestión de reservas deficiente: 171 casos derivados de expectativas fallidas ('booking_expectation'), incluyendo errores técnicos que generan cobros incorrectos por fechas o servicios no contratados."
+    ],
+    "revenue_diagnosis_es": [
+      "Impacto directo en ingresos: El 37.2% (372) de las reseñas tienen 'high' revenue_impact, correlacionado directamente con quejas sobre cobros erróneos y pérdida de confianza inmediata.",
+      "Riesgo de fuga masiva: La distribución de riesgo de retención muestra un 40.5% en niveles medios o altos (167 + 75), amenazando la lealtad del cliente recurrente frente a competidores con ventaja competitiva.",
+      "Daño reputacional por precios percibidos como injustos: Múltiples reseñas califican el hotel de 'over rated' y reportan sobrecargas, erosionando el valor percibido (value) que afecta la disposición a pagar."
+    ],
+    "crm_priorities_es": [
+      "Acción inmediata para casos de fraude/cobro indebido: Revisar transacciones con Expedia/terceros en los 104 casos 'low_rating', procesar reembolsos y enviar disculpas personalizadas (Dueño: Director Financiero).",
+      "Reestructuración del equipo Front Desk/Guest Relations: Capacitación urgente en empatía y resolución de conflictos tras incidentes con gerentes específicos como Marco Montoya (Dueño: Gerencia General).",
+      "Auditoría de descripciones de habitaciones: Actualizar inmediatamente el sitio web para eliminar referencias a 'rooms' que no existen o son subterráneas, evitando litigios futuros por publicidad engañosa.",
+      "Programa de recuperación de confianza (Win-back): Contactar proactivamente a los 75 huéspedes con riesgo alto de retención ofreciendo compensación y garantías de corrección."
+    ],
+    "risk_watchlist_es": [
+      "Riesgo Legal por Fraude: 13 casos identificados en 'fraud' más múltiples menciones de robo de dinero, requiriendo revisión forense inmediata.",
+      "Seguridad Física y Reputacional: 55 incidentes clasificados como 'safety', incluyendo rechazo a huéspedes no registrados e instalaciones inseguras (subterráneas).",
+      "Cumplimiento Normativo: Riesgo por discriminación (6 casos) y privacidad (3 casos), que podrían derivar en demandas civiles o sanciones regulatorias.",
+      "Responsabilidad Civil por Salud/Higiene: 16 incidentes de 'health' relacionados con alimentos ('food') que requieren inspección sanitaria urgente."
+    ],
+    "evidence_es": [
+      "Reseña ID 985387425 (Dic 2024): Cobro por taxi inexistente; causa raíz: billing_pricing, booking_expectation.",
+      "Reseña ID 656524827 (Mar 2019): Habitaciones subterráneas sin ventanas vs. publicidad; causa raíz: room_quality, brand_promise.",
+      "Reseña ID 384156046 (Jun 2016): Inseguridad y rechazo a huéspedes no registrados; departamento involucrado: security, front_desk.",
+      "Distribución de Urgencia: Solo el 17% son 'high' pero concentran la mayoría del impacto financiero negativo."
+    ],
+    "recommended_next_steps_es": [
+      "Auditar las últimas 50 transacciones de facturación para identificar patrones de sobrecargo y establecer un protocolo de verificación antes del checkout.",
+      "Publicar una declaración oficial en el sitio web admitiendo errores pasados, describiendo la nueva política de transparencia en precios y renovación de habitaciones.",
+      "Implementar un sistema de alerta temprana que bloquee reservas o notifique al huésped si hay discrepancias entre lo contratado (ej. taxi) y lo cobrado.",
+      "Reemplazar a personal identificado con conductas groseras o falta de empatía tras 30 días, reentrenando al resto en gestión de crisis.",
+      "Establecer un KPI mensual de 'Tasa de Respuesta' obligatoria para el equipo Guest Relations, penalizando la inacción ante quejas graves."
+    ],
+    "data_limitations_es": [
+      "Cobertura parcial del LLM: Solo se analizaron 915 de las 1891 reseñas totales (48.39%), por lo que los conteos exactos en 'operational_diagnosis' y 'revenue_diagnosis' reflejan solo el subconjunto procesado.",
+      "Falta de contexto temporal continuo: El historial mensual muestra brechas significativas (ej. sin datos para 2024-5, 6), lo que dificulta detectar tendencias estacionales precisas fuera de los meses reportados."
+    ],
+    "confidence": 1.0,
+    "error": ""
+  }
 }

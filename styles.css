@@ -381,8 +381,34 @@ select {
   grid-template-columns: minmax(360px, 0.45fr) minmax(0, 1fr);
 }
 
+.analysis-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(360px, 0.48fr);
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
 .panel {
   padding: 16px;
+}
+
+.analysis-list {
+  display: grid;
+  gap: 10px;
+}
+
+.analysis-list.compact {
+  gap: 8px;
+}
+
+.analysis-item {
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 11px 12px;
+  background: #f8fafc;
+  color: #334155;
+  font-size: 13px;
+  line-height: 1.5;
 }
 
 .panel-heading {

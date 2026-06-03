@@ -87,6 +87,7 @@ const VALUE_SIGNAL_LABELS = {
 
 let allReviews = [];
 let filteredReviews = [];
+let dashboardAnalysis = null;
 
 const $ = (selector) => document.querySelector(selector);
 
@@ -869,6 +870,52 @@ function renderTable(rows) {
   `).join("");
 }
 
+function renderAnalysisList(containerId, items, emptyText = "No hay análisis disponible para esta sección.") {
+  const container = $(`#${containerId}`);
+  if (!container) return;
+  const values = normalizeList(items);
+  container.innerHTML = values.length
+    ? values.map((item) => `<article class="analysis-item">${escapeHtml(item)}</article>`).join("")
+    : `<p class="empty-state">${escapeHtml(emptyText)}</p>`;
+}
+
+function renderServiceAnalysis() {
+  const analysis = dashboardAnalysis;
+  if (!analysis) {
+    $("#serviceAnalysisHeadline").textContent = "Análisis profundo pendiente";
+    $("#serviceAnalysisMeta").textContent = "El archivo meta del dataset no incluye todavía dashboard_analysis. Ejecuta el enriquecimiento para generarlo.";
+    [
+      "serviceExecutiveSummary",
+      "serviceOperationalDiagnosis",
+      "serviceRevenueDiagnosis",
+      "serviceCrmPriorities",
+      "serviceRiskWatchlist",
+      "serviceEvidence",
+      "serviceNextSteps",
+      "serviceLimitations"
+    ].forEach((id) => renderAnalysisList(id, []));
+    return;
+  }
+
+  const aggregate = analysis.aggregate || {};
+  $("#serviceAnalysisHeadline").textContent = analysis.headline_es || "Análisis generado desde los datos";
+  $("#serviceAnalysisMeta").textContent = [
+    `${Number(aggregate.reviews_total || 0).toLocaleString()} reseñas`,
+    `${Number(aggregate.reviews_analyzed_by_llm || 0).toLocaleString()} analizadas por LLM`,
+    `${Number(aggregate.coverage_pct || 0).toFixed(1)}% de cobertura`,
+    analysis.generated_at ? `generado ${String(analysis.generated_at).slice(0, 10)}` : ""
+  ].filter(Boolean).join(" | ");
+
+  renderAnalysisList("serviceExecutiveSummary", analysis.executive_summary_es);
+  renderAnalysisList("serviceOperationalDiagnosis", analysis.operational_diagnosis_es);
+  renderAnalysisList("serviceRevenueDiagnosis", analysis.revenue_diagnosis_es);
+  renderAnalysisList("serviceCrmPriorities", analysis.crm_priorities_es);
+  renderAnalysisList("serviceRiskWatchlist", analysis.risk_watchlist_es);
+  renderAnalysisList("serviceEvidence", analysis.evidence_es);
+  renderAnalysisList("serviceNextSteps", analysis.recommended_next_steps_es);
+  renderAnalysisList("serviceLimitations", analysis.data_limitations_es);
+}
+
 function populateSelect(id, values, allLabel) {
   const select = $(`#${id}`);
   const current = select.value;
@@ -941,6 +988,7 @@ function renderDashboard() {
   renderWorkflow(rows);
   renderRiskReviews(rows);
   renderTable(rows);
+  renderServiceAnalysis();
 }
 
 async function loadDatasetFromUrl(url) {
@@ -949,7 +997,21 @@ async function loadDatasetFromUrl(url) {
   if (!response.ok) throw new Error(`No pude cargar ${url}: HTTP ${response.status}`);
   const payload = await response.json();
   $("#datasetUrl").value = url;
+  dashboardAnalysis = await loadDashboardAnalysisMeta(url);
   ingestRows(Array.isArray(payload) ? payload : Object.values(payload).flat());
+}
+
+async function loadDashboardAnalysisMeta(url) {
+  const metaUrl = url.replace(/\.json(?:\?.*)?$/, ".meta.json");
+  if (metaUrl === url) return null;
+  try {
+    const response = await fetch(metaUrl, { cache: "no-store" });
+    if (!response.ok) return null;
+    const meta = await response.json();
+    return meta.dashboard_analysis || null;
+  } catch {
+    return null;
+  }
 }
 
 async function loadDefaultDataset() {

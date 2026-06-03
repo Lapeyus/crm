@@ -21,6 +21,7 @@
         <a href="#overviewPanel" data-panel="overviewPanel">Resumen</a>
         <a href="#operationsPanel" data-panel="operationsPanel">Operaciones</a>
         <a href="#strategyPanel" data-panel="strategyPanel">Estrategia</a>
+        <a href="#serviceAnalysisPanel" data-panel="serviceAnalysisPanel">Análisis profundo</a>
         <a href="#aiPanel" data-panel="aiPanel">Análisis IA</a>
         <a href="#crmPanel" data-panel="crmPanel">CRM</a>
         <a href="#benchmarkPanel" data-panel="benchmarkPanel">Benchmark</a>
@@ -181,6 +182,88 @@
               </div>
             </div>
             <div id="revenueImpactBars"></div>
+          </article>
+        </section>
+      </section>
+
+      <section id="serviceAnalysisPanel" class="dashboard-panel">
+        <section class="section-explainer">
+          <strong>Análisis profundo generado en enriquecimiento</strong>
+          <p>Lectura ejecutiva generada por Ollama a partir de agregados reales del dataset: métricas, distribuciones, evidencia seleccionada y cobertura LLM.</p>
+        </section>
+        <section class="analysis-grid">
+          <article class="panel wide">
+            <div class="panel-heading">
+              <div>
+                <p class="eyebrow">Diagnóstico del servicio</p>
+                <h3 id="serviceAnalysisHeadline">Análisis pendiente</h3>
+                <p id="serviceAnalysisMeta" class="panel-description">Ejecuta el enriquecimiento LLM para generar una lectura profunda del dashboard.</p>
+              </div>
+            </div>
+            <div id="serviceExecutiveSummary" class="analysis-list"></div>
+          </article>
+
+          <article class="panel">
+            <div class="panel-heading">
+              <div>
+                <p class="eyebrow">Limitaciones</p>
+                <h3>Alcance de datos</h3>
+              </div>
+            </div>
+            <div id="serviceLimitations" class="analysis-list compact"></div>
+          </article>
+
+          <article class="panel">
+            <div class="panel-heading">
+              <div>
+                <p class="eyebrow">Operaciones</p>
+                <h3>Lectura operativa</h3>
+              </div>
+            </div>
+            <div id="serviceOperationalDiagnosis" class="analysis-list"></div>
+          </article>
+
+          <article class="panel">
+            <div class="panel-heading">
+              <div>
+                <p class="eyebrow">Ingresos</p>
+                <h3>Impacto comercial</h3>
+              </div>
+            </div>
+            <div id="serviceRevenueDiagnosis" class="analysis-list"></div>
+          </article>
+
+          <article class="panel">
+            <div class="panel-heading">
+              <div>
+                <p class="eyebrow">CRM</p>
+                <h3>Prioridades de acción</h3>
+              </div>
+            </div>
+            <div id="serviceCrmPriorities" class="analysis-list"></div>
+          </article>
+
+          <article class="panel">
+            <div class="panel-heading">
+              <div>
+                <p class="eyebrow">Riesgos</p>
+                <h3>Watchlist</h3>
+              </div>
+            </div>
+            <div id="serviceRiskWatchlist" class="analysis-list"></div>
+          </article>
+
+          <article class="panel wide">
+            <div class="panel-heading">
+              <div>
+                <p class="eyebrow">Evidencia y próximos pasos</p>
+                <h3>Acciones sustentadas en datos</h3>
+              </div>
+            </div>
+            <div class="split-grid">
+              <div id="serviceEvidence" class="analysis-list"></div>
+              <div id="serviceNextSteps" class="analysis-list"></div>
+            </div>
           </article>
         </section>
       </section>
