@@ -24,6 +24,7 @@
         <a href="#crm">CRM</a>
         <a href="#benchmark">Benchmark</a>
         <a href="#brand">Brand</a>
+        <a href="#sources">Sources</a>
         <a href="#reviews">Reviews</a>
         <a href="#automation">Automation</a>
       </nav>
@@ -324,6 +325,49 @@
               <p class="panel-description tight">Nombres o roles mencionados positivamente para reconocimiento interno y aprendizaje operativo.</p>
               <div id="staffRecognitionList" class="recognition-list"></div>
             </div>
+          </div>
+        </article>
+      </section>
+
+      <section id="sources" class="layout-grid">
+        <article class="panel wide">
+          <div class="panel-heading">
+            <div>
+              <p class="eyebrow">Sources & Method</p>
+              <h3>Qué información representa este dashboard</h3>
+              <p class="panel-description">Parte de un export de TripAdvisor para Hotel Grano de Oro y lo enriquece con Ollama local. La lectura combina estrellas, texto libre, fechas, segmentos, sentimiento semántico, causas raíz y señales operativas.</p>
+            </div>
+            <a class="inline-link" href="./docs/user-guide.md" target="_blank" rel="noreferrer">Abrir guía completa</a>
+          </div>
+          <div class="source-grid">
+            <article class="source-card">
+              <strong>Fuente principal</strong>
+              <p>TripAdvisor Hotel Grano de Oro. La unidad de análisis es la reseña individual con rating, texto, fecha y metadatos asociados.</p>
+            </article>
+            <article class="source-card">
+              <strong>Enriquecimiento</strong>
+              <p>Ollama `qwen3.5:9b` convierte texto libre en sentimiento, urgencia, causa raíz, dueño recomendado, SLA, riesgo comercial y borradores de respuesta.</p>
+            </article>
+            <article class="source-card">
+              <strong>Uso operativo</strong>
+              <p>El objetivo no es solo analizar reputación. Es convertir reviews en colas de trabajo para CRM, operaciones, revenue y compliance.</p>
+            </article>
+          </div>
+        </article>
+
+        <article class="panel">
+          <div class="panel-heading">
+            <div>
+              <p class="eyebrow">Comparable Services</p>
+              <h3>Cómo se compara con la industria</h3>
+              <p class="panel-description">Las plataformas líderes unifican reviews, analizan sentimiento y ayudan a responder. Esta versión añade una capa hotel-specific y local con routing y causa raíz.</p>
+            </div>
+          </div>
+          <div class="comparison-list">
+            <div class="comparison-row"><span>TrustYou</span><p>Reputation management, CXP, AI-powered sentiment, competitor benchmarking y response AI.</p></div>
+            <div class="comparison-row"><span>Shiji ReviewPro</span><p>Semantic analysis, guest experience benchmark, brand voice y review aggregation.</p></div>
+            <div class="comparison-row"><span>Birdeye</span><p>Review monitoring, AI summaries, on-brand replies, review alerts and review insights.</p></div>
+            <div class="comparison-row"><span>ReviewTrackers</span><p>Customer experience analytics, NLP sentiment, trend detection, competitor insights and compliance monitoring.</p></div>
           </div>
         </article>
       </section>
