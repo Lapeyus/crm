@@ -840,6 +840,112 @@ th {
   padding: 18px;
 }
 
+.docs-page {
+  background:
+    radial-gradient(circle at top left, rgba(15, 118, 110, 0.08), transparent 28%),
+    radial-gradient(circle at top right, rgba(37, 99, 235, 0.08), transparent 22%),
+    var(--bg);
+}
+
+.docs-sidebar {
+  width: 290px;
+}
+
+.docs-shell {
+  margin-left: 290px;
+}
+
+.docs-topbar {
+  align-items: flex-start;
+}
+
+.docs-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.docs-card {
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 14px;
+  background: #ffffff;
+  box-shadow: var(--shadow);
+}
+
+.docs-card strong,
+.docs-copy h4 {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 14px;
+}
+
+.docs-card p,
+.docs-copy p,
+.docs-footnote {
+  margin: 0;
+  color: #334155;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.docs-section {
+  margin-bottom: 18px;
+  padding: 16px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #ffffff;
+  box-shadow: var(--shadow);
+}
+
+.docs-section-head h3 {
+  margin: 0 0 8px;
+  font-size: 22px;
+}
+
+.docs-columns {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.docs-copy {
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 12px;
+  background: #f8fafc;
+}
+
+.docs-comparison {
+  margin-top: 8px;
+}
+
+.docs-steps {
+  margin: 8px 0 0;
+  padding-left: 18px;
+  color: #334155;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.docs-links {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.docs-links a {
+  display: block;
+  padding: 10px 12px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: #f8fafc;
+  color: var(--ink);
+  text-decoration: none;
+  font-size: 13px;
+}
+
 @media (max-width: 1100px) {
   .sidebar {
     position: static;
@@ -858,8 +964,19 @@ th {
   .brief-grid,
   .action-grid,
   .split-grid,
-  .source-grid {
+  .source-grid,
+  .docs-grid,
+  .docs-columns,
+  .docs-links {
     grid-template-columns: 1fr;
+  }
+
+  .docs-sidebar {
+    width: auto;
+  }
+
+  .docs-shell {
+    margin-left: 0;
   }
 
   .topbar,
