@@ -110,14 +110,13 @@
         <button class="section-tab" type="button" role="tab" aria-selected="false" data-panel="brandPanel">Brand</button>
         <button class="section-tab" type="button" role="tab" aria-selected="false" data-panel="sourcesPanel">Sources</button>
         <button class="section-tab" type="button" role="tab" aria-selected="false" data-panel="automationPanel">Automation</button>
-        <button class="section-tab" type="button" role="tab" aria-selected="false" data-panel="reviewsPanel">Reviews</button>
       </section>
 
       <section id="overview" class="metric-grid" aria-label="KPIs principales"></section>
 
       <section id="overviewPanel" class="dashboard-panel active">
-        <section class="layout-grid">
-        <article class="panel wide">
+        <section class="layout-grid overview-layout">
+        <article class="panel wide overview-hero">
           <div class="panel-heading">
             <div>
               <p class="eyebrow">Trend</p>
@@ -143,8 +142,8 @@
       </section>
 
       <section id="operationsPanel" class="dashboard-panel">
-        <section id="operations" class="layout-grid">
-          <article class="panel">
+        <section id="operations" class="layout-grid operations-layout">
+          <article class="panel operations-left">
             <div class="panel-heading">
               <div>
                 <p class="eyebrow">Operations</p>
@@ -156,7 +155,7 @@
             <div id="topicBars"></div>
           </article>
 
-          <article class="panel">
+          <article class="panel operations-right">
             <div class="panel-heading">
               <div>
                 <p class="eyebrow">Guest Mix</p>
@@ -170,8 +169,8 @@
       </section>
 
       <section id="strategyPanel" class="dashboard-panel">
-        <section id="strategy" class="layout-grid">
-          <article class="panel wide">
+        <section id="strategy" class="layout-grid strategy-layout">
+          <article class="panel strategy-left">
             <div class="panel-heading">
               <div>
                 <p class="eyebrow">Executive Brief</p>
@@ -183,7 +182,7 @@
             <p id="weeklyNarrative" class="brief-narrative"></p>
           </article>
 
-          <article class="panel">
+          <article class="panel strategy-right">
             <div class="panel-heading">
               <div>
                 <p class="eyebrow">Revenue</p>
@@ -197,8 +196,8 @@
       </section>
 
       <section id="aiPanel" class="dashboard-panel">
-        <section class="layout-grid">
-          <article class="panel">
+        <section class="layout-grid ai-layout">
+          <article class="panel ai-left">
             <div class="panel-heading">
               <div>
                 <p class="eyebrow">Root Cause</p>
@@ -209,7 +208,7 @@
             <div id="rootCauseBars"></div>
           </article>
 
-          <article class="panel wide">
+          <article class="panel wide ai-right">
             <div class="panel-heading">
               <div>
                 <p class="eyebrow">Pattern Examples</p>
@@ -223,7 +222,7 @@
       </section>
 
       <section id="crmPanel" class="dashboard-panel">
-        <section id="ai" class="layout-grid">
+        <section id="ai" class="layout-grid crm-layout">
           <article class="panel wide">
             <div class="panel-heading">
               <div>
@@ -259,8 +258,8 @@
       </section>
 
       <section id="benchmarkPanel" class="dashboard-panel">
-        <section id="crm" class="layout-grid">
-          <article class="panel wide">
+        <section id="crm" class="layout-grid benchmark-layout">
+          <article class="panel wide benchmark-left">
             <div class="panel-heading">
               <div>
                 <p class="eyebrow">CRM Workbench</p>
@@ -271,7 +270,7 @@
             <div id="crmActionQueue" class="action-grid"></div>
           </article>
 
-          <article class="panel">
+          <article class="panel benchmark-right">
             <div class="panel-heading">
               <div>
                 <p class="eyebrow">Revenue Protection</p>
@@ -285,8 +284,8 @@
       </section>
 
       <section id="brandPanel" class="dashboard-panel">
-        <section id="benchmark" class="layout-grid">
-          <article class="panel wide">
+        <section id="benchmark" class="layout-grid brand-layout">
+          <article class="panel wide brand-left">
             <div class="panel-heading">
               <div>
                 <p class="eyebrow">Benchmark</p>
@@ -311,7 +310,7 @@
             </div>
           </article>
 
-          <article class="panel">
+          <article class="panel brand-right">
             <div class="panel-heading">
               <div>
                 <p class="eyebrow">Competitive Intel</p>
@@ -325,8 +324,8 @@
       </section>
 
       <section id="sourcesPanel" class="dashboard-panel">
-        <section id="brand" class="layout-grid">
-          <article class="panel">
+        <section id="brand" class="layout-grid sources-layout">
+          <article class="panel sources-left">
             <div class="panel-heading">
               <div>
                 <p class="eyebrow">Compliance</p>
@@ -337,7 +336,7 @@
             <div id="complianceRiskList" class="compact-list"></div>
           </article>
 
-          <article class="panel wide">
+          <article class="panel wide sources-right">
             <div class="panel-heading">
               <div>
                 <p class="eyebrow">Brand Voice</p>
@@ -360,8 +359,8 @@
       </section>
 
       <section id="automationPanel" class="dashboard-panel">
-        <section id="sources" class="layout-grid">
-          <article class="panel wide">
+        <section id="sources" class="layout-grid automation-layout">
+          <article class="panel wide automation-top">
             <div class="panel-heading">
               <div>
                 <p class="eyebrow">Fuentes y método</p>
@@ -386,7 +385,7 @@
             </div>
           </article>
 
-          <article class="panel">
+          <article class="panel automation-bottom">
             <div class="panel-heading">
               <div>
                 <p class="eyebrow">Servicios comparables</p>
@@ -473,6 +472,7 @@
           </article>
         </section>
       </section>
+
     </main>
 
     <template id="metricTemplate">
