@@ -42,110 +42,168 @@
         </div>
       </header>
 
-      <section id="fuente" class="section-explainer">
-        <strong>Fuente de información</strong>
-        <p>El dashboard usa reseñas de TripAdvisor de Hotel Grano de Oro como base. Conserva rating, texto, fecha, autor, URL y metadatos del negocio, y añade una capa de IA local con Ollama `qwen3.5:9b` para clasificar sentimiento, urgencia, causa raíz, riesgo comercial y recomendación operativa.</p>
+      <div class="docs-tabs" role="tablist" aria-label="Secciones de documentación">
+        <button class="docs-tab active" type="button" role="tab" aria-selected="true" aria-controls="tab-fuente" data-tab="fuente">Fuente</button>
+        <button class="docs-tab" type="button" role="tab" aria-selected="false" aria-controls="tab-analisis" data-tab="analisis">Análisis</button>
+        <button class="docs-tab" type="button" role="tab" aria-selected="false" aria-controls="tab-comparacion" data-tab="comparacion">Comparación</button>
+        <button class="docs-tab" type="button" role="tab" aria-selected="false" aria-controls="tab-flujo" data-tab="flujo">Flujo</button>
+        <button class="docs-tab" type="button" role="tab" aria-selected="false" aria-controls="tab-fuentes" data-tab="fuentes">Fuentes oficiales</button>
+      </div>
+
+      <section id="tab-fuente" class="docs-tabpanel active" role="tabpanel">
+        <section id="fuente" class="section-explainer">
+          <strong>Fuente de información</strong>
+          <p>El dashboard usa reseñas de TripAdvisor de Hotel Grano de Oro como base. Conserva rating, texto, fecha, autor, URL y metadatos del negocio, y añade una capa de IA local con Ollama `qwen3.5:9b` para clasificar sentimiento, urgencia, causa raíz, riesgo comercial y recomendación operativa.</p>
+        </section>
+
+        <section class="docs-grid">
+          <article class="docs-card">
+            <strong>Dato base</strong>
+            <p>1,891 reseñas en el export actual.</p>
+          </article>
+          <article class="docs-card">
+            <strong>Enriquecimiento</strong>
+            <p>510 reseñas ya procesadas por la tubería local de IA en la última sincronización.</p>
+          </article>
+          <article class="docs-card">
+            <strong>Privacidad</strong>
+            <p>El procesamiento ocurre localmente y el resultado queda en un JSON exportable.</p>
+          </article>
+        </section>
       </section>
 
-      <section class="docs-grid">
-        <article class="docs-card">
-          <strong>Dato base</strong>
-          <p>1,891 reseñas en el export actual.</p>
-        </article>
-        <article class="docs-card">
-          <strong>Enriquecimiento</strong>
-          <p>510 reseñas ya procesadas por la tubería local de IA en la última sincronización.</p>
-        </article>
-        <article class="docs-card">
-          <strong>Privacidad</strong>
-          <p>El procesamiento ocurre localmente y el resultado queda en un JSON exportable.</p>
-        </article>
+      <section id="tab-analisis" class="docs-tabpanel" role="tabpanel" hidden>
+        <section id="analisis" class="docs-section">
+          <div class="docs-section-head">
+            <p class="eyebrow">Análisis</p>
+            <h3>Qué muestra cada bloque</h3>
+          </div>
+
+          <div class="docs-columns">
+            <article class="docs-copy">
+              <h4>Overview y tendencia</h4>
+              <p>Muestran el estado general de la reputación, el volumen, la distribución de estrellas y la evolución mensual. Sirven para responder si la reputación mejora o si hay meses con presión operativa.</p>
+            </article>
+            <article class="docs-copy">
+              <h4>Temas y segmento</h4>
+              <p>Traducen texto libre en temas operativos y perfiles de huésped. Ayudan a identificar si el problema está en habitaciones, limpieza, comida, ruido, servicio o en segmentos específicos como familias o viajeros de negocios.</p>
+            </article>
+            <article class="docs-copy">
+              <h4>Resumen ejecutivo</h4>
+              <p>Condensa cobertura IA, urgencias, compensaciones, riesgo comercial, brechas de marca y reconocimiento al staff. Está diseñado para dirección y para reuniones operativas.</p>
+            </article>
+            <article class="docs-copy">
+              <h4>Causa raíz y patrones</h4>
+              <p>Organiza reseñas por causa probable y muestra ejemplos concretos. Es la vista más útil para convertir feedback en una lista de mejoras priorizadas.</p>
+            </article>
+            <article class="docs-copy">
+              <h4>IA accionable</h4>
+              <p>El LLM produce sentimiento semántico, urgencia, resumen, ruta por departamento, necesidad de compensación, SLA y borradores de respuesta. Esto convierte cada reseña en un caso de trabajo.</p>
+            </article>
+            <article class="docs-copy">
+              <h4>Benchmark, compliance y marca</h4>
+              <p>Benchmark compara propiedades o fuentes; compliance captura temas sensibles; brand voice genera respuestas y destaca oportunidades de marketing y reconocimiento al equipo.</p>
+            </article>
+          </div>
+        </section>
       </section>
 
-      <section id="analisis" class="docs-section">
-        <div class="docs-section-head">
-          <p class="eyebrow">Análisis</p>
-          <h3>Qué muestra cada bloque</h3>
-        </div>
+      <section id="tab-comparacion" class="docs-tabpanel" role="tabpanel" hidden>
+        <section id="comparacion" class="docs-section">
+          <div class="docs-section-head">
+            <p class="eyebrow">Comparación</p>
+            <h3>Cómo se compara con servicios líderes</h3>
+          </div>
 
-        <div class="docs-columns">
-          <article class="docs-copy">
-            <h4>Overview y tendencia</h4>
-            <p>Muestran el estado general de la reputación, el volumen, la distribución de estrellas y la evolución mensual. Sirven para responder si la reputación mejora o si hay meses con presión operativa.</p>
-          </article>
-          <article class="docs-copy">
-            <h4>Temas y segmento</h4>
-            <p>Traducen texto libre en temas operativos y perfiles de huésped. Ayudan a identificar si el problema está en habitaciones, limpieza, comida, ruido, servicio o en segmentos específicos como familias o viajeros de negocios.</p>
-          </article>
-          <article class="docs-copy">
-            <h4>Resumen ejecutivo</h4>
-            <p>Condensa cobertura IA, urgencias, compensaciones, riesgo comercial, brechas de marca y reconocimiento al staff. Está diseñado para dirección y para reuniones operativas.</p>
-          </article>
-          <article class="docs-copy">
-            <h4>Causa raíz y patrones</h4>
-            <p>Organiza reseñas por causa probable y muestra ejemplos concretos. Es la vista más útil para convertir feedback en una lista de mejoras priorizadas.</p>
-          </article>
-          <article class="docs-copy">
-            <h4>IA accionable</h4>
-            <p>El LLM produce sentimiento semántico, urgencia, resumen, ruta por departamento, necesidad de compensación, SLA y borradores de respuesta. Esto convierte cada reseña en un caso de trabajo.</p>
-          </article>
-          <article class="docs-copy">
-            <h4>Benchmark, compliance y marca</h4>
-            <p>Benchmark compara propiedades o fuentes; compliance captura temas sensibles; brand voice genera respuestas y destaca oportunidades de marketing y reconocimiento al equipo.</p>
-          </article>
-        </div>
+          <div class="comparison-list docs-comparison">
+            <div class="comparison-row"><span>TrustYou</span><p>Gestión de reputación hotelera, CXP, análisis de sentimiento, benchmark competitivo y respuesta con IA.</p></div>
+            <div class="comparison-row"><span>Shiji ReviewPro</span><p>Análisis semántico, benchmark de experiencia del huésped, voz de marca y agregación de reseñas.</p></div>
+            <div class="comparison-row"><span>Birdeye</span><p>Monitoreo de reseñas, resúmenes con IA, respuestas con voz de marca, alertas e insights.</p></div>
+            <div class="comparison-row"><span>ReviewTrackers</span><p>Analítica de experiencia, sentimiento NLP, detección de tendencias, inteligencia competitiva y compliance.</p></div>
+          </div>
+
+          <p class="docs-footnote">La diferencia de esta implementación es que no se queda en agregación y respuesta. Añade causa raíz, routing por departamento, riesgo comercial y una capa local exportable para CRM y operaciones.</p>
+        </section>
       </section>
 
-      <section id="comparacion" class="docs-section">
-        <div class="docs-section-head">
-          <p class="eyebrow">Comparación</p>
-          <h3>Cómo se compara con servicios líderes</h3>
-        </div>
+      <section id="tab-flujo" class="docs-tabpanel" role="tabpanel" hidden>
+        <section id="flujo" class="docs-section">
+          <div class="docs-section-head">
+            <p class="eyebrow">Flujo</p>
+            <h3>Cómo usarlo en una operación real</h3>
+          </div>
 
-        <div class="comparison-list docs-comparison">
-          <div class="comparison-row"><span>TrustYou</span><p>Gestión de reputación hotelera, CXP, análisis de sentimiento, benchmark competitivo y respuesta con IA.</p></div>
-          <div class="comparison-row"><span>Shiji ReviewPro</span><p>Análisis semántico, benchmark de experiencia del huésped, voz de marca y agregación de reseñas.</p></div>
-          <div class="comparison-row"><span>Birdeye</span><p>Monitoreo de reseñas, resúmenes con IA, respuestas con voz de marca, alertas e insights.</p></div>
-          <div class="comparison-row"><span>ReviewTrackers</span><p>Analítica de experiencia, sentimiento NLP, detección de tendencias, inteligencia competitiva y compliance.</p></div>
-        </div>
-
-        <p class="docs-footnote">La diferencia de esta implementación es que no se queda en agregación y respuesta. Añade causa raíz, routing por departamento, riesgo comercial y una capa local exportable para CRM y operaciones.</p>
+          <ol class="docs-steps">
+            <li>Cargar exportes o conectar la fuente de reviews.</li>
+            <li>Ejecutar enriquecimiento local con Ollama.</li>
+            <li>Revisar el resumen ejecutivo y la cola CRM.</li>
+            <li>Asignar cada caso a un departamento responsable.</li>
+            <li>Escalar los temas de compliance y revenue.</li>
+            <li>Exportar el dataset para seguimiento o reporting.</li>
+          </ol>
+        </section>
       </section>
 
-      <section id="flujo" class="docs-section">
-        <div class="docs-section-head">
-          <p class="eyebrow">Flujo</p>
-          <h3>Cómo usarlo en una operación real</h3>
-        </div>
+      <section id="tab-fuentes" class="docs-tabpanel" role="tabpanel" hidden>
+        <section class="docs-section">
+          <div class="docs-section-head">
+            <p class="eyebrow">Fuentes oficiales</p>
+            <h3>Referencias comparables</h3>
+          </div>
 
-        <ol class="docs-steps">
-          <li>Cargar exportes o conectar la fuente de reviews.</li>
-          <li>Ejecutar enriquecimiento local con Ollama.</li>
-          <li>Revisar el resumen ejecutivo y la cola CRM.</li>
-          <li>Asignar cada caso a un departamento responsable.</li>
-          <li>Escalar los temas de compliance y revenue.</li>
-          <li>Exportar el dataset para seguimiento o reporting.</li>
-        </ol>
-      </section>
-
-      <section class="docs-section">
-        <div class="docs-section-head">
-          <p class="eyebrow">Fuentes oficiales</p>
-          <h3>Referencias comparables</h3>
-        </div>
-
-        <div class="docs-links">
-          <a href="https://www.trustyou.com/products/reputation-management" target="_blank" rel="noreferrer">TrustYou - Reputation Management</a>
-          <a href="https://www.trustyou.com/products/customer_experience_platform/" target="_blank" rel="noreferrer">TrustYou - Customer Experience Platform</a>
-          <a href="https://resources.trustyou.com/request-a-cxp-demo" target="_blank" rel="noreferrer">TrustYou - CXP Demo</a>
-          <a href="https://www.shijigroup.com/reviewpro-reputation" target="_blank" rel="noreferrer">Shiji ReviewPro - Reputation</a>
-          <a href="https://www.shijigroup.com/reviewpro-reputation/features" target="_blank" rel="noreferrer">Shiji ReviewPro - Features</a>
-          <a href="https://www.reviewtrackers.com/social-media-marketing/" target="_blank" rel="noreferrer">ReviewTrackers - Customer Experience Analytics</a>
-          <a href="https://www.reviewtrackers.com/plans/" target="_blank" rel="noreferrer">ReviewTrackers - Pricing</a>
-          <a href="https://birdeye.com/review-management/" target="_blank" rel="noreferrer">Birdeye - Review Management</a>
-          <a href="https://birdeye.com/reviews/" target="_blank" rel="noreferrer">Birdeye - Reviews AI</a>
-        </div>
+          <div class="docs-links">
+            <a href="https://www.trustyou.com/products/reputation-management" target="_blank" rel="noreferrer">TrustYou - Reputation Management</a>
+            <a href="https://www.trustyou.com/products/customer_experience_platform/" target="_blank" rel="noreferrer">TrustYou - Customer Experience Platform</a>
+            <a href="https://resources.trustyou.com/request-a-cxp-demo" target="_blank" rel="noreferrer">TrustYou - CXP Demo</a>
+            <a href="https://www.shijigroup.com/reviewpro-reputation" target="_blank" rel="noreferrer">Shiji ReviewPro - Reputation</a>
+            <a href="https://www.shijigroup.com/reviewpro-reputation/features" target="_blank" rel="noreferrer">Shiji ReviewPro - Features</a>
+            <a href="https://www.reviewtrackers.com/social-media-marketing/" target="_blank" rel="noreferrer">ReviewTrackers - Customer Experience Analytics</a>
+            <a href="https://www.reviewtrackers.com/plans/" target="_blank" rel="noreferrer">ReviewTrackers - Pricing</a>
+            <a href="https://birdeye.com/review-management/" target="_blank" rel="noreferrer">Birdeye - Review Management</a>
+            <a href="https://birdeye.com/reviews/" target="_blank" rel="noreferrer">Birdeye - Reviews AI</a>
+          </div>
+        </section>
       </section>
     </main>
+    <script>
+      const tabs = Array.from(document.querySelectorAll('.docs-tab'));
+      const panels = Array.from(document.querySelectorAll('.docs-tabpanel'));
+
+      function activateTab(name) {
+        tabs.forEach((tab) => {
+          const active = tab.dataset.tab === name;
+          tab.classList.toggle('active', active);
+          tab.setAttribute('aria-selected', String(active));
+          tab.tabIndex = active ? 0 : -1;
+        });
+
+        panels.forEach((panel) => {
+          const active = panel.id === `tab-${name}`;
+          panel.classList.toggle('active', active);
+          panel.hidden = !active;
+        });
+
+        const target = document.getElementById(`tab-${name}`);
+        if (target) {
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      }
+
+      tabs.forEach((tab) => {
+        tab.addEventListener('click', () => activateTab(tab.dataset.tab));
+      });
+
+      window.addEventListener('hashchange', () => {
+        const hash = window.location.hash.replace('#', '');
+        if (hash === 'fuente' || hash === 'analisis' || hash === 'comparacion' || hash === 'flujo') {
+          activateTab(hash);
+        }
+      });
+
+      const initial = window.location.hash.replace('#', '');
+      if (['fuente', 'analisis', 'comparacion', 'flujo'].includes(initial)) {
+        activateTab(initial);
+      }
+    </script>
   </body>
 </html>
