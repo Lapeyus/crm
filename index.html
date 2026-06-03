@@ -1,0 +1,379 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Hotel Grano de Oro Reputation CRM</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="brand-mark">R</div>
+        <div>
+          <h1>Reputation CRM</h1>
+          <p>Hospitality Intelligence</p>
+        </div>
+      </div>
+
+      <nav class="nav">
+        <a class="active" href="#overview">Overview</a>
+        <a href="#operations">Operations</a>
+        <a href="#strategy">Strategy</a>
+        <a href="#ai">AI Analysis</a>
+        <a href="#crm">CRM</a>
+        <a href="#benchmark">Benchmark</a>
+        <a href="#brand">Brand</a>
+        <a href="#reviews">Reviews</a>
+        <a href="#automation">Automation</a>
+      </nav>
+
+      <section class="sidebar-panel">
+        <label for="dataFile">Agregar dataset</label>
+        <input id="dataFile" type="file" accept=".json" multiple />
+        <p>Sube exportes JSON del extractor para combinar TripAdvisor, Google y Booking.</p>
+      </section>
+
+      <section class="sidebar-panel">
+        <label for="datasetUrl">Dataset URL</label>
+        <input id="datasetUrl" type="text" value="./data/hotel_grano_de_oro_reviews_llm.json" />
+        <button id="reloadDataset" type="button">Cargar URL</button>
+      </section>
+    </aside>
+
+    <main class="app-shell">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">Unified Reviews Dashboard</p>
+          <h2 id="propertyName">Cargando...</h2>
+        </div>
+        <div class="topbar-actions">
+          <span id="lastSync" class="status-pill">Sincronizando</span>
+          <button id="downloadJson" type="button">Export JSON</button>
+          <button id="downloadCsv" type="button">Export CSV</button>
+        </div>
+      </header>
+
+      <section class="filters" aria-label="Filtros del dashboard">
+        <label>
+          Negocio
+          <select id="businessFilter"></select>
+        </label>
+        <label>
+          Canal
+          <select id="sourceFilter"></select>
+        </label>
+        <label>
+          Segmento
+          <select id="segmentFilter"></select>
+        </label>
+        <label>
+          Rating
+          <select id="ratingFilter">
+            <option value="all">Todos</option>
+            <option value="5">5 estrellas</option>
+            <option value="4">4+ estrellas</option>
+            <option value="3">3 o menos</option>
+            <option value="2">2 o menos</option>
+          </select>
+        </label>
+        <label>
+          Prioridad IA
+          <select id="urgencyFilter">
+            <option value="all">Todas</option>
+            <option value="high">High</option>
+            <option value="medium">Medium</option>
+            <option value="low">Low</option>
+          </select>
+        </label>
+        <label class="search-field">
+          Buscar
+          <input id="searchFilter" type="search" placeholder="room, breakfast, service..." />
+        </label>
+      </section>
+
+      <section id="overview" class="metric-grid" aria-label="KPIs principales"></section>
+
+      <section class="layout-grid">
+        <article class="panel wide">
+          <div class="panel-heading">
+            <div>
+              <p class="eyebrow">Trend</p>
+              <h3>Rating y volumen mensual</h3>
+            </div>
+            <span id="trendWindow" class="panel-note"></span>
+          </div>
+          <div id="timeline" class="timeline"></div>
+        </article>
+
+        <article class="panel">
+          <div class="panel-heading">
+            <div>
+              <p class="eyebrow">Distribution</p>
+              <h3>Ratings</h3>
+            </div>
+          </div>
+          <div id="ratingBars"></div>
+        </article>
+      </section>
+
+      <section id="operations" class="layout-grid">
+        <article class="panel">
+          <div class="panel-heading">
+            <div>
+              <p class="eyebrow">Operations</p>
+              <h3>Temas detectados</h3>
+            </div>
+            <span id="topicMode" class="panel-note"></span>
+          </div>
+          <div id="topicBars"></div>
+        </article>
+
+        <article class="panel">
+          <div class="panel-heading">
+            <div>
+              <p class="eyebrow">Guest Mix</p>
+              <h3>Segmentos</h3>
+            </div>
+          </div>
+          <div id="segmentBars"></div>
+        </article>
+      </section>
+
+      <section id="strategy" class="layout-grid">
+        <article class="panel wide">
+          <div class="panel-heading">
+            <div>
+              <p class="eyebrow">Executive Brief</p>
+              <h3>Prioridades de reputación</h3>
+            </div>
+          </div>
+          <div id="weeklyBriefCards" class="brief-grid"></div>
+          <p id="weeklyNarrative" class="brief-narrative"></p>
+        </article>
+
+        <article class="panel">
+          <div class="panel-heading">
+            <div>
+              <p class="eyebrow">Revenue</p>
+              <h3>Impacto comercial</h3>
+            </div>
+          </div>
+          <div id="revenueImpactBars"></div>
+        </article>
+      </section>
+
+      <section class="layout-grid">
+        <article class="panel">
+          <div class="panel-heading">
+            <div>
+              <p class="eyebrow">Root Cause</p>
+              <h3>Mapa de causa raíz</h3>
+            </div>
+          </div>
+          <div id="rootCauseBars"></div>
+        </article>
+
+        <article class="panel wide">
+          <div class="panel-heading">
+            <div>
+              <p class="eyebrow">Pattern Examples</p>
+              <h3>Evidencia accionable</h3>
+            </div>
+          </div>
+          <div id="rootCauseExamples" class="compact-list"></div>
+        </article>
+      </section>
+
+      <section id="ai" class="layout-grid">
+        <article class="panel wide">
+          <div class="panel-heading">
+            <div>
+              <p class="eyebrow">Ollama Qwen 3.5 9B</p>
+              <h3>Insights accionables</h3>
+            </div>
+            <span id="aiCoverage" class="panel-note"></span>
+          </div>
+          <div id="aiInsightList" class="insight-list"></div>
+        </article>
+
+        <article class="panel">
+          <div class="panel-heading">
+            <div>
+              <p class="eyebrow">Triage</p>
+              <h3>Sentimiento IA</h3>
+            </div>
+          </div>
+          <div id="aiSentimentBars"></div>
+          <div class="panel-divider"></div>
+          <div class="panel-heading compact">
+            <div>
+              <p class="eyebrow">Routing</p>
+              <h3>Departamentos</h3>
+            </div>
+          </div>
+          <div id="departmentBars"></div>
+        </article>
+      </section>
+
+      <section id="crm" class="layout-grid">
+        <article class="panel wide">
+          <div class="panel-heading">
+            <div>
+              <p class="eyebrow">CRM Workbench</p>
+              <h3>Action queue enriquecida</h3>
+            </div>
+          </div>
+          <div id="crmActionQueue" class="action-grid"></div>
+        </article>
+
+        <article class="panel">
+          <div class="panel-heading">
+            <div>
+              <p class="eyebrow">Revenue Protection</p>
+              <h3>Riesgos prioritarios</h3>
+            </div>
+          </div>
+          <div id="revenueImpactList" class="compact-list"></div>
+        </article>
+      </section>
+
+      <section id="benchmark" class="layout-grid">
+        <article class="panel wide">
+          <div class="panel-heading">
+            <div>
+              <p class="eyebrow">Benchmark</p>
+              <h3>Comparación de desempeño</h3>
+            </div>
+            <span id="benchmarkNote" class="panel-note"></span>
+          </div>
+          <div class="table-wrap short">
+            <table>
+              <thead>
+                <tr>
+                  <th>Grupo</th>
+                  <th>Volumen</th>
+                  <th>Rating</th>
+                  <th>Recovery</th>
+                  <th>IA positiva</th>
+                </tr>
+              </thead>
+              <tbody id="benchmarkTable"></tbody>
+            </table>
+          </div>
+        </article>
+
+        <article class="panel">
+          <div class="panel-heading">
+            <div>
+              <p class="eyebrow">Competitive Intel</p>
+              <h3>Señal competitiva</h3>
+            </div>
+          </div>
+          <div id="competitiveSignalBars"></div>
+        </article>
+      </section>
+
+      <section id="brand" class="layout-grid">
+        <article class="panel">
+          <div class="panel-heading">
+            <div>
+              <p class="eyebrow">Compliance</p>
+              <h3>Riesgos legales y seguridad</h3>
+            </div>
+          </div>
+          <div id="complianceRiskList" class="compact-list"></div>
+        </article>
+
+        <article class="panel wide">
+          <div class="panel-heading">
+            <div>
+              <p class="eyebrow">Brand Voice</p>
+              <h3>Respuesta y marketing</h3>
+            </div>
+          </div>
+          <div class="split-grid">
+            <div id="brandResponseList" class="compact-list"></div>
+            <div>
+              <div id="marketingSignalList" class="compact-list"></div>
+              <div class="panel-divider"></div>
+              <h4>Staff recognition</h4>
+              <div id="staffRecognitionList" class="recognition-list"></div>
+            </div>
+          </div>
+        </article>
+      </section>
+
+      <section id="automation" class="workflow-grid">
+        <article class="workflow-card">
+          <span>Review Collection API</span>
+          <strong id="collectionQueue">0</strong>
+          <p>Huespedes recientes listos para invitacion post check-out.</p>
+        </article>
+        <article class="workflow-card">
+          <span>Service Recovery</span>
+          <strong id="recoveryQueue">0</strong>
+          <p>Casos con rating bajo o sentimiento negativo para seguimiento del CRM.</p>
+        </article>
+        <article class="workflow-card">
+          <span>Response SLA</span>
+          <strong id="responseQueue">0</strong>
+          <p>Resenas sin respuesta del propietario detectada en el export.</p>
+        </article>
+        <article class="workflow-card">
+          <span>AI Triage</span>
+          <strong id="aiQueue">0</strong>
+          <p>Resenas con prioridad alta o media detectadas por Ollama.</p>
+        </article>
+      </section>
+
+      <section id="reviews" class="layout-grid reviews-layout">
+        <article class="panel">
+          <div class="panel-heading">
+            <div>
+              <p class="eyebrow">Action Queue</p>
+              <h3>Reseñas para recuperar</h3>
+            </div>
+          </div>
+          <div id="riskReviews" class="review-list"></div>
+        </article>
+
+        <article class="panel wide">
+          <div class="panel-heading">
+            <div>
+              <p class="eyebrow">Dataset</p>
+              <h3>Reseñas filtradas</h3>
+            </div>
+            <span id="tableCount" class="panel-note"></span>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Fecha</th>
+                  <th>Canal</th>
+                  <th>Rating</th>
+                  <th>IA</th>
+                  <th>Titulo</th>
+                  <th>Accion IA</th>
+                  <th>Segmento</th>
+                </tr>
+              </thead>
+              <tbody id="reviewsTable"></tbody>
+            </table>
+          </div>
+        </article>
+      </section>
+    </main>
+
+    <template id="metricTemplate">
+      <article class="metric-card">
+        <span></span>
+        <strong></strong>
+        <small></small>
+      </article>
+    </template>
+
+    <script src="./app.js"></script>
+  </body>
+</html>

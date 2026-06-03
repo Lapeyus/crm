@@ -1,0 +1,15 @@
+{
+  "input": "exports/tripadvisor_299076_hotel_grano_de_oro_reviews_selenium.json",
+  "output": "exports/tripadvisor_299076_hotel_grano_de_oro_reviews_selenium_llm.json",
+  "model": "qwen3.5:9b",
+  "prompt_version": "hotel-reputation-v2",
+  "started_at": "2026-06-03T16:54:09.742192+00:00",
+  "updated_at": "2026-06-03T16:58:11.390081+00:00",
+  "reviews_total": 1891,
+  "processed_this_run": 8,
+  "analyzed_total": 8,
+  "cache_hits": 0,
+  "skipped": 0,
+  "errors": 0,
+  "complete": false
+}
