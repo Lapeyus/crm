@@ -1055,22 +1055,36 @@ function wireEvents() {
 
   const sectionTabs = [...document.querySelectorAll(".section-tab")];
   const sectionPanels = [...document.querySelectorAll(".dashboard-panel")];
+  const navLinks = [...document.querySelectorAll(".nav a[data-panel]")];
   const activateSection = (panelId) => {
     sectionTabs.forEach((tab) => {
       const active = tab.dataset.panel === panelId;
       tab.classList.toggle("active", active);
       tab.setAttribute("aria-selected", String(active));
     });
+    navLinks.forEach((link) => {
+      const active = link.dataset.panel === panelId;
+      link.classList.toggle("active", active);
+    });
     sectionPanels.forEach((panel) => {
       panel.classList.toggle("active", panel.id === panelId);
     });
+    history.replaceState(null, "", `#${panelId}`);
   };
 
   sectionTabs.forEach((tab) => {
     tab.addEventListener("click", () => activateSection(tab.dataset.panel));
   });
 
-  activateSection("overviewPanel");
+  navLinks.forEach((link) => {
+    link.addEventListener("click", (event) => {
+      event.preventDefault();
+      activateSection(link.dataset.panel);
+    });
+  });
+
+  const initialPanel = window.location.hash.replace("#", "");
+  activateSection(["overviewPanel", ...sectionPanels.map((panel) => panel.id)].includes(initialPanel) ? initialPanel : "overviewPanel");
 }
 
 wireEvents();
