@@ -46,6 +46,7 @@
         <div>
           <p class="eyebrow">Unified Reviews Dashboard</p>
           <h2 id="propertyName">Cargando...</h2>
+          <p class="page-summary">Vista ejecutiva y operativa de reseñas: reputación, causas raíz, riesgo comercial, acciones CRM y señales generadas por IA.</p>
         </div>
         <div class="topbar-actions">
           <span id="lastSync" class="status-pill">Sincronizando</span>
@@ -92,6 +93,11 @@
         </label>
       </section>
 
+      <section class="section-explainer">
+        <strong>KPIs principales</strong>
+        <p>Resumen del dataset filtrado: rating promedio, volumen, promotores, casos de recuperación, tasa de respuesta, cobertura LLM, fuentes conectadas, segmentos y profundidad del feedback.</p>
+      </section>
+
       <section id="overview" class="metric-grid" aria-label="KPIs principales"></section>
 
       <section class="layout-grid">
@@ -100,6 +106,7 @@
             <div>
               <p class="eyebrow">Trend</p>
               <h3>Rating y volumen mensual</h3>
+              <p class="panel-description">Evolución temporal de reputación. Cada barra representa volumen mensual y el color indica el rating promedio de ese mes.</p>
             </div>
             <span id="trendWindow" class="panel-note"></span>
           </div>
@@ -111,6 +118,7 @@
             <div>
               <p class="eyebrow">Distribution</p>
               <h3>Ratings</h3>
+              <p class="panel-description">Distribución de reseñas por estrellas. Ayuda a ver si el promedio viene de una base sólida o de pocos extremos.</p>
             </div>
           </div>
           <div id="ratingBars"></div>
@@ -123,6 +131,7 @@
             <div>
               <p class="eyebrow">Operations</p>
               <h3>Temas detectados</h3>
+              <p class="panel-description">Temas operativos mencionados en las reseñas. Usa etiquetas LLM cuando existen y palabras clave como respaldo.</p>
             </div>
             <span id="topicMode" class="panel-note"></span>
           </div>
@@ -134,6 +143,7 @@
             <div>
               <p class="eyebrow">Guest Mix</p>
               <h3>Segmentos</h3>
+              <p class="panel-description">Agrupa reseñas por tipo de huésped o viaje para detectar diferencias entre parejas, familias, negocios y otros perfiles.</p>
             </div>
           </div>
           <div id="segmentBars"></div>
@@ -146,6 +156,7 @@
             <div>
               <p class="eyebrow">Executive Brief</p>
               <h3>Prioridades de reputación</h3>
+              <p class="panel-description">Síntesis para gerencia: volumen analizado por IA, urgencias, compensaciones, riesgos comerciales, brechas de marca y reconocimientos.</p>
             </div>
           </div>
           <div id="weeklyBriefCards" class="brief-grid"></div>
@@ -157,6 +168,7 @@
             <div>
               <p class="eyebrow">Revenue</p>
               <h3>Impacto comercial</h3>
+              <p class="panel-description">Clasifica reseñas según su posible efecto en conversión, precio, confianza pública, repetición de huéspedes y pérdida de demanda.</p>
             </div>
           </div>
           <div id="revenueImpactBars"></div>
@@ -169,6 +181,7 @@
             <div>
               <p class="eyebrow">Root Cause</p>
               <h3>Mapa de causa raíz</h3>
+              <p class="panel-description">Agrupa problemas y fortalezas por causa probable: servicio, habitación, ruido, limpieza, alimentos, cobros, seguridad y promesa de marca.</p>
             </div>
           </div>
           <div id="rootCauseBars"></div>
@@ -179,6 +192,7 @@
             <div>
               <p class="eyebrow">Pattern Examples</p>
               <h3>Evidencia accionable</h3>
+              <p class="panel-description">Ejemplos concretos que explican los patrones detectados. Sirven como evidencia para priorizar mejoras o investigar casos.</p>
             </div>
           </div>
           <div id="rootCauseExamples" class="compact-list"></div>
@@ -191,6 +205,7 @@
             <div>
               <p class="eyebrow">Ollama Qwen 3.5 9B</p>
               <h3>Insights accionables</h3>
+              <p class="panel-description">Reseñas priorizadas por el LLM con resumen y siguiente acción. La cobertura indica cuántas reseñas ya fueron enriquecidas.</p>
             </div>
             <span id="aiCoverage" class="panel-note"></span>
           </div>
@@ -202,6 +217,7 @@
             <div>
               <p class="eyebrow">Triage</p>
               <h3>Sentimiento IA</h3>
+              <p class="panel-description">Clasificación semántica de sentimiento. Complementa el rating porque detecta reseñas mixtas o negativas aunque la puntuación sea alta.</p>
             </div>
           </div>
           <div id="aiSentimentBars"></div>
@@ -210,6 +226,7 @@
             <div>
               <p class="eyebrow">Routing</p>
               <h3>Departamentos</h3>
+              <p class="panel-description">Departamentos responsables sugeridos por IA para seguimiento: Front Desk, Housekeeping, F&B, Revenue, Management y otros.</p>
             </div>
           </div>
           <div id="departmentBars"></div>
@@ -222,6 +239,7 @@
             <div>
               <p class="eyebrow">CRM Workbench</p>
               <h3>Action queue enriquecida</h3>
+              <p class="panel-description">Lista priorizada de casos para seguimiento. Combina urgencia, SLA, dueño operativo, necesidad de compensación y acción recomendada.</p>
             </div>
           </div>
           <div id="crmActionQueue" class="action-grid"></div>
@@ -232,6 +250,7 @@
             <div>
               <p class="eyebrow">Revenue Protection</p>
               <h3>Riesgos prioritarios</h3>
+              <p class="panel-description">Casos que podrían afectar reservas futuras, percepción de valor, repetición de huéspedes o confianza en el precio publicado.</p>
             </div>
           </div>
           <div id="revenueImpactList" class="compact-list"></div>
@@ -244,6 +263,7 @@
             <div>
               <p class="eyebrow">Benchmark</p>
               <h3>Comparación de desempeño</h3>
+              <p class="panel-description">Compara desempeño por negocio cuando hay varios datasets o por canal cuando solo hay un negocio cargado.</p>
             </div>
             <span id="benchmarkNote" class="panel-note"></span>
           </div>
@@ -268,6 +288,7 @@
             <div>
               <p class="eyebrow">Competitive Intel</p>
               <h3>Señal competitiva</h3>
+              <p class="panel-description">Identifica si las reseñas sugieren ventaja, paridad o desventaja frente a expectativas del mercado o competidores mencionados.</p>
             </div>
           </div>
           <div id="competitiveSignalBars"></div>
@@ -280,6 +301,7 @@
             <div>
               <p class="eyebrow">Compliance</p>
               <h3>Riesgos legales y seguridad</h3>
+              <p class="panel-description">Menciones que requieren revisión cuidadosa: seguridad, salud, fraude, privacidad, discriminación o disputas de cobro.</p>
             </div>
           </div>
           <div id="complianceRiskList" class="compact-list"></div>
@@ -290,6 +312,7 @@
             <div>
               <p class="eyebrow">Brand Voice</p>
               <h3>Respuesta y marketing</h3>
+              <p class="panel-description">Borradores de respuesta pública, señales para amplificar reseñas positivas, brechas de promesa comercial y reconocimientos al staff.</p>
             </div>
           </div>
           <div class="split-grid">
@@ -298,10 +321,16 @@
               <div id="marketingSignalList" class="compact-list"></div>
               <div class="panel-divider"></div>
               <h4>Staff recognition</h4>
+              <p class="panel-description tight">Nombres o roles mencionados positivamente para reconocimiento interno y aprendizaje operativo.</p>
               <div id="staffRecognitionList" class="recognition-list"></div>
             </div>
           </div>
         </article>
+      </section>
+
+      <section class="section-explainer">
+        <strong>Automatización operativa</strong>
+        <p>Estas colas traducen reseñas en trabajo de CRM: invitaciones post check-out, recuperación de servicio, respuestas pendientes y triage de IA.</p>
       </section>
 
       <section id="automation" class="workflow-grid">
@@ -333,6 +362,7 @@
             <div>
               <p class="eyebrow">Action Queue</p>
               <h3>Reseñas para recuperar</h3>
+              <p class="panel-description">Reseñas con rating bajo o señales negativas. Se ordenan por urgencia IA, fecha y rating para priorizar recuperación.</p>
             </div>
           </div>
           <div id="riskReviews" class="review-list"></div>
@@ -343,6 +373,7 @@
             <div>
               <p class="eyebrow">Dataset</p>
               <h3>Reseñas filtradas</h3>
+              <p class="panel-description">Tabla de reseñas que cumplen los filtros actuales. Incluye canal, rating, sentimiento IA, título, acción recomendada y segmento.</p>
             </div>
             <span id="tableCount" class="panel-note"></span>
           </div>
