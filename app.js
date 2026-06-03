@@ -1053,15 +1053,9 @@ function wireEvents() {
     downloadFile("reputation_dashboard_filtered.csv", "text/csv", toCsv(filteredReviews));
   });
 
-  const sectionTabs = [...document.querySelectorAll(".section-tab")];
   const sectionPanels = [...document.querySelectorAll(".dashboard-panel")];
   const navLinks = [...document.querySelectorAll(".nav a[data-panel]")];
   const activateSection = (panelId) => {
-    sectionTabs.forEach((tab) => {
-      const active = tab.dataset.panel === panelId;
-      tab.classList.toggle("active", active);
-      tab.setAttribute("aria-selected", String(active));
-    });
     navLinks.forEach((link) => {
       const active = link.dataset.panel === panelId;
       link.classList.toggle("active", active);
@@ -1071,10 +1065,6 @@ function wireEvents() {
     });
     history.replaceState(null, "", `#${panelId}`);
   };
-
-  sectionTabs.forEach((tab) => {
-    tab.addEventListener("click", () => activateSection(tab.dataset.panel));
-  });
 
   navLinks.forEach((link) => {
     link.addEventListener("click", (event) => {
