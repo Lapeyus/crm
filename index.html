@@ -99,9 +99,23 @@
         <p>Resumen del dataset filtrado: rating promedio, volumen, promotores, casos de recuperación, tasa de respuesta, cobertura LLM, fuentes conectadas, segmentos y profundidad del feedback.</p>
       </section>
 
+      <section class="section-tabs" role="tablist" aria-label="Secciones del dashboard">
+        <button class="section-tab active" type="button" role="tab" aria-selected="true" data-panel="overviewPanel">Overview</button>
+        <button class="section-tab" type="button" role="tab" aria-selected="false" data-panel="operationsPanel">Operations</button>
+        <button class="section-tab" type="button" role="tab" aria-selected="false" data-panel="strategyPanel">Strategy</button>
+        <button class="section-tab" type="button" role="tab" aria-selected="false" data-panel="aiPanel">AI Analysis</button>
+        <button class="section-tab" type="button" role="tab" aria-selected="false" data-panel="crmPanel">CRM</button>
+        <button class="section-tab" type="button" role="tab" aria-selected="false" data-panel="benchmarkPanel">Benchmark</button>
+        <button class="section-tab" type="button" role="tab" aria-selected="false" data-panel="brandPanel">Brand</button>
+        <button class="section-tab" type="button" role="tab" aria-selected="false" data-panel="sourcesPanel">Sources</button>
+        <button class="section-tab" type="button" role="tab" aria-selected="false" data-panel="automationPanel">Automation</button>
+        <button class="section-tab" type="button" role="tab" aria-selected="false" data-panel="reviewsPanel">Reviews</button>
+      </section>
+
       <section id="overview" class="metric-grid" aria-label="KPIs principales"></section>
 
-      <section class="layout-grid">
+      <section id="overviewPanel" class="dashboard-panel active">
+        <section class="layout-grid">
         <article class="panel wide">
           <div class="panel-heading">
             <div>
@@ -124,320 +138,339 @@
           </div>
           <div id="ratingBars"></div>
         </article>
+        </section>
       </section>
 
-      <section id="operations" class="layout-grid">
-        <article class="panel">
-          <div class="panel-heading">
-            <div>
-              <p class="eyebrow">Operations</p>
-              <h3>Temas detectados</h3>
-              <p class="panel-description">Temas operativos mencionados en las reseñas. Usa etiquetas LLM cuando existen y palabras clave como respaldo.</p>
+      <section id="operationsPanel" class="dashboard-panel">
+        <section id="operations" class="layout-grid">
+          <article class="panel">
+            <div class="panel-heading">
+              <div>
+                <p class="eyebrow">Operations</p>
+                <h3>Temas detectados</h3>
+                <p class="panel-description">Temas operativos mencionados en las reseñas. Usa etiquetas LLM cuando existen y palabras clave como respaldo.</p>
+              </div>
+              <span id="topicMode" class="panel-note"></span>
             </div>
-            <span id="topicMode" class="panel-note"></span>
-          </div>
-          <div id="topicBars"></div>
-        </article>
+            <div id="topicBars"></div>
+          </article>
 
-        <article class="panel">
-          <div class="panel-heading">
-            <div>
-              <p class="eyebrow">Guest Mix</p>
-              <h3>Segmentos</h3>
-              <p class="panel-description">Agrupa reseñas por tipo de huésped o viaje para detectar diferencias entre parejas, familias, negocios y otros perfiles.</p>
+          <article class="panel">
+            <div class="panel-heading">
+              <div>
+                <p class="eyebrow">Guest Mix</p>
+                <h3>Segmentos</h3>
+                <p class="panel-description">Agrupa reseñas por tipo de huésped o viaje para detectar diferencias entre parejas, familias, negocios y otros perfiles.</p>
+              </div>
             </div>
-          </div>
-          <div id="segmentBars"></div>
-        </article>
+            <div id="segmentBars"></div>
+          </article>
+        </section>
       </section>
 
-      <section id="strategy" class="layout-grid">
-        <article class="panel wide">
-          <div class="panel-heading">
-            <div>
-              <p class="eyebrow">Executive Brief</p>
-              <h3>Prioridades de reputación</h3>
-              <p class="panel-description">Síntesis para gerencia: volumen analizado por IA, urgencias, compensaciones, riesgos comerciales, brechas de marca y reconocimientos.</p>
+      <section id="strategyPanel" class="dashboard-panel">
+        <section id="strategy" class="layout-grid">
+          <article class="panel wide">
+            <div class="panel-heading">
+              <div>
+                <p class="eyebrow">Executive Brief</p>
+                <h3>Prioridades de reputación</h3>
+                <p class="panel-description">Síntesis para gerencia: volumen analizado por IA, urgencias, compensaciones, riesgos comerciales, brechas de marca y reconocimientos.</p>
+              </div>
             </div>
-          </div>
-          <div id="weeklyBriefCards" class="brief-grid"></div>
-          <p id="weeklyNarrative" class="brief-narrative"></p>
-        </article>
+            <div id="weeklyBriefCards" class="brief-grid"></div>
+            <p id="weeklyNarrative" class="brief-narrative"></p>
+          </article>
 
-        <article class="panel">
-          <div class="panel-heading">
-            <div>
-              <p class="eyebrow">Revenue</p>
-              <h3>Impacto comercial</h3>
-              <p class="panel-description">Clasifica reseñas según su posible efecto en conversión, precio, confianza pública, repetición de huéspedes y pérdida de demanda.</p>
+          <article class="panel">
+            <div class="panel-heading">
+              <div>
+                <p class="eyebrow">Revenue</p>
+                <h3>Impacto comercial</h3>
+                <p class="panel-description">Clasifica reseñas según su posible efecto en conversión, precio, confianza pública, repetición de huéspedes y pérdida de demanda.</p>
+              </div>
             </div>
-          </div>
-          <div id="revenueImpactBars"></div>
-        </article>
+            <div id="revenueImpactBars"></div>
+          </article>
+        </section>
       </section>
 
-      <section class="layout-grid">
-        <article class="panel">
-          <div class="panel-heading">
-            <div>
-              <p class="eyebrow">Root Cause</p>
-              <h3>Mapa de causa raíz</h3>
-              <p class="panel-description">Agrupa problemas y fortalezas por causa probable: servicio, habitación, ruido, limpieza, alimentos, cobros, seguridad y promesa de marca.</p>
+      <section id="aiPanel" class="dashboard-panel">
+        <section class="layout-grid">
+          <article class="panel">
+            <div class="panel-heading">
+              <div>
+                <p class="eyebrow">Root Cause</p>
+                <h3>Mapa de causa raíz</h3>
+                <p class="panel-description">Agrupa problemas y fortalezas por causa probable: servicio, habitación, ruido, limpieza, alimentos, cobros, seguridad y promesa de marca.</p>
+              </div>
             </div>
-          </div>
-          <div id="rootCauseBars"></div>
-        </article>
+            <div id="rootCauseBars"></div>
+          </article>
 
-        <article class="panel wide">
-          <div class="panel-heading">
-            <div>
-              <p class="eyebrow">Pattern Examples</p>
-              <h3>Evidencia accionable</h3>
-              <p class="panel-description">Ejemplos concretos que explican los patrones detectados. Sirven como evidencia para priorizar mejoras o investigar casos.</p>
+          <article class="panel wide">
+            <div class="panel-heading">
+              <div>
+                <p class="eyebrow">Pattern Examples</p>
+                <h3>Evidencia accionable</h3>
+                <p class="panel-description">Ejemplos concretos que explican los patrones detectados. Sirven como evidencia para priorizar mejoras o investigar casos.</p>
+              </div>
             </div>
-          </div>
-          <div id="rootCauseExamples" class="compact-list"></div>
-        </article>
+            <div id="rootCauseExamples" class="compact-list"></div>
+          </article>
+        </section>
       </section>
 
-      <section id="ai" class="layout-grid">
-        <article class="panel wide">
-          <div class="panel-heading">
-            <div>
-              <p class="eyebrow">Ollama Qwen 3.5 9B</p>
-              <h3>Insights accionables</h3>
-              <p class="panel-description">Reseñas priorizadas por el LLM con resumen y siguiente acción. La cobertura indica cuántas reseñas ya fueron enriquecidas.</p>
+      <section id="crmPanel" class="dashboard-panel">
+        <section id="ai" class="layout-grid">
+          <article class="panel wide">
+            <div class="panel-heading">
+              <div>
+                <p class="eyebrow">Ollama Qwen 3.5 9B</p>
+                <h3>Insights accionables</h3>
+                <p class="panel-description">Reseñas priorizadas por el LLM con resumen y siguiente acción. La cobertura indica cuántas reseñas ya fueron enriquecidas.</p>
+              </div>
+              <span id="aiCoverage" class="panel-note"></span>
             </div>
-            <span id="aiCoverage" class="panel-note"></span>
-          </div>
-          <div id="aiInsightList" class="insight-list"></div>
-        </article>
+            <div id="aiInsightList" class="insight-list"></div>
+          </article>
 
-        <article class="panel">
-          <div class="panel-heading">
-            <div>
-              <p class="eyebrow">Triage</p>
-              <h3>Sentimiento IA</h3>
-              <p class="panel-description">Clasificación semántica de sentimiento. Complementa el rating porque detecta reseñas mixtas o negativas aunque la puntuación sea alta.</p>
+          <article class="panel">
+            <div class="panel-heading">
+              <div>
+                <p class="eyebrow">Triage</p>
+                <h3>Sentimiento IA</h3>
+                <p class="panel-description">Clasificación semántica de sentimiento. Complementa el rating porque detecta reseñas mixtas o negativas aunque la puntuación sea alta.</p>
+              </div>
             </div>
-          </div>
-          <div id="aiSentimentBars"></div>
-          <div class="panel-divider"></div>
-          <div class="panel-heading compact">
-            <div>
-              <p class="eyebrow">Routing</p>
-              <h3>Departamentos</h3>
-              <p class="panel-description">Departamentos responsables sugeridos por IA para seguimiento: Front Desk, Housekeeping, F&B, Revenue, Management y otros.</p>
+            <div id="aiSentimentBars"></div>
+            <div class="panel-divider"></div>
+            <div class="panel-heading compact">
+              <div>
+                <p class="eyebrow">Routing</p>
+                <h3>Departamentos</h3>
+                <p class="panel-description">Departamentos responsables sugeridos por IA para seguimiento: Front Desk, Housekeeping, F&B, Revenue, Management y otros.</p>
+              </div>
             </div>
-          </div>
-          <div id="departmentBars"></div>
-        </article>
+            <div id="departmentBars"></div>
+          </article>
+        </section>
       </section>
 
-      <section id="crm" class="layout-grid">
-        <article class="panel wide">
-          <div class="panel-heading">
-            <div>
-              <p class="eyebrow">CRM Workbench</p>
-              <h3>Action queue enriquecida</h3>
-              <p class="panel-description">Lista priorizada de casos para seguimiento. Combina urgencia, SLA, dueño operativo, necesidad de compensación y acción recomendada.</p>
+      <section id="benchmarkPanel" class="dashboard-panel">
+        <section id="crm" class="layout-grid">
+          <article class="panel wide">
+            <div class="panel-heading">
+              <div>
+                <p class="eyebrow">CRM Workbench</p>
+                <h3>Action queue enriquecida</h3>
+                <p class="panel-description">Lista priorizada de casos para seguimiento. Combina urgencia, SLA, dueño operativo, necesidad de compensación y acción recomendada.</p>
+              </div>
             </div>
-          </div>
-          <div id="crmActionQueue" class="action-grid"></div>
-        </article>
+            <div id="crmActionQueue" class="action-grid"></div>
+          </article>
 
-        <article class="panel">
-          <div class="panel-heading">
-            <div>
-              <p class="eyebrow">Revenue Protection</p>
-              <h3>Riesgos prioritarios</h3>
-              <p class="panel-description">Casos que podrían afectar reservas futuras, percepción de valor, repetición de huéspedes o confianza en el precio publicado.</p>
+          <article class="panel">
+            <div class="panel-heading">
+              <div>
+                <p class="eyebrow">Revenue Protection</p>
+                <h3>Riesgos prioritarios</h3>
+                <p class="panel-description">Casos que podrían afectar reservas futuras, percepción de valor, repetición de huéspedes o confianza en el precio publicado.</p>
+              </div>
             </div>
-          </div>
-          <div id="revenueImpactList" class="compact-list"></div>
-        </article>
+            <div id="revenueImpactList" class="compact-list"></div>
+          </article>
+        </section>
       </section>
 
-      <section id="benchmark" class="layout-grid">
-        <article class="panel wide">
-          <div class="panel-heading">
-            <div>
-              <p class="eyebrow">Benchmark</p>
-              <h3>Comparación de desempeño</h3>
-              <p class="panel-description">Compara desempeño por negocio cuando hay varios datasets o por canal cuando solo hay un negocio cargado.</p>
+      <section id="brandPanel" class="dashboard-panel">
+        <section id="benchmark" class="layout-grid">
+          <article class="panel wide">
+            <div class="panel-heading">
+              <div>
+                <p class="eyebrow">Benchmark</p>
+                <h3>Comparación de desempeño</h3>
+                <p class="panel-description">Compara desempeño por negocio cuando hay varios datasets o por canal cuando solo hay un negocio cargado.</p>
+              </div>
+              <span id="benchmarkNote" class="panel-note"></span>
             </div>
-            <span id="benchmarkNote" class="panel-note"></span>
-          </div>
-          <div class="table-wrap short">
-            <table>
-              <thead>
-                <tr>
-                  <th>Grupo</th>
-                  <th>Volumen</th>
-                  <th>Rating</th>
-                  <th>Recovery</th>
-                  <th>IA positiva</th>
-                </tr>
-              </thead>
-              <tbody id="benchmarkTable"></tbody>
-            </table>
-          </div>
-        </article>
+            <div class="table-wrap short">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Grupo</th>
+                    <th>Volumen</th>
+                    <th>Rating</th>
+                    <th>Recovery</th>
+                    <th>IA positiva</th>
+                  </tr>
+                </thead>
+                <tbody id="benchmarkTable"></tbody>
+              </table>
+            </div>
+          </article>
 
-        <article class="panel">
-          <div class="panel-heading">
-            <div>
-              <p class="eyebrow">Competitive Intel</p>
-              <h3>Señal competitiva</h3>
-              <p class="panel-description">Identifica si las reseñas sugieren ventaja, paridad o desventaja frente a expectativas del mercado o competidores mencionados.</p>
+          <article class="panel">
+            <div class="panel-heading">
+              <div>
+                <p class="eyebrow">Competitive Intel</p>
+                <h3>Señal competitiva</h3>
+                <p class="panel-description">Identifica si las reseñas sugieren ventaja, paridad o desventaja frente a expectativas del mercado o competidores mencionados.</p>
+              </div>
             </div>
-          </div>
-          <div id="competitiveSignalBars"></div>
-        </article>
+            <div id="competitiveSignalBars"></div>
+          </article>
+        </section>
       </section>
 
-      <section id="brand" class="layout-grid">
-        <article class="panel">
-          <div class="panel-heading">
-            <div>
-              <p class="eyebrow">Compliance</p>
-              <h3>Riesgos legales y seguridad</h3>
-              <p class="panel-description">Menciones que requieren revisión cuidadosa: seguridad, salud, fraude, privacidad, discriminación o disputas de cobro.</p>
+      <section id="sourcesPanel" class="dashboard-panel">
+        <section id="brand" class="layout-grid">
+          <article class="panel">
+            <div class="panel-heading">
+              <div>
+                <p class="eyebrow">Compliance</p>
+                <h3>Riesgos legales y seguridad</h3>
+                <p class="panel-description">Menciones que requieren revisión cuidadosa: seguridad, salud, fraude, privacidad, discriminación o disputas de cobro.</p>
+              </div>
             </div>
-          </div>
-          <div id="complianceRiskList" class="compact-list"></div>
-        </article>
+            <div id="complianceRiskList" class="compact-list"></div>
+          </article>
 
-        <article class="panel wide">
-          <div class="panel-heading">
-            <div>
-              <p class="eyebrow">Brand Voice</p>
-              <h3>Respuesta y marketing</h3>
-              <p class="panel-description">Borradores de respuesta pública, señales para amplificar reseñas positivas, brechas de promesa comercial y reconocimientos al staff.</p>
+          <article class="panel wide">
+            <div class="panel-heading">
+              <div>
+                <p class="eyebrow">Brand Voice</p>
+                <h3>Respuesta y marketing</h3>
+                <p class="panel-description">Borradores de respuesta pública, señales para amplificar reseñas positivas, brechas de promesa comercial y reconocimientos al staff.</p>
+              </div>
             </div>
-          </div>
-          <div class="split-grid">
-            <div id="brandResponseList" class="compact-list"></div>
-            <div>
-              <div id="marketingSignalList" class="compact-list"></div>
-              <div class="panel-divider"></div>
-              <h4>Staff recognition</h4>
-              <p class="panel-description tight">Nombres o roles mencionados positivamente para reconocimiento interno y aprendizaje operativo.</p>
-              <div id="staffRecognitionList" class="recognition-list"></div>
+            <div class="split-grid">
+              <div id="brandResponseList" class="compact-list"></div>
+              <div>
+                <div id="marketingSignalList" class="compact-list"></div>
+                <div class="panel-divider"></div>
+                <h4>Staff recognition</h4>
+                <p class="panel-description tight">Nombres o roles mencionados positivamente para reconocimiento interno y aprendizaje operativo.</p>
+                <div id="staffRecognitionList" class="recognition-list"></div>
+              </div>
             </div>
-          </div>
-        </article>
+          </article>
+        </section>
       </section>
 
-      <section id="sources" class="layout-grid">
-        <article class="panel wide">
-          <div class="panel-heading">
-            <div>
-              <p class="eyebrow">Fuentes y método</p>
-              <h3>Qué información representa este dashboard</h3>
-              <p class="panel-description">Parte de un export de TripAdvisor para Hotel Grano de Oro y lo enriquece con Ollama local. La lectura combina estrellas, texto libre, fechas, segmentos, sentimiento semántico, causas raíz y señales operativas.</p>
+      <section id="automationPanel" class="dashboard-panel">
+        <section id="sources" class="layout-grid">
+          <article class="panel wide">
+            <div class="panel-heading">
+              <div>
+                <p class="eyebrow">Fuentes y método</p>
+                <h3>Qué información representa este dashboard</h3>
+                <p class="panel-description">Parte de un export de TripAdvisor para Hotel Grano de Oro y lo enriquece con Ollama local. La lectura combina estrellas, texto libre, fechas, segmentos, sentimiento semántico, causas raíz y señales operativas.</p>
+              </div>
+              <a class="inline-link" href="./docs/user-guide.md" target="_blank" rel="noreferrer">Abrir guía completa</a>
             </div>
-            <a class="inline-link" href="./docs/user-guide.md" target="_blank" rel="noreferrer">Abrir guía completa</a>
-          </div>
-          <div class="source-grid">
-            <article class="source-card">
-              <strong>Fuente principal</strong>
-              <p>TripAdvisor Hotel Grano de Oro. La unidad de análisis es la reseña individual con rating, texto, fecha y metadatos asociados.</p>
-            </article>
-            <article class="source-card">
-              <strong>Enriquecimiento</strong>
-              <p>Ollama `qwen3.5:9b` convierte texto libre en sentimiento, urgencia, causa raíz, dueño recomendado, SLA, riesgo comercial y borradores de respuesta.</p>
-            </article>
-            <article class="source-card">
-              <strong>Uso operativo</strong>
-              <p>El objetivo no es solo analizar reputación. Es convertir reviews en colas de trabajo para CRM, operaciones, revenue y compliance.</p>
-            </article>
-          </div>
-        </article>
+            <div class="source-grid">
+              <article class="source-card">
+                <strong>Fuente principal</strong>
+                <p>TripAdvisor Hotel Grano de Oro. La unidad de análisis es la reseña individual con rating, texto, fecha y metadatos asociados.</p>
+              </article>
+              <article class="source-card">
+                <strong>Enriquecimiento</strong>
+                <p>Ollama `qwen3.5:9b` convierte texto libre en sentimiento, urgencia, causa raíz, dueño recomendado, SLA, riesgo comercial y borradores de respuesta.</p>
+              </article>
+              <article class="source-card">
+                <strong>Uso operativo</strong>
+                <p>El objetivo no es solo analizar reputación. Es convertir reviews en colas de trabajo para CRM, operaciones, revenue y compliance.</p>
+              </article>
+            </div>
+          </article>
 
-        <article class="panel">
-          <div class="panel-heading">
-            <div>
-              <p class="eyebrow">Servicios comparables</p>
-              <h3>Cómo se compara con la industria</h3>
-              <p class="panel-description">Las plataformas líderes unifican reviews, analizan sentimiento y ayudan a responder. Esta versión añade una capa hotel-specific y local con routing y causa raíz.</p>
+          <article class="panel">
+            <div class="panel-heading">
+              <div>
+                <p class="eyebrow">Servicios comparables</p>
+                <h3>Cómo se compara con la industria</h3>
+                <p class="panel-description">Las plataformas líderes unifican reviews, analizan sentimiento y ayudan a responder. Esta versión añade una capa hotel-specific y local con routing y causa raíz.</p>
+              </div>
             </div>
-          </div>
-          <div class="comparison-list">
-            <div class="comparison-row"><span>TrustYou</span><p>Gestión de reputación, CXP, sentimiento con IA, benchmark competitivo y respuesta automática.</p></div>
-            <div class="comparison-row"><span>Shiji ReviewPro</span><p>Análisis semántico, benchmark de experiencia del huésped, voz de marca y agregación de reseñas.</p></div>
-            <div class="comparison-row"><span>Birdeye</span><p>Monitoreo de reseñas, resúmenes con IA, respuestas con voz de marca, alertas e insights.</p></div>
-            <div class="comparison-row"><span>ReviewTrackers</span><p>Analítica de experiencia, sentimiento NLP, detección de tendencias, inteligencia competitiva y compliance.</p></div>
-          </div>
-        </article>
+            <div class="comparison-list">
+              <div class="comparison-row"><span>TrustYou</span><p>Gestión de reputación, CXP, sentimiento con IA, benchmark competitivo y respuesta automática.</p></div>
+              <div class="comparison-row"><span>Shiji ReviewPro</span><p>Análisis semántico, benchmark de experiencia del huésped, voz de marca y agregación de reseñas.</p></div>
+              <div class="comparison-row"><span>Birdeye</span><p>Monitoreo de reseñas, resúmenes con IA, respuestas con voz de marca, alertas e insights.</p></div>
+              <div class="comparison-row"><span>ReviewTrackers</span><p>Analítica de experiencia, sentimiento NLP, detección de tendencias, inteligencia competitiva y compliance.</p></div>
+            </div>
+          </article>
+        </section>
       </section>
 
-      <section class="section-explainer">
-        <strong>Automatización operativa</strong>
-        <p>Estas colas traducen reseñas en trabajo de CRM: invitaciones post check-out, recuperación de servicio, respuestas pendientes y triage de IA.</p>
-      </section>
+      <section id="reviewsPanel" class="dashboard-panel">
+        <section class="section-explainer">
+          <strong>Automatización operativa</strong>
+          <p>Estas colas traducen reseñas en trabajo de CRM: invitaciones post check-out, recuperación de servicio, respuestas pendientes y triage de IA.</p>
+        </section>
 
-      <section id="automation" class="workflow-grid">
-        <article class="workflow-card">
-          <span>Review Collection API</span>
-          <strong id="collectionQueue">0</strong>
-          <p>Huespedes recientes listos para invitacion post check-out.</p>
-        </article>
-        <article class="workflow-card">
-          <span>Service Recovery</span>
-          <strong id="recoveryQueue">0</strong>
-          <p>Casos con rating bajo o sentimiento negativo para seguimiento del CRM.</p>
-        </article>
-        <article class="workflow-card">
-          <span>Response SLA</span>
-          <strong id="responseQueue">0</strong>
-          <p>Resenas sin respuesta del propietario detectada en el export.</p>
-        </article>
-        <article class="workflow-card">
-          <span>AI Triage</span>
-          <strong id="aiQueue">0</strong>
-          <p>Resenas con prioridad alta o media detectadas por Ollama.</p>
-        </article>
-      </section>
+        <section id="automation" class="workflow-grid">
+          <article class="workflow-card">
+            <span>Review Collection API</span>
+            <strong id="collectionQueue">0</strong>
+            <p>Huespedes recientes listos para invitacion post check-out.</p>
+          </article>
+          <article class="workflow-card">
+            <span>Service Recovery</span>
+            <strong id="recoveryQueue">0</strong>
+            <p>Casos con rating bajo o sentimiento negativo para seguimiento del CRM.</p>
+          </article>
+          <article class="workflow-card">
+            <span>Response SLA</span>
+            <strong id="responseQueue">0</strong>
+            <p>Resenas sin respuesta del propietario detectada en el export.</p>
+          </article>
+          <article class="workflow-card">
+            <span>AI Triage</span>
+            <strong id="aiQueue">0</strong>
+            <p>Resenas con prioridad alta o media detectadas por Ollama.</p>
+          </article>
+        </section>
 
-      <section id="reviews" class="layout-grid reviews-layout">
-        <article class="panel">
-          <div class="panel-heading">
-            <div>
-              <p class="eyebrow">Action Queue</p>
-              <h3>Reseñas para recuperar</h3>
-              <p class="panel-description">Reseñas con rating bajo o señales negativas. Se ordenan por urgencia IA, fecha y rating para priorizar recuperación.</p>
+        <section class="layout-grid reviews-layout">
+          <article class="panel">
+            <div class="panel-heading">
+              <div>
+                <p class="eyebrow">Action Queue</p>
+                <h3>Reseñas para recuperar</h3>
+                <p class="panel-description">Reseñas con rating bajo o señales negativas. Se ordenan por urgencia IA, fecha y rating para priorizar recuperación.</p>
+              </div>
             </div>
-          </div>
-          <div id="riskReviews" class="review-list"></div>
-        </article>
+            <div id="riskReviews" class="review-list"></div>
+          </article>
 
-        <article class="panel wide">
-          <div class="panel-heading">
-            <div>
-              <p class="eyebrow">Dataset</p>
-              <h3>Reseñas filtradas</h3>
-              <p class="panel-description">Tabla de reseñas que cumplen los filtros actuales. Incluye canal, rating, sentimiento IA, título, acción recomendada y segmento.</p>
+          <article class="panel wide">
+            <div class="panel-heading">
+              <div>
+                <p class="eyebrow">Dataset</p>
+                <h3>Reseñas filtradas</h3>
+                <p class="panel-description">Tabla de reseñas que cumplen los filtros actuales. Incluye canal, rating, sentimiento IA, título, acción recomendada y segmento.</p>
+              </div>
+              <span id="tableCount" class="panel-note"></span>
             </div>
-            <span id="tableCount" class="panel-note"></span>
-          </div>
-          <div class="table-wrap">
-            <table>
-              <thead>
-                <tr>
-                  <th>Fecha</th>
-                  <th>Canal</th>
-                  <th>Rating</th>
-                  <th>IA</th>
-                  <th>Titulo</th>
-                  <th>Accion IA</th>
-                  <th>Segmento</th>
-                </tr>
-              </thead>
-              <tbody id="reviewsTable"></tbody>
-            </table>
-          </div>
-        </article>
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Fecha</th>
+                    <th>Canal</th>
+                    <th>Rating</th>
+                    <th>IA</th>
+                    <th>Titulo</th>
+                    <th>Accion IA</th>
+                    <th>Segmento</th>
+                  </tr>
+                </thead>
+                <tbody id="reviewsTable"></tbody>
+              </table>
+            </div>
+          </article>
+        </section>
       </section>
     </main>
 

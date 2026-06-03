@@ -1052,6 +1052,25 @@ function wireEvents() {
   $("#downloadCsv").addEventListener("click", () => {
     downloadFile("reputation_dashboard_filtered.csv", "text/csv", toCsv(filteredReviews));
   });
+
+  const sectionTabs = [...document.querySelectorAll(".section-tab")];
+  const sectionPanels = [...document.querySelectorAll(".dashboard-panel")];
+  const activateSection = (panelId) => {
+    sectionTabs.forEach((tab) => {
+      const active = tab.dataset.panel === panelId;
+      tab.classList.toggle("active", active);
+      tab.setAttribute("aria-selected", String(active));
+    });
+    sectionPanels.forEach((panel) => {
+      panel.classList.toggle("active", panel.id === panelId);
+    });
+  };
+
+  sectionTabs.forEach((tab) => {
+    tab.addEventListener("click", () => activateSection(tab.dataset.panel));
+  });
+
+  activateSection("overviewPanel");
 }
 
 wireEvents();

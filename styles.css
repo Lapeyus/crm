@@ -251,6 +251,39 @@ select {
   line-height: 1.45;
 }
 
+.section-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 0 0 16px;
+}
+
+.section-tab {
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 8px 13px;
+  background: #ffffff;
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.section-tab.active {
+  border-color: var(--blue);
+  background: var(--blue);
+  color: #ffffff;
+}
+
+.dashboard-panel {
+  display: none;
+  margin-bottom: 16px;
+}
+
+.dashboard-panel.active {
+  display: block;
+}
+
 .metric-card,
 .panel,
 .workflow-card {
