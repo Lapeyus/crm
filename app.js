@@ -2,12 +2,12 @@ const LLM_DATA_URL = "./data/hotel_grano_de_oro_reviews_llm.json";
 const DEFAULT_DATA_URLS = [LLM_DATA_URL];
 
 const TOPICS = {
-  Service: ["service", "staff", "front desk", "manager", "friendly", "helpful", "attentive", "courteous"],
-  Rooms: ["room", "bed", "bathroom", "shower", "suite", "balcony", "window", "noise"],
-  Food: ["breakfast", "restaurant", "dinner", "menu", "food", "coffee", "bar", "wine"],
-  Cleanliness: ["clean", "cleanliness", "dirty", "spotless", "impeccable", "smell"],
-  Location: ["location", "downtown", "san jose", "airport", "walk", "neighborhood"],
-  Value: ["value", "price", "expensive", "worth", "money", "cost"]
+  Servicio: ["service", "staff", "front desk", "manager", "friendly", "helpful", "attentive", "courteous"],
+  Habitaciones: ["room", "bed", "bathroom", "shower", "suite", "balcony", "window", "noise"],
+  Alimentos: ["breakfast", "restaurant", "dinner", "menu", "food", "coffee", "bar", "wine"],
+  Limpieza: ["clean", "cleanliness", "dirty", "spotless", "impeccable", "smell"],
+  Ubicación: ["location", "downtown", "san jose", "airport", "walk", "neighborhood"],
+  Valor: ["value", "price", "expensive", "worth", "money", "cost"]
 };
 
 const SOURCE_LABELS = {
@@ -17,72 +17,72 @@ const SOURCE_LABELS = {
   google_maps: "Google",
   booking: "Booking",
   booking_com: "Booking",
-  unknown: "Unknown"
+  unknown: "Desconocido"
 };
 
 const LLM_TOPIC_LABELS = {
-  service: "Service",
-  rooms: "Rooms",
-  food: "Food",
-  cleanliness: "Cleanliness",
-  location: "Location",
-  value: "Value",
-  amenities: "Amenities",
-  booking: "Booking",
-  staff: "Staff",
-  safety: "Safety",
-  noise: "Noise"
+  service: "Servicio",
+  rooms: "Habitaciones",
+  food: "Alimentos",
+  cleanliness: "Limpieza",
+  location: "Ubicación",
+  value: "Valor",
+  amenities: "Amenidades",
+  booking: "Reserva",
+  staff: "Personal",
+  safety: "Seguridad",
+  noise: "Ruido"
 };
 
 const DEPARTMENT_LABELS = {
-  front_desk: "Front Desk",
-  housekeeping: "Housekeeping",
-  food_beverage: "Food & Beverage",
-  rooms: "Rooms",
-  maintenance: "Maintenance",
-  management: "Management",
-  revenue: "Revenue",
-  guest_relations: "Guest Relations",
-  security: "Security",
-  spa_wellness: "Spa & Wellness",
-  none: "Unassigned"
+  front_desk: "Recepción",
+  housekeeping: "Ama de llaves",
+  food_beverage: "Alimentos y bebidas",
+  rooms: "Habitaciones",
+  maintenance: "Mantenimiento",
+  management: "Gerencia",
+  revenue: "Ingresos",
+  guest_relations: "Relaciones con huéspedes",
+  security: "Seguridad",
+  spa_wellness: "Spa y bienestar",
+  none: "Sin asignar"
 };
 
 const ROOT_CAUSE_LABELS = {
-  service_failure: "Service Failure",
-  room_quality: "Room Quality",
-  noise: "Noise",
-  cleanliness: "Cleanliness",
-  food_quality: "Food Quality",
-  billing_pricing: "Billing & Pricing",
-  booking_expectation: "Booking Expectation",
-  maintenance: "Maintenance",
-  safety_security: "Safety & Security",
-  location_access: "Location & Access",
-  amenities_gap: "Amenities Gap",
-  staff_recognition: "Staff Recognition",
-  brand_promise: "Brand Promise",
-  none: "Unclassified"
+  service_failure: "Falla de servicio",
+  room_quality: "Calidad de habitación",
+  noise: "Ruido",
+  cleanliness: "Limpieza",
+  food_quality: "Calidad de alimentos",
+  billing_pricing: "Cobro y precio",
+  booking_expectation: "Expectativa de reserva",
+  maintenance: "Mantenimiento",
+  safety_security: "Seguridad",
+  location_access: "Ubicación y acceso",
+  amenities_gap: "Brecha de amenidades",
+  staff_recognition: "Reconocimiento al personal",
+  brand_promise: "Promesa de marca",
+  none: "Sin clasificar"
 };
 
 const COMPLIANCE_LABELS = {
-  safety: "Safety",
-  security: "Security",
-  health: "Health",
-  discrimination: "Discrimination",
-  fraud: "Fraud",
-  privacy: "Privacy",
-  billing_dispute: "Billing Dispute",
-  none: "None"
+  safety: "Seguridad",
+  security: "Seguridad",
+  health: "Salud",
+  discrimination: "Discriminación",
+  fraud: "Fraude",
+  privacy: "Privacidad",
+  billing_dispute: "Disputa de cobro",
+  none: "Ninguno"
 };
 
 const VALUE_SIGNAL_LABELS = {
-  low: "Low",
-  standard: "Standard",
-  high: "High",
+  low: "Bajo",
+  standard: "Estándar",
+  high: "Alto",
   vip: "VIP",
-  repeat_guest: "Repeat Guest",
-  unknown: "Unknown"
+  repeat_guest: "Huésped recurrente",
+  unknown: "Desconocido"
 };
 
 let allReviews = [];
@@ -336,7 +336,7 @@ function renderMetrics(rows) {
     metric("Promotores 4-5", `${promoters.toFixed(1)}%`, "Rating >= 4", promoters >= 80 ? "good" : "warn"),
     metric("Service recovery", recovery.toLocaleString(), "Rating <= 3 o negativo", recovery ? "risk" : "good"),
     metric("Response rate", `${responseRate.toFixed(1)}%`, "Owner responses detectadas", responseRate >= 60 ? "good" : "warn"),
-    metric("LLM coverage", `${llmCoverage.toFixed(1)}%`, `${llmAnalyzed.toLocaleString()} reviews procesadas`, llmCoverage >= 80 ? "good" : llmCoverage ? "warn" : ""),
+    metric("Cobertura LLM", `${llmCoverage.toFixed(1)}%`, `${llmAnalyzed.toLocaleString()} reseñas procesadas`, llmCoverage >= 80 ? "good" : llmCoverage ? "warn" : ""),
     metric("Fuentes", new Set(rows.map((row) => row.source_label)).size.toLocaleString(), "Canales conectados", ""),
     metric("Segmentos", new Set(rows.map((row) => row.trip_type)).size.toLocaleString(), "Tipos de viaje", ""),
     metric("Palabras promedio", average(rows.map((row) => row.word_count)).toFixed(1), "Profundidad de feedback", "")
@@ -409,7 +409,7 @@ function renderTopics(rows) {
     .sort((a, b) => b[1] - a[1]);
   renderBars("topicBars", entries, "");
   const note = $("#topicMode");
-  if (note) note.textContent = "Keyword fallback";
+  if (note) note.textContent = "Respaldo por palabras clave";
 }
 
 function renderSegments(rows) {
@@ -555,9 +555,9 @@ function renderExecutiveBrief(rows) {
     ["IA procesada", `${analyzed.length}/${rows.length}`, "Cobertura del modelo"],
     ["Urgencia alta", highUrgency.toLocaleString(), "SLA recomendado 4h"],
     ["Compensación", compensation.toLocaleString(), "Requiere gesto/refund"],
-    ["Revenue risk", highRevenue.toLocaleString(), "Impacto alto"],
-    ["Brand gap", marketingGaps.toLocaleString(), "Promesa vs experiencia"],
-    ["Staff wins", staffWins.toLocaleString(), "Elogios detectados"]
+    ["Riesgo de ingresos", highRevenue.toLocaleString(), "Impacto alto"],
+    ["Brecha de marca", marketingGaps.toLocaleString(), "Promesa vs experiencia"],
+    ["Reconocimientos", staffWins.toLocaleString(), "Elogios detectados"]
   ].map(([label, value, note]) => `
     <article class="brief-card">
       <span>${escapeHtml(label)}</span>
@@ -570,7 +570,7 @@ function renderExecutiveBrief(rows) {
   const ownerLabel = topOwner ? labelFromMap(topOwner[0], DEPARTMENT_LABELS) : "sin dueño dominante";
   $("#weeklyNarrative").textContent =
     `Prioridad ejecutiva: ${causeLabel}. Dueño operativo principal: ${ownerLabel}. ` +
-    `Hay ${highUrgency} casos de urgencia alta y ${highRevenue} con impacto alto en revenue.`;
+    `Hay ${highUrgency} casos de urgencia alta y ${highRevenue} con impacto alto en ingresos.`;
 }
 
 function renderCrmActionQueue(rows) {
@@ -598,7 +598,7 @@ function renderCrmActionQueue(rows) {
         ${row.llm_compensation_reason ? `<small>${escapeHtml(row.llm_compensation_reason)}</small>` : ""}
       </article>
     `).join("")
-    : '<p class="empty-state">No hay acciones CRM con los filtros actuales.</p>';
+    : '<p class="empty-state">No hay acciones de CRM con los filtros actuales.</p>';
 }
 
 function renderRevenueImpact(rows) {
@@ -617,8 +617,8 @@ function renderRevenueImpact(rows) {
     ? risks.map((row) => `
       <article class="compact-card">
         <div class="tag-row">
-          <span class="tag ${impactTone(revenueImpactForRow(row))}">${escapeHtml(revenueImpactForRow(row))} revenue</span>
-          <span class="tag">${escapeHtml(labelFromMap(retentionRiskForRow(row), VALUE_SIGNAL_LABELS))} retention</span>
+          <span class="tag ${impactTone(revenueImpactForRow(row))}">${escapeHtml(revenueImpactForRow(row))} ingresos</span>
+          <span class="tag">${escapeHtml(labelFromMap(retentionRiskForRow(row), VALUE_SIGNAL_LABELS))} retención</span>
           ${row.llm_guest_value_signal ? `<span class="tag">${escapeHtml(labelFromMap(row.llm_guest_value_signal, VALUE_SIGNAL_LABELS))}</span>` : ""}
         </div>
         <strong>${escapeHtml(row.llm_marketing_gap || row.llm_competitive_detail || row.review_title || "Riesgo comercial")}</strong>
@@ -708,7 +708,7 @@ function renderComplianceAndBrand(rows) {
       <article class="compact-card">
         <div class="tag-row">
           ${row.llm_marketing_amplification ? '<span class="tag good">Amplificar</span>' : ""}
-          ${row.llm_marketing_gap ? '<span class="tag warn">Brand gap</span>' : ""}
+          ${row.llm_marketing_gap ? '<span class="tag warn">Brecha de marca</span>' : ""}
         </div>
         <strong>${escapeHtml(row.llm_marketing_amplification || row.llm_marketing_gap)}</strong>
         <p>${escapeHtml(row.review_title || row.llm_summary || "")}</p>
@@ -736,7 +736,7 @@ function renderComplianceAndBrand(rows) {
 function renderLlmInsights(rows) {
   const analyzed = rows.filter((row) => row.has_llm_analysis);
   const coverage = rows.length ? analyzed.length / rows.length * 100 : 0;
-  $("#aiCoverage").textContent = `${analyzed.length.toLocaleString()} / ${rows.length.toLocaleString()} reviews | ${coverage.toFixed(1)}% coverage`;
+  $("#aiCoverage").textContent = `${analyzed.length.toLocaleString()} / ${rows.length.toLocaleString()} reseñas | ${coverage.toFixed(1)}% de cobertura`;
 
   if (!analyzed.length) {
     $("#aiSentimentBars").innerHTML = '<p class="empty-state">Ejecuta el enriquecimiento con Ollama para activar sentimiento, routing y acciones sugeridas.</p>';
@@ -806,7 +806,7 @@ function renderTimeline(rows) {
     return `
       <div class="timeline-item">
         <div class="timeline-rating">${row.rating.toFixed(1)}</div>
-        <div class="timeline-bar" style="height:${height}px;background:${tone}" title="${row.reviews} reviews"></div>
+        <div class="timeline-bar" style="height:${height}px;background:${tone}" title="${row.reviews} reseñas"></div>
         <div class="timeline-label">${monthLabel(row.key)}</div>
       </div>
     `;
@@ -924,7 +924,7 @@ function renderDashboard() {
     .filter(Boolean)
     .sort((a, b) => b - a)[0];
   $("#propertyName").textContent = property;
-  $("#lastSync").textContent = `${rows.length.toLocaleString()} reviews${latest ? ` | latest ${latest.toISOString().slice(0, 10)}` : ""}`;
+  $("#lastSync").textContent = `${rows.length.toLocaleString()} reseñas${latest ? ` | última ${latest.toISOString().slice(0, 10)}` : ""}`;
 
   renderMetrics(rows);
   renderRatingBars(rows);
@@ -1074,12 +1074,13 @@ function wireEvents() {
   });
 
   const initialPanel = window.location.hash.replace("#", "");
-  activateSection(["overviewPanel", ...sectionPanels.map((panel) => panel.id)].includes(initialPanel) ? initialPanel : "overviewPanel");
+  const defaultPanel = "kpisPanel";
+  activateSection([defaultPanel, ...sectionPanels.map((panel) => panel.id)].includes(initialPanel) ? initialPanel : defaultPanel);
 }
 
 wireEvents();
 loadDefaultDataset().catch((error) => {
-  $("#lastSync").textContent = "Carga manual requerida";
-  $("#propertyName").textContent = "Sube un dataset JSON";
-  $("#overview").innerHTML = `<article class="metric-card risk"><span>Error</span><strong>Dataset</strong><small>${escapeHtml(error.message)}</small></article>`;
-});
+    $("#lastSync").textContent = "Carga manual requerida";
+    $("#propertyName").textContent = "Sube un conjunto de datos JSON";
+    $("#overview").innerHTML = `<article class="metric-card risk"><span>Error</span><strong>Conjunto de datos</strong><small>${escapeHtml(error.message)}</small></article>`;
+  });
