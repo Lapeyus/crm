@@ -425,6 +425,36 @@ select {
   margin-bottom: 10px;
 }
 
+.panel-insight {
+  margin-top: 14px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 11px 12px;
+  background: #f8fafc;
+}
+
+.panel-insight strong {
+  display: block;
+  margin-bottom: 5px;
+  font-size: 12px;
+}
+
+.panel-insight p {
+  margin: 0;
+  color: #334155;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.panel-insight a {
+  display: inline-block;
+  margin-top: 8px;
+  color: var(--green);
+  font-size: 12px;
+  font-weight: 800;
+  text-decoration: none;
+}
+
 .inline-link {
   display: inline-flex;
   align-items: center;

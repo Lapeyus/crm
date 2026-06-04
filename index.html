@@ -110,6 +110,7 @@
             <span id="trendWindow" class="panel-note"></span>
           </div>
           <div id="timeline" class="timeline"></div>
+          <div id="timelineInsight" class="panel-insight"></div>
         </article>
 
         <article class="panel">
@@ -121,6 +122,7 @@
             </div>
           </div>
           <div id="ratingBars"></div>
+          <div id="ratingInsight" class="panel-insight"></div>
         </article>
         </section>
       </section>
@@ -513,6 +515,14 @@
             <strong>Cómo analizar</strong>
             <p>Guía para interpretar KPIs, diagnóstico IA, estrategia, CRM, marca y riesgos.</p>
           </a>
+          <a class="docs-card docs-link-card" href="#doc-tendencia">
+            <strong>Tendencia mensual</strong>
+            <p>Cómo leer volumen, rating promedio mensual, color de alerta y estabilidad temporal.</p>
+          </a>
+          <a class="docs-card docs-link-card" href="#doc-calificaciones">
+            <strong>Distribución de calificaciones</strong>
+            <p>Cómo interpretar concentración de 5/4 estrellas y peso de reseñas de recuperación.</p>
+          </a>
           <a class="docs-card docs-link-card" href="#doc-automatizacion">
             <strong>Automatización CRM</strong>
             <p>Cómo una reseña pasa a cola de seguimiento, SLA, respuesta y exportación.</p>
@@ -577,6 +587,56 @@
             <article id="doc-limitaciones" class="docs-copy">
               <h4>Limitaciones</h4>
               <p>Las métricas de rating y volumen cubren todo el dataset; sentimiento, causa raíz, routing y análisis profundo dependen de la cobertura LLM disponible.</p>
+            </article>
+          </div>
+        </section>
+
+        <section id="doc-tendencia" class="docs-section">
+          <div class="docs-section-head">
+            <p class="eyebrow">Tendencia mensual</p>
+            <h3>Cómo analizar calificación y volumen</h3>
+          </div>
+          <div class="docs-columns">
+            <article class="docs-copy">
+              <h4>Fuente</h4>
+              <p>Este panel usa la fecha de publicación y la calificación numérica de cada reseña filtrada. Agrupa por mes y calcula rating promedio mensual y volumen de reseñas.</p>
+            </article>
+            <article class="docs-copy">
+              <h4>Interpretación</h4>
+              <p>La altura de cada barra representa volumen; el número superior es el rating promedio. Verde indica meses fuertes, ámbar requiere atención y rojo señala deterioro o muestra negativa.</p>
+            </article>
+            <article class="docs-copy">
+              <h4>Uso práctico</h4>
+              <p>Un mes con rating bajo y poco volumen debe investigarse como caso puntual; un mes con rating bajo y alto volumen apunta a presión operativa más amplia.</p>
+            </article>
+            <article class="docs-copy">
+              <h4>Precaución</h4>
+              <p>La tendencia debe leerse junto con el volumen: una sola reseña puede mover mucho el promedio mensual, mientras que meses con más reseñas son más representativos.</p>
+            </article>
+          </div>
+        </section>
+
+        <section id="doc-calificaciones" class="docs-section">
+          <div class="docs-section-head">
+            <p class="eyebrow">Distribución de calificaciones</p>
+            <h3>Cómo analizar el peso de cada estrella</h3>
+          </div>
+          <div class="docs-columns">
+            <article class="docs-copy">
+              <h4>Fuente</h4>
+              <p>Este panel usa la calificación numérica de cada reseña filtrada y cuenta cuántas reseñas hay en cada nivel de 1 a 5 estrellas.</p>
+            </article>
+            <article class="docs-copy">
+              <h4>Interpretación</h4>
+              <p>Una concentración alta en 5 y 4 estrellas indica reputación robusta. Las reseñas de 1 a 3 estrellas representan la base para recuperación, análisis de causa raíz y seguimiento CRM.</p>
+            </article>
+            <article class="docs-copy">
+              <h4>Uso práctico</h4>
+              <p>Si el promedio general es alto pero crecen 1, 2 o 3 estrellas, conviene revisar temas y evidencia antes de que el deterioro aparezca en el promedio global.</p>
+            </article>
+            <article class="docs-copy">
+              <h4>Precaución</h4>
+              <p>La distribución no explica por sí sola la causa. Debe conectarse con sentimiento IA, temas, causa raíz y reseñas concretas para definir acciones.</p>
             </article>
           </div>
         </section>

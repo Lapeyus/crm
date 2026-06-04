@@ -383,6 +383,21 @@ function renderRatingBars(rows) {
   const counts = countBy(rows.filter((row) => row.rating), (row) => String(Math.round(row.rating)));
   const entries = [5, 4, 3, 2, 1].map((rating) => [`${rating} estrellas`, counts[String(rating)] || 0]);
   renderBars("ratingBars", entries, "good");
+  renderRatingInsight(rows, counts);
+}
+
+function renderRatingInsight(rows, counts) {
+  const total = rows.filter((row) => row.rating).length;
+  const fiveStar = counts["5"] || 0;
+  const fourStar = counts["4"] || 0;
+  const lowRated = (counts["1"] || 0) + (counts["2"] || 0) + (counts["3"] || 0);
+  const positiveShare = total ? (fiveStar + fourStar) / total * 100 : 0;
+  const lowShare = total ? lowRated / total * 100 : 0;
+  $("#ratingInsight").innerHTML = `
+    <strong>Fuente e interpretación actual</strong>
+    <p>Fuente: calificación numérica de ${total.toLocaleString()} reseñas filtradas. La distribución está concentrada en 5 estrellas (${fiveStar.toLocaleString()}) y 4 estrellas (${fourStar.toLocaleString()}), equivalentes al ${positiveShare.toFixed(1)}% del total visible; las reseñas de 1 a 3 estrellas suman ${lowRated.toLocaleString()} (${lowShare.toFixed(1)}%), que son la base principal para recuperación de servicio.</p>
+    <a href="#doc-calificaciones">Cómo analizar calificaciones</a>
+  `;
 }
 
 function renderTopics(rows) {
@@ -812,6 +827,28 @@ function renderTimeline(rows) {
       </div>
     `;
   }).join("");
+  renderTimelineInsight(monthly);
+}
+
+function renderTimelineInsight(monthly) {
+  if (!monthly.length) {
+    $("#timelineInsight").innerHTML = `
+      <strong>Fuente e interpretación actual</strong>
+      <p>No hay fechas suficientes en los filtros actuales para construir una tendencia mensual.</p>
+      <a href="#doc-tendencia">Cómo analizar tendencia</a>
+    `;
+    return;
+  }
+  const first = monthly[0];
+  const last = monthly[monthly.length - 1];
+  const highestVolume = [...monthly].sort((a, b) => b.reviews - a.reviews)[0];
+  const weakestRating = [...monthly].sort((a, b) => a.rating - b.rating)[0];
+  const latestTone = last.rating >= 4.5 ? "fuerte" : last.rating >= 4 ? "estable con atención" : "riesgoso";
+  $("#timelineInsight").innerHTML = `
+    <strong>Fuente e interpretación actual</strong>
+    <p>Fuente: fecha y calificación de las reseñas filtradas. La ventana visible va de ${monthLabel(first.key)} a ${monthLabel(last.key)}. El mes con mayor volumen es ${monthLabel(highestVolume.key)} con ${highestVolume.reviews.toLocaleString()} reseñas; el punto más débil es ${monthLabel(weakestRating.key)} con rating promedio ${weakestRating.rating.toFixed(1)}. El último mes visible (${monthLabel(last.key)}) cierra en ${last.rating.toFixed(1)}, una señal ${latestTone} que debe leerse junto con su volumen (${last.reviews.toLocaleString()} reseñas).</p>
+    <a href="#doc-tendencia">Cómo analizar tendencia</a>
+  `;
 }
 
 function renderWorkflow(rows) {
@@ -1135,6 +1172,18 @@ function wireEvents() {
     link.addEventListener("click", (event) => {
       event.preventDefault();
       activateSection((link.dataset.panels || "").split(",").filter(Boolean));
+    });
+  });
+
+  document.querySelectorAll('a[href^="#doc-"]').forEach((link) => {
+    link.addEventListener("click", (event) => {
+      event.preventDefault();
+      const targetId = link.getAttribute("href").slice(1);
+      activateSection(["documentationPanel"]);
+      window.setTimeout(() => {
+        document.getElementById(targetId)?.scrollIntoView({ behavior: "smooth", block: "start" });
+        history.replaceState(null, "", `#${targetId}`);
+      }, 0);
     });
   });
 
