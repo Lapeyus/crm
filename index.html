@@ -93,7 +93,7 @@
       <section id="kpisPanel" class="dashboard-panel active">
         <section class="section-explainer">
           <strong>KPI del negocio</strong>
-          <p>Resumen del dataset filtrado: calificación promedio, volumen, promotores, casos de recuperación, tasa de respuesta, cobertura LLM, fuentes conectadas, segmentos y profundidad del feedback.</p>
+          <p>Resumen del dataset filtrado: calificación promedio, volumen, promotores, casos de recuperación, tasa de respuesta, cobertura de análisis, fuentes conectadas, segmentos y profundidad del feedback.</p>
         </section>
         <section id="overview" class="metric-grid" aria-label="KPIs principales"></section>
         <div id="kpiInsight" class="panel-insight"></div>
@@ -135,7 +135,7 @@
               <div>
                 <p class="eyebrow">Operaciones</p>
                 <h3>Temas detectados</h3>
-                <p class="panel-description">Temas operativos mencionados en las reseñas. Usa etiquetas LLM cuando existen y palabras clave como respaldo.</p>
+                <p class="panel-description">Temas operativos mencionados en las reseñas. Usa etiquetas de IA cuando existen y palabras clave como respaldo.</p>
               </div>
               <span id="topicMode" class="panel-note"></span>
             </div>
@@ -189,7 +189,7 @@
       <section id="serviceAnalysisPanel" class="dashboard-panel">
         <section class="section-explainer">
           <strong>Análisis profundo generado en enriquecimiento</strong>
-          <p>Lectura ejecutiva generada por Ollama a partir de agregados reales del dataset: métricas, distribuciones, evidencia seleccionada y cobertura LLM.</p>
+          <p>Lectura ejecutiva generada por IA a partir de agregados reales del dataset: métricas, distribuciones, evidencia seleccionada y cobertura de análisis.</p>
         </section>
         <section class="analysis-grid">
           <article class="panel wide">
@@ -197,7 +197,7 @@
               <div>
                 <p class="eyebrow">Diagnóstico del servicio</p>
                 <h3 id="serviceAnalysisHeadline">Análisis pendiente</h3>
-                <p id="serviceAnalysisMeta" class="panel-description">Ejecuta el enriquecimiento LLM para generar una lectura profunda del dashboard.</p>
+                <p id="serviceAnalysisMeta" class="panel-description">Ejecuta el enriquecimiento de IA para generar una lectura profunda del dashboard.</p>
               </div>
             </div>
             <div id="serviceExecutiveSummary" class="analysis-list"></div>
@@ -281,6 +281,16 @@
             </div>
             <div id="rootCauseBars"></div>
             <div id="rootCauseInsight" class="panel-insight"></div>
+            <div class="panel-divider"></div>
+            <div class="panel-heading compact">
+              <div>
+                <p class="eyebrow">Repetición</p>
+                <h3>Clusters recurrentes</h3>
+                <p class="panel-description">Agrupa problemas o fortalezas repetidas para detectar patrones que se repiten con nombres consistentes.</p>
+              </div>
+            </div>
+            <div id="repeatClusterBars"></div>
+            <div id="repeatClusterInsight" class="panel-insight"></div>
           </article>
 
           <article class="panel wide ai-right">
@@ -302,9 +312,9 @@
           <article class="panel wide">
             <div class="panel-heading">
               <div>
-                <p class="eyebrow">Ollama Qwen 3.5 9B</p>
+                <p class="eyebrow">Motor de análisis configurable</p>
                 <h3>Insights accionables</h3>
-                <p class="panel-description">Reseñas priorizadas por el LLM con resumen y siguiente acción. La cobertura indica cuántas reseñas ya fueron enriquecidas.</p>
+                <p class="panel-description">Reseñas priorizadas por IA con resumen y siguiente acción. La cobertura indica cuántas reseñas ya fueron enriquecidas.</p>
               </div>
               <span id="aiCoverage" class="panel-note"></span>
             </div>
@@ -332,6 +342,18 @@
             </div>
             <div id="departmentBars"></div>
             <div id="departmentInsight" class="panel-insight"></div>
+            <div class="panel-divider"></div>
+            <div class="panel-heading compact">
+              <div>
+                <p class="eyebrow">Calidad de lectura</p>
+                <h3>Intención, alineación y confianza</h3>
+                <p class="panel-description">Usa intención del huésped, consistencia entre rating y texto, y confianza del análisis para auditar la lectura semántica.</p>
+              </div>
+            </div>
+            <div id="guestIntentBars"></div>
+            <div class="panel-divider subtle"></div>
+            <div id="ratingAlignmentBars"></div>
+            <div id="analysisQualityInsight" class="panel-insight"></div>
           </article>
         </section>
       </section>
@@ -468,7 +490,7 @@
           <article class="workflow-card">
             <span>Triage IA</span>
             <strong id="aiQueue">0</strong>
-            <p>Resenas con prioridad alta o media detectadas por Ollama.</p>
+            <p>Resenas con prioridad alta o media detectadas por la capa de analisis.</p>
           </article>
         </section>
         <div id="workflowInsight" class="panel-insight"></div>
@@ -491,7 +513,7 @@
               <div>
                 <p class="eyebrow">Conjunto de datos</p>
                 <h3>Reseñas filtradas</h3>
-                <p class="panel-description">Tabla de reseñas que cumplen los filtros actuales. Incluye canal, rating, sentimiento IA, título, acción recomendada y segmento.</p>
+                <p class="panel-description">Tabla de reseñas que cumplen los filtros actuales. Incluye canal, rating, sentimiento, intención, alineación, confianza, acción recomendada y segmento.</p>
               </div>
               <span id="tableCount" class="panel-note"></span>
             </div>
@@ -503,6 +525,9 @@
                     <th>Canal</th>
                     <th>Rating</th>
                     <th>IA</th>
+                    <th>Intención</th>
+                    <th>Alineación</th>
+                    <th>Confianza</th>
                     <th>Titulo</th>
                     <th>Accion IA</th>
                     <th>Segmento</th>
@@ -519,7 +544,7 @@
       <section id="documentationPanel" class="dashboard-panel">
         <section class="section-explainer">
           <strong>Documentación del sistema</strong>
-          <p>Guía operativa del panel: fuente de datos, enriquecimiento LLM, análisis presentados, automatización CRM y comparación con plataformas de reputación hotelera.</p>
+          <p>Guía operativa del panel: fuente de datos, enriquecimiento con IA, análisis presentados, automatización CRM y comparación con plataformas de reputación hotelera.</p>
         </section>
 
         <section class="docs-grid docs-index" aria-label="Índice de documentación">
@@ -528,8 +553,8 @@
             <p>Origen, alcance, metadatos disponibles y qué representa cada reseña.</p>
           </a>
           <a class="docs-card docs-link-card" href="#doc-enriquecimiento">
-            <strong>Enriquecimiento LLM</strong>
-            <p>Qué agrega Ollama a cada reseña y cómo se usa el meta de análisis profundo.</p>
+            <strong>Enriquecimiento con IA</strong>
+            <p>Qué agrega la capa de análisis a cada reseña y cómo se usa el meta de análisis profundo.</p>
           </a>
           <a class="docs-card docs-link-card" href="#doc-lectura">
             <strong>Cómo analizar</strong>
@@ -537,7 +562,7 @@
           </a>
           <a class="docs-card docs-link-card" href="#doc-kpis">
             <strong>KPIs del negocio</strong>
-            <p>Rating, promotores, recuperación, respuesta, cobertura LLM y profundidad del feedback.</p>
+            <p>Rating, promotores, recuperación, respuesta, cobertura de análisis y profundidad del feedback.</p>
           </a>
           <a class="docs-card docs-link-card" href="#doc-temas">
             <strong>Temas y segmentos</strong>
@@ -569,7 +594,7 @@
           </a>
           <a class="docs-card docs-link-card" href="#doc-limitaciones">
             <strong>Limitaciones</strong>
-            <p>Diferencia entre métricas de todo el dataset y campos dependientes de cobertura LLM.</p>
+            <p>Diferencia entre métricas de todo el dataset y campos dependientes de cobertura de análisis.</p>
           </a>
         </section>
 
@@ -584,12 +609,12 @@
               <p>El dataset base contiene reseñas públicas de TripAdvisor para Hotel Grano de Oro. La unidad de análisis es la reseña individual con calificación, texto, fecha, autor, URL y metadatos disponibles.</p>
             </article>
             <article id="doc-enriquecimiento" class="docs-card">
-              <strong>Enriquecimiento LLM</strong>
-              <p>Ollama `qwen3.5:9b` procesa cada reseña para extraer sentimiento, urgencia, causa raíz, departamento responsable, SLA, riesgo comercial, compensación y respuesta sugerida.</p>
+              <strong>Enriquecimiento con IA</strong>
+              <p>La capa de análisis procesa cada reseña para extraer sentimiento, urgencia, causa raíz, departamento responsable, SLA, riesgo comercial, compensación y respuesta sugerida. El motor puede cambiar sin alterar la lógica de negocio del dashboard.</p>
             </article>
             <article class="docs-card">
               <strong>Análisis profundo</strong>
-              <p>El archivo meta del dataset contiene una lectura agregada generada por LLM desde métricas reales, distribuciones, cobertura y evidencia seleccionada.</p>
+              <p>El archivo meta del dataset contiene una lectura agregada generada por IA desde métricas reales, distribuciones, cobertura y evidencia seleccionada.</p>
             </article>
           </section>
         </section>
@@ -602,7 +627,7 @@
           <div class="docs-columns">
             <article class="docs-copy">
               <h4>KPIs y tendencia</h4>
-              <p>Resume reputación, volumen, promotores, recuperación de servicio, respuestas, cobertura LLM y evolución mensual. Es la vista de salud general.</p>
+              <p>Resume reputación, volumen, promotores, recuperación de servicio, respuestas, cobertura de análisis y evolución mensual. En plataformas como TrustYou, ReviewPro, Birdeye y ReviewTrackers, este grupo funciona como el tablero de salud reputacional: permite saber si la propiedad está ganando confianza, perdiendo calidad percibida o acumulando riesgo operativo.</p>
             </article>
             <article class="docs-copy">
               <h4>Diagnóstico IA</h4>
@@ -622,7 +647,7 @@
             </article>
             <article id="doc-limitaciones" class="docs-copy">
               <h4>Limitaciones</h4>
-              <p>Las métricas de rating y volumen cubren todo el dataset; sentimiento, causa raíz, routing y análisis profundo dependen de la cobertura LLM disponible.</p>
+              <p>Las métricas de rating y volumen cubren todo el dataset; sentimiento, causa raíz, routing y análisis profundo dependen de la cobertura de análisis disponible. Por eso el dashboard separa KPIs observados de señales inferidas.</p>
             </article>
           </div>
         </section>
@@ -635,15 +660,19 @@
           <div class="docs-columns">
             <article class="docs-copy">
               <h4>Fuente</h4>
-              <p>Los KPIs usan todas las reseñas filtradas: calificación, fecha, respuesta del propietario, fuente, segmento, conteo de palabras y campos enriquecidos por LLM.</p>
+              <p>Los KPIs usan todas las reseñas filtradas: calificación, fecha, respuesta del propietario, fuente, segmento, conteo de palabras y campos enriquecidos por IA. Son métricas de gestión porque resumen tres dimensiones críticas: percepción pública, volumen de evidencia y capacidad operativa de respuesta.</p>
             </article>
             <article class="docs-copy">
-              <h4>Interpretación</h4>
-              <p>Rating promedio y promotores miden reputación pública; service recovery mide presión de recuperación; response rate mide disciplina de respuesta; cobertura LLM indica cuánto diagnóstico semántico está disponible.</p>
+              <h4>Por qué son KPIs</h4>
+              <p>Rating promedio es el indicador más visible para el comprador. Promotores 4-5 mide la base de confianza. Service recovery muestra cuántos huéspedes requieren intervención. Response rate mide disciplina pública de gestión. Cobertura de análisis indica qué proporción del feedback ya puede convertirse en causas, responsables y acciones.</p>
             </article>
             <article class="docs-copy">
-              <h4>Uso comercial</h4>
-              <p>Un rating alto con baja respuesta o cobertura incompleta requiere completar operación antes de vender conclusiones definitivas. Un rating alto con pocos casos recovery valida fortaleza reputacional.</p>
+              <h4>Uso en la industria</h4>
+              <p>Las plataformas de reputación hotelera suelen iniciar con indicadores parecidos: puntuación agregada, volumen, sentimiento, respuesta y alertas de recuperación. TrustYou usa análisis semántico e indicadores de impacto para conectar temas con operación; ReviewPro/Shiji organiza insights para dirección y departamentos; Birdeye y ReviewTrackers combinan ratings, sentimiento, tendencias y acciones.</p>
+            </article>
+            <article class="docs-copy">
+              <h4>Cómo venderlo al cliente</h4>
+              <p>Un rating alto con baja respuesta muestra reputación fuerte pero gestión incompleta. Un rating estable con aumento de recovery indica riesgo temprano. Una cobertura de análisis baja no invalida el dataset, pero sí limita la profundidad de diagnóstico. Esto ayuda a explicar qué está probado por datos y qué requiere más procesamiento.</p>
             </article>
           </div>
         </section>
@@ -656,15 +685,19 @@
           <div class="docs-columns">
             <article class="docs-copy">
               <h4>Fuente</h4>
-              <p>Cuando hay cobertura LLM, el panel usa etiquetas temáticas por reseña. Si no hay LLM suficiente, usa palabras clave del texto como respaldo conservador.</p>
+              <p>Cuando hay cobertura de IA, el panel usa etiquetas temáticas por reseña. Si no hay cobertura suficiente, usa palabras clave del texto como respaldo conservador. La fuente real sigue siendo el texto del huésped, no una encuesta diseñada por el hotel.</p>
             </article>
             <article class="docs-copy">
-              <h4>Interpretación</h4>
-              <p>El tema dominante no siempre es un problema: puede ser fortaleza o fricción. Debe cruzarse con sentimiento, rating, causa raíz y ejemplos textuales.</p>
+              <h4>Por qué se usa como KPI</h4>
+              <p>Los temas convierten reseñas no estructuradas en categorías operativas. En la industria, esto se conoce como análisis semántico o categorización de experiencia: permite detectar si el volumen de conversación está en habitaciones, servicio, alimentos, ubicación, limpieza o valor.</p>
             </article>
             <article id="doc-segmentos" class="docs-copy">
               <h4>Segmentos</h4>
-              <p>Los segmentos provienen del tipo de viaje o perfil disponible. Permiten ver si la experiencia cambia para parejas, familias, viajeros de negocio, amigos o huéspedes solos.</p>
+              <p>Los segmentos provienen del tipo de viaje o perfil disponible. Permiten ver si la experiencia cambia para parejas, familias, viajeros de negocio, amigos o huéspedes solos. Esto es estándar en CRM hotelero porque cada segmento valora atributos distintos: una pareja puede priorizar ambiente y restaurante; una familia, habitación y servicio; un viajero de negocio, silencio, ubicación y eficiencia.</p>
+            </article>
+            <article class="docs-copy">
+              <h4>Comparación con competidores</h4>
+              <p>ReviewPro/Shiji posiciona el análisis semántico como forma de convertir grandes volúmenes de texto en áreas de mejora para diferentes niveles de la organización. TrustYou usa categorías semánticas para explicar desempeño por atributos del hotel. Este dashboard replica esa lógica con datos propios y filtros accionables.</p>
             </article>
           </div>
         </section>
@@ -677,11 +710,15 @@
           <div class="docs-columns">
             <article class="docs-copy">
               <h4>Fuente</h4>
-              <p>El resumen combina conteos LLM, urgencia, compensación, impacto de ingresos, brechas de marca, reconocimientos y dueños operativos.</p>
+              <p>El resumen combina conteos de IA, urgencia, compensación, impacto de ingresos, brechas de marca, reconocimientos y dueños operativos. No es una lista de reseñas: es una traducción ejecutiva de la voz del huésped.</p>
             </article>
             <article class="docs-copy">
-              <h4>Interpretación</h4>
-              <p>Sirve para decidir qué problema merece comité ejecutivo, qué área debe liderar la respuesta y qué casos requieren recuperación inmediata.</p>
+              <h4>Por qué se usa como KPI</h4>
+              <p>Dirección no necesita leer cientos de reseñas para decidir. Necesita saber qué tema domina, qué área responde, cuántos casos son urgentes y cuántos amenazan ingresos. Este estándar aparece en suites de reputación que separan vistas ejecutivas de vistas departamentales.</p>
+            </article>
+            <article class="docs-copy">
+              <h4>Uso en la industria</h4>
+              <p>En gestión hotelera, el resumen ejecutivo conecta experiencia del huésped con reuniones de operación, revenue y marca. Sirve para priorizar recursos: arreglar una causa repetida suele tener más retorno que responder casos aislados sin corregir el origen.</p>
             </article>
           </div>
         </section>
@@ -694,15 +731,19 @@
           <div class="docs-columns">
             <article class="docs-copy">
               <h4>Fuente</h4>
-              <p>El impacto comercial se deriva del LLM cuando existe y de reglas de respaldo basadas en rating, limpieza, seguridad, cobros y severidad del texto.</p>
+              <p>El impacto comercial se deriva de la capa de análisis cuando existe y de reglas de respaldo basadas en rating, limpieza, seguridad, cobros y severidad del texto. Clasifica reseñas según su probabilidad de afectar demanda, precio, repetición o confianza.</p>
             </article>
             <article class="docs-copy">
-              <h4>Interpretación</h4>
-              <p>Alto impacto apunta a reseñas que pueden afectar conversión, confianza en precio, repetición del huésped o percepción de valor. Medio indica seguimiento preventivo.</p>
+              <h4>Por qué se usa como KPI</h4>
+              <p>No todas las reseñas negativas dañan igual. Una que menciona cobros, seguridad, limpieza o incumplimiento de promesa puede afectar más la conversión que una queja menor. El KPI ayuda a priorizar por riesgo de negocio, no solo por enojo del huésped.</p>
             </article>
             <article class="docs-copy">
-              <h4>Uso práctico</h4>
-              <p>Revenue, gerencia y guest relations pueden usar esta vista para priorizar respuestas públicas, compensaciones, revisión de producto y ajustes de comunicación comercial.</p>
+              <h4>Uso en revenue y reputación</h4>
+              <p>La industria usa reputación como variable de demanda: ratings, contenido de reseñas y confianza influyen en conversión y disposición a pagar. Por eso herramientas como TrustYou y ReviewPro conectan análisis semántico con impacto operativo; este panel lo lleva a una cola priorizada para gerencia, revenue y guest relations.</p>
+            </article>
+            <article class="docs-copy">
+              <h4>Cómo competir</h4>
+              <p>Frente a suites comerciales, la ventaja aquí es transparencia: el cliente ve qué reseñas entraron, qué regla o señal las elevó y qué acción se recomienda. Esto reduce la sensación de “caja negra” habitual en dashboards de reputación.</p>
             </article>
           </div>
         </section>
@@ -715,19 +756,23 @@
           <div class="docs-columns">
             <article class="docs-copy">
               <h4>Fuente</h4>
-              <p>La sección usa `dashboard_analysis` del archivo meta generado por Ollama. El análisis se produce desde agregados reales, cobertura LLM, distribuciones y evidencia seleccionada.</p>
+              <p>La sección usa `dashboard_analysis` del archivo meta generado durante el enriquecimiento. El análisis se produce desde agregados reales, cobertura de IA, distribuciones y evidencia seleccionada.</p>
             </article>
             <article class="docs-copy">
-              <h4>Interpretación</h4>
-              <p>Debe leerse como una hipótesis ejecutiva sustentada en los datos cargados. Su precisión aumenta conforme crece la cobertura de reseñas enriquecidas.</p>
+              <h4>Por qué se usa como KPI</h4>
+              <p>El análisis profundo no reemplaza las métricas; las interpreta. Su valor es conectar patrones que normalmente viven separados: rating, sentimiento, causa raíz, departamento, riesgo comercial y evidencia textual. En la industria, esta capa se parece a los resúmenes ejecutivos y análisis semánticos de plataformas de experiencia del huésped.</p>
             </article>
             <article id="doc-causa-raiz" class="docs-copy">
               <h4>Causa raíz</h4>
-              <p>Agrupa reseñas por causa probable: servicio, habitación, ruido, limpieza, alimentos, cobros, seguridad, mantenimiento, ubicación, amenidades o promesa de marca.</p>
+              <p>Agrupa reseñas por causa probable: servicio, habitación, ruido, limpieza, alimentos, cobros, seguridad, mantenimiento, ubicación, amenidades o promesa de marca. Se usa porque el rating dice cuánto duele, pero la causa raíz dice dónde intervenir.</p>
             </article>
             <article id="doc-evidencia" class="docs-copy">
               <h4>Evidencia</h4>
-              <p>Los ejemplos muestran reseñas priorizadas por urgencia, impacto comercial y SLA. Sirven para validar que el patrón agregado aparece en textos concretos.</p>
+              <p>Los ejemplos muestran reseñas priorizadas por urgencia, impacto comercial y SLA. Sirven para validar que el patrón agregado aparece en textos concretos y para que el equipo no discuta opiniones, sino evidencia.</p>
+            </article>
+            <article class="docs-copy">
+              <h4>Estándar de calidad</h4>
+              <p>Un buen diagnóstico debe mostrar cobertura, datos usados y limitaciones. Si no hay suficientes reseñas enriquecidas, el análisis debe declararlo. Esta práctica es clave para vender confianza y evitar conclusiones exageradas.</p>
             </article>
           </div>
         </section>
@@ -740,15 +785,27 @@
           <div class="docs-columns">
             <article class="docs-copy">
               <h4>Fuente</h4>
-              <p>Los insights provienen de campos enriquecidos por Ollama: resumen, acción recomendada, urgencia, sentimiento, departamentos, SLA y respuesta sugerida.</p>
+              <p>Los insights provienen de campos enriquecidos por IA: resumen, acción recomendada, urgencia, sentimiento, departamentos, SLA y respuesta sugerida. Cada insight conserva vínculo con la reseña original para auditoría.</p>
             </article>
             <article id="doc-sentimiento" class="docs-copy">
               <h4>Sentimiento</h4>
-              <p>El sentimiento complementa el rating. Una reseña de alta puntuación puede ser mixta, y una reseña baja puede contener elogios que conviene preservar.</p>
+              <p>El sentimiento complementa el rating. Una reseña de alta puntuación puede ser mixta, y una reseña baja puede contener elogios que conviene preservar. Birdeye y ReviewTrackers usan análisis de sentimiento para leer intención y emoción más allá de las estrellas.</p>
+            </article>
+            <article class="docs-copy">
+              <h4>Intención y alineación</h4>
+              <p>Guest intent clasifica si el huésped elogia, reclama, mezcla señales, recomienda, vuelve o habla de logística. Rating alignment compara estrellas contra texto para detectar reseñas donde el rating sobrestima o subestima la experiencia narrada.</p>
             </article>
             <article id="doc-departamentos" class="docs-copy">
               <h4>Departamentos</h4>
-              <p>El routing asigna responsables probables para seguimiento: recepción, housekeeping, alimentos y bebidas, habitaciones, mantenimiento, ingresos, seguridad o gerencia.</p>
+              <p>El routing asigna responsables probables para seguimiento: recepción, housekeeping, alimentos y bebidas, habitaciones, mantenimiento, ingresos, seguridad o gerencia. Es un KPI operativo porque mide carga por área y evita que reputación quede aislada en marketing.</p>
+            </article>
+            <article class="docs-copy">
+              <h4>Confianza y clusters</h4>
+              <p>Confidence ayuda a auditar la seguridad de la lectura semántica. Repeat issue cluster agrupa patrones repetidos como ruido, cobros o habitación, y permite convertir quejas individuales en proyectos de mejora.</p>
+            </article>
+            <article class="docs-copy">
+              <h4>Uso competitivo</h4>
+              <p>La diferencia frente a un dashboard pasivo es que cada insight propone una acción. Esto acerca el producto a CRMs de reputación: no solo monitorea, sino que convierte feedback en tareas, SLA y respuesta.</p>
             </article>
           </div>
         </section>
@@ -761,11 +818,15 @@
           <div class="docs-columns">
             <article class="docs-copy">
               <h4>Fuente</h4>
-              <p>La cola CRM usa riesgo de recuperación, urgencia, impacto comercial, SLA, dueño operativo, compensación y siguiente acción generada por LLM.</p>
+              <p>La cola CRM usa riesgo de recuperación, urgencia, impacto comercial, SLA, dueño operativo, compensación y siguiente acción generada por IA. Su fuente son reseñas reales normalizadas y enriquecidas.</p>
             </article>
             <article class="docs-copy">
-              <h4>Interpretación</h4>
-              <p>Los primeros casos son los más sensibles por daño potencial, urgencia o necesidad de respuesta. La cola está pensada para asignar trabajo y medir cierre.</p>
+              <h4>Por qué se usa como KPI</h4>
+              <p>Una plataforma de reputación madura no termina en un gráfico: debe crear trabajo accionable. La cola CRM mide cuántos casos hay, quién debe resolverlos, en cuánto tiempo y con qué tipo de respuesta.</p>
+            </article>
+            <article class="docs-copy">
+              <h4>Uso en hotelería</h4>
+              <p>Guest relations, front desk y gerencia pueden usar la cola para recuperación post-estadía, respuesta pública, compensación y aprendizaje operativo. El estándar competitivo es similar al de herramientas con alertas, tickets y workflows de respuesta.</p>
             </article>
           </div>
         </section>
@@ -778,11 +839,15 @@
           <div class="docs-columns">
             <article class="docs-copy">
               <h4>Fuente</h4>
-              <p>Si hay varios negocios, compara por negocio. Si solo hay uno, compara por fuente o canal disponible, usando volumen, rating, recovery e IA positiva.</p>
+              <p>Si hay varios negocios, compara por negocio. Si solo hay uno, compara por fuente o canal disponible, usando volumen, rating, recovery y sentimiento positivo. El objetivo es transformar reputación en benchmark comparable.</p>
             </article>
             <article id="doc-competitivo" class="docs-copy">
               <h4>Señal competitiva</h4>
-              <p>La señal competitiva clasifica menciones de ventaja, paridad, desventaja o expectativa poco clara frente al mercado o competidores mencionados.</p>
+              <p>La señal competitiva clasifica menciones de ventaja, paridad, desventaja o expectativa poco clara frente al mercado o competidores mencionados. Este tipo de lectura es clave para posicionamiento: no basta saber si el hotel gustó, hay que saber si superó expectativas.</p>
+            </article>
+            <article class="docs-copy">
+              <h4>Uso en la industria</h4>
+              <p>ReviewPro/Shiji y TrustYou usan benchmarks para comparar experiencia del huésped y reputación. En ventas, este panel ayuda a mostrar si una propiedad lidera, se mantiene en paridad o necesita defender una brecha frente a su set competitivo.</p>
             </article>
           </div>
         </section>
@@ -795,11 +860,15 @@
           <div class="docs-columns">
             <article class="docs-copy">
               <h4>Fuente</h4>
-              <p>El panel usa riesgos marcados por LLM y reglas de respaldo para seguridad, salud, privacidad, fraude, discriminación y disputas de cobro.</p>
+              <p>El panel usa riesgos marcados por IA y reglas de respaldo para seguridad, salud, privacidad, fraude, discriminación y disputas de cobro. La fuente siempre debe poder trazarse a la reseña original.</p>
             </article>
             <article class="docs-copy">
-              <h4>Interpretación</h4>
-              <p>No reemplaza revisión legal. Su función es alertar casos que requieren respuesta controlada, documentación interna y posible escalamiento.</p>
+              <h4>Por qué se usa como KPI</h4>
+              <p>Riesgos legales o de seguridad no se gestionan por promedio. Un solo caso puede requerir escalamiento. Por eso el KPI existe como alerta cualitativa y no como simple porcentaje.</p>
+            </article>
+            <article class="docs-copy">
+              <h4>Estándar operativo</h4>
+              <p>No reemplaza revisión legal. Su función es alertar casos que requieren respuesta controlada, documentación interna, revisión de hechos y posible escalamiento antes de publicar una respuesta.</p>
             </article>
           </div>
         </section>
@@ -812,11 +881,15 @@
           <div class="docs-columns">
             <article class="docs-copy">
               <h4>Fuente</h4>
-              <p>La sección usa borradores de respuesta, señales para amplificación, brechas de promesa comercial y menciones de staff detectadas por LLM.</p>
+              <p>La sección usa borradores de respuesta, señales para amplificación, brechas de promesa comercial y menciones de staff detectadas por IA.</p>
             </article>
             <article class="docs-copy">
-              <h4>Interpretación</h4>
-              <p>Permite convertir reseñas positivas en prueba social, reseñas mixtas en respuesta pública coherente y menciones de personal en reconocimiento interno.</p>
+              <h4>Por qué se usa como KPI</h4>
+              <p>La reputación también es activo de marca. Las reseñas positivas alimentan prueba social; las brechas de promesa muestran dónde la comunicación comercial promete más de lo que la operación entrega; las menciones de staff revelan comportamientos que conviene reforzar.</p>
+            </article>
+            <article class="docs-copy">
+              <h4>Comparación con plataformas</h4>
+              <p>Birdeye enfatiza respuestas personalizadas y consistentes con la voz de marca. ReviewTrackers y TrustYou convierten reseñas en tendencias y aprendizajes. Este panel une ambas cosas: respuesta pública, marketing, brechas y reconocimiento.</p>
             </article>
           </div>
         </section>
@@ -833,11 +906,11 @@
             </article>
             <article class="docs-copy">
               <h4>Interpretación</h4>
-              <p>La altura de cada barra representa volumen; el número superior es el rating promedio. Verde indica meses fuertes, ámbar requiere atención y rojo señala deterioro o muestra negativa.</p>
+              <p>La altura de cada barra representa volumen; el número superior es el rating promedio. Verde indica meses fuertes, ámbar requiere atención y rojo señala deterioro o muestra negativa. Se usa como KPI porque reputación es dinámica: un promedio histórico alto puede ocultar deterioro reciente.</p>
             </article>
             <article class="docs-copy">
-              <h4>Uso práctico</h4>
-              <p>Un mes con rating bajo y poco volumen debe investigarse como caso puntual; un mes con rating bajo y alto volumen apunta a presión operativa más amplia.</p>
+              <h4>Uso en la industria</h4>
+              <p>Las suites de reputación muestran tendencias porque dirección necesita distinguir eventos aislados de patrones sostenidos. Un mes con rating bajo y poco volumen debe investigarse como caso puntual; un mes con rating bajo y alto volumen apunta a presión operativa más amplia.</p>
             </article>
             <article class="docs-copy">
               <h4>Precaución</h4>
@@ -858,11 +931,11 @@
             </article>
             <article class="docs-copy">
               <h4>Interpretación</h4>
-              <p>Una concentración alta en 5 y 4 estrellas indica reputación robusta. Las reseñas de 1 a 3 estrellas representan la base para recuperación, análisis de causa raíz y seguimiento CRM.</p>
+              <p>Una concentración alta en 5 y 4 estrellas indica reputación robusta. Las reseñas de 1 a 3 estrellas representan la base para recuperación, análisis de causa raíz y seguimiento CRM. Se usa como KPI porque el promedio puede verse sano aunque exista una cola creciente de huéspedes insatisfechos.</p>
             </article>
             <article class="docs-copy">
-              <h4>Uso práctico</h4>
-              <p>Si el promedio general es alto pero crecen 1, 2 o 3 estrellas, conviene revisar temas y evidencia antes de que el deterioro aparezca en el promedio global.</p>
+              <h4>Uso en la industria</h4>
+              <p>Plataformas de reputación combinan rating promedio con distribución para separar reputación general de riesgo de recuperación. Si el promedio general es alto pero crecen 1, 2 o 3 estrellas, conviene revisar temas y evidencia antes de que el deterioro aparezca en el promedio global.</p>
             </article>
             <article class="docs-copy">
               <h4>Precaución</h4>
@@ -878,7 +951,7 @@
           </div>
           <ol class="docs-steps">
             <li>Cargar exportes o conectar fuentes de reseñas.</li>
-            <li>Ejecutar enriquecimiento local con Ollama.</li>
+            <li>Ejecutar enriquecimiento con el motor de IA configurado para el cliente.</li>
             <li>Generar análisis agregado del dashboard desde el meta del dataset.</li>
             <li>Priorizar casos por urgencia, riesgo comercial, departamento y SLA.</li>
             <li>Usar la cola CRM para recuperación de servicio, respuesta pública y seguimiento interno.</li>
@@ -894,11 +967,15 @@
           <div class="docs-columns">
             <article class="docs-copy">
               <h4>Fuente</h4>
-              <p>La lista usa reseñas con rating bajo, sentimiento negativo o señales LLM de urgencia. Se ordena por urgencia, fecha y calificación.</p>
+              <p>La lista usa reseñas con rating bajo, sentimiento negativo o señales de urgencia. Se ordena por urgencia, fecha y calificación para priorizar los casos donde una intervención puede proteger relación, reputación o ingresos.</p>
             </article>
             <article id="doc-tabla" class="docs-copy">
               <h4>Tabla normalizada</h4>
               <p>La tabla muestra hasta 250 filas filtradas con campos normalizados y enriquecidos. Es útil para auditoría, búsqueda, exportación y revisión de evidencia.</p>
+            </article>
+            <article class="docs-copy">
+              <h4>Por qué se usa como KPI</h4>
+              <p>Recovery no mide solamente insatisfacción: mide carga de trabajo para recuperar huéspedes y aprender de fallas. En un CRM hotelero, cada caso debe tener dueño, SLA, acción y cierre.</p>
             </article>
           </div>
         </section>
@@ -909,10 +986,20 @@
             <h3>Servicios similares de la industria</h3>
           </div>
           <div class="comparison-list docs-comparison">
-            <div class="comparison-row"><span>TrustYou</span><p>Gestión de reputación hotelera, CXP, análisis de sentimiento, benchmark competitivo y respuesta con IA.</p></div>
-            <div class="comparison-row"><span>Shiji ReviewPro</span><p>Análisis semántico, benchmark de experiencia del huésped, voz de marca y agregación de reseñas.</p></div>
-            <div class="comparison-row"><span>Birdeye</span><p>Monitoreo de reseñas, resúmenes con IA, respuestas con voz de marca, alertas e insights.</p></div>
-            <div class="comparison-row"><span>ReviewTrackers</span><p>Analítica de experiencia, sentimiento NLP, detección de tendencias, inteligencia competitiva y cumplimiento.</p></div>
+            <div class="comparison-row"><span>TrustYou</span><p>Gestión de reputación hotelera, análisis semántico, categorías de experiencia e indicadores de impacto para explicar qué atributos afectan la percepción del huésped.</p></div>
+            <div class="comparison-row"><span>Shiji ReviewPro</span><p>Análisis semántico, benchmark de experiencia del huésped y vistas para distintos niveles de la organización: dirección, departamentos y equipos operativos.</p></div>
+            <div class="comparison-row"><span>Birdeye</span><p>Monitoreo de reseñas, sentimiento, urgencia, respuestas personalizadas con voz de marca, alertas e insights para marcas multiubicación.</p></div>
+            <div class="comparison-row"><span>ReviewTrackers</span><p>Analítica de experiencia, ratings, tendencias de palabras clave, sentimiento NLP e inteligencia competitiva para convertir reseñas en decisiones.</p></div>
+          </div>
+          <div class="docs-columns">
+            <article class="docs-copy">
+              <h4>Estándar competitivo</h4>
+              <p>El mercado no vende únicamente “ver reseñas”; vende transformar feedback no estructurado en indicadores, prioridades, responsables y acciones. Por eso este dashboard organiza KPIs de salud, diagnóstico, impacto comercial, CRM, benchmark y marca.</p>
+            </article>
+            <article class="docs-copy">
+              <h4>Referencias públicas</h4>
+              <p>Ver referencias: <a href="https://www.trustyou.com/blog/cxp/how-data-science-improves-a-hotels-operations-and-reputation-with-trustyous-impact-scores/" target="_blank" rel="noreferrer">TrustYou Impact Scores</a>, <a href="https://insights.shijigroup.com/reviewpros-new-semantic-analysis-tool/" target="_blank" rel="noreferrer">Shiji ReviewPro Semantic Analysis</a>, <a href="https://birdeye.com/reviews/" target="_blank" rel="noreferrer">Birdeye Reviews AI</a> y <a href="https://www.reviewtrackers.com/social-media-marketing/" target="_blank" rel="noreferrer">ReviewTrackers Experience Analytics</a>.</p>
+            </article>
           </div>
         </section>
       </section>

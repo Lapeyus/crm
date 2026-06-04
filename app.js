@@ -85,6 +85,22 @@ const VALUE_SIGNAL_LABELS = {
   unknown: "Desconocido"
 };
 
+const RATING_ALIGNMENT_LABELS = {
+  matches: "Rating consistente",
+  overstated: "Rating sobrestima",
+  understated: "Rating subestima",
+  unclear: "No claro"
+};
+
+const GUEST_INTENT_LABELS = {
+  praise: "Elogio",
+  complaint: "Queja",
+  mixed: "Mixta",
+  recommendation: "Recomendación",
+  repeat_guest: "Huésped recurrente",
+  logistics: "Logística"
+};
+
 let allReviews = [];
 let filteredReviews = [];
 let dashboardAnalysis = null;
@@ -190,14 +206,22 @@ function normalizeTripType(value) {
   return cleaned || "unspecified";
 }
 
+function pickField(row, ...keys) {
+  for (const key of keys) {
+    const value = row[key];
+    if (value !== undefined && value !== null && value !== "") return value;
+  }
+  return "";
+}
+
 function normalizeReview(row) {
   const rating = Number(row.rating);
   const text = String(row.review_text || row.text || "");
   const title = String(row.review_title || row.title || "");
   const date = parseDate(row.review_date_parsed || row.review_date || row.date);
   const ownerResponse = String(row.owner_response || "").trim();
-  const llmSentiment = canonicalKey(row.llm_sentiment);
-  const llmUrgency = canonicalKey(row.llm_urgency);
+  const llmSentiment = canonicalKey(pickField(row, "llm_sentiment", "sentiment"));
+  const llmUrgency = canonicalKey(pickField(row, "llm_urgency", "urgency"));
   const sentiment = String(llmSentiment || row.sentiment_hint || "").toLowerCase();
   const risk =
     llmUrgency === "high" || llmUrgency === "medium" || rating <= 3 || sentiment === "negative"
@@ -205,10 +229,12 @@ function normalizeReview(row) {
       : rating >= 4
         ? "healthy"
         : "watch";
-  const llmTopics = normalizeList(row.llm_topics).map(canonicalKey);
-  const llmDepartments = normalizeList(row.llm_departments).map(canonicalKey);
-  const llmRootCauses = normalizeList(row.llm_root_causes).map(canonicalKey);
-  const llmComplianceRisks = normalizeList(row.llm_compliance_risks).map(canonicalKey);
+  const llmTopics = normalizeList(pickField(row, "llm_topics", "topics")).map(canonicalKey);
+  const llmDepartments = normalizeList(pickField(row, "llm_departments", "departments")).map(canonicalKey);
+  const llmRootCauses = normalizeList(pickField(row, "llm_root_causes", "root_causes")).map(canonicalKey);
+  const llmComplianceRisks = normalizeList(pickField(row, "llm_compliance_risks", "compliance_risks")).map(canonicalKey);
+  const llmSummary = String(pickField(row, "llm_summary", "summary_es") || "");
+  const llmAction = String(pickField(row, "llm_action", "action_es") || "");
 
   return {
     business_name: row.business_name || row.place_name || row.location_name || "Unknown property",
@@ -231,35 +257,35 @@ function normalizeReview(row) {
     review_date_parsed: date,
     review_month: date ? monthKey(date) : "",
     risk_level: risk,
-    has_llm_analysis: Boolean(row.llm_sentiment || row.llm_summary || row.llm_action),
+    has_llm_analysis: Boolean(llmSentiment || llmSummary || llmAction),
     llm_model: row.llm_model || "",
     llm_processed_at: row.llm_processed_at || "",
     llm_sentiment: llmSentiment || "",
-    llm_rating_alignment: canonicalKey(row.llm_rating_alignment),
+    llm_rating_alignment: canonicalKey(pickField(row, "llm_rating_alignment", "rating_alignment")),
     llm_topics: llmTopics,
     llm_departments: llmDepartments,
     llm_root_causes: llmRootCauses,
-    llm_recommended_owner: canonicalKey(row.llm_recommended_owner),
-    llm_guest_intent: canonicalKey(row.llm_guest_intent),
+    llm_recommended_owner: canonicalKey(pickField(row, "llm_recommended_owner", "recommended_owner")),
+    llm_guest_intent: canonicalKey(pickField(row, "llm_guest_intent", "guest_intent")),
     llm_urgency: llmUrgency || "",
-    llm_sla_hours: Number(row.llm_sla_hours) || 0,
-    llm_compensation_needed: normalizeBool(row.llm_compensation_needed),
-    llm_compensation_reason: String(row.llm_compensation_reason || ""),
-    llm_guest_value_signal: canonicalKey(row.llm_guest_value_signal),
-    llm_retention_risk: canonicalKey(row.llm_retention_risk),
-    llm_revenue_impact: canonicalKey(row.llm_revenue_impact),
-    llm_competitive_signal: canonicalKey(row.llm_competitive_signal),
-    llm_competitive_detail: String(row.llm_competitive_detail || ""),
+    llm_sla_hours: Number(pickField(row, "llm_sla_hours", "sla_hours")) || 0,
+    llm_compensation_needed: normalizeBool(pickField(row, "llm_compensation_needed", "compensation_needed")),
+    llm_compensation_reason: String(pickField(row, "llm_compensation_reason", "compensation_reason_es") || ""),
+    llm_guest_value_signal: canonicalKey(pickField(row, "llm_guest_value_signal", "guest_value_signal")),
+    llm_retention_risk: canonicalKey(pickField(row, "llm_retention_risk", "retention_risk")),
+    llm_revenue_impact: canonicalKey(pickField(row, "llm_revenue_impact", "revenue_impact")),
+    llm_competitive_signal: canonicalKey(pickField(row, "llm_competitive_signal", "competitive_signal")),
+    llm_competitive_detail: String(pickField(row, "llm_competitive_detail", "competitive_detail_es") || ""),
     llm_compliance_risks: llmComplianceRisks,
-    llm_staff_mentions: normalizeList(row.llm_staff_mentions),
-    llm_marketing_gap: String(row.llm_marketing_gap || ""),
-    llm_crm_next_step: String(row.llm_crm_next_step || ""),
-    llm_marketing_amplification: String(row.llm_marketing_amplification || ""),
-    llm_repeat_issue_cluster: canonicalKey(row.llm_repeat_issue_cluster),
-    llm_summary: String(row.llm_summary || ""),
-    llm_action: String(row.llm_action || ""),
-    llm_response_draft: String(row.llm_response_draft || ""),
-    llm_confidence: Number(row.llm_confidence) || 0,
+    llm_staff_mentions: normalizeList(pickField(row, "llm_staff_mentions", "staff_mentions")),
+    llm_marketing_gap: String(pickField(row, "llm_marketing_gap", "marketing_gap_es") || ""),
+    llm_crm_next_step: String(pickField(row, "llm_crm_next_step", "crm_next_step_es") || ""),
+    llm_marketing_amplification: String(pickField(row, "llm_marketing_amplification", "marketing_amplification_es") || ""),
+    llm_repeat_issue_cluster: canonicalKey(pickField(row, "llm_repeat_issue_cluster", "repeat_issue_cluster")),
+    llm_summary: llmSummary,
+    llm_action: llmAction,
+    llm_response_draft: String(pickField(row, "llm_response_draft", "response_draft_es") || ""),
+    llm_confidence: Number(pickField(row, "llm_confidence", "confidence")) || 0,
     llm_error: String(row.llm_error || "")
   };
 }
@@ -347,7 +373,7 @@ function renderMetrics(rows) {
     metric("Promotores 4-5", `${promoters.toFixed(1)}%`, "Rating >= 4", promoters >= 80 ? "good" : "warn"),
     metric("Service recovery", recovery.toLocaleString(), "Rating <= 3 o negativo", recovery ? "risk" : "good"),
     metric("Response rate", `${responseRate.toFixed(1)}%`, "Owner responses detectadas", responseRate >= 60 ? "good" : "warn"),
-    metric("Cobertura LLM", `${llmCoverage.toFixed(1)}%`, `${llmAnalyzed.toLocaleString()} reseñas procesadas`, llmCoverage >= 80 ? "good" : llmCoverage ? "warn" : ""),
+    metric("Cobertura IA", `${llmCoverage.toFixed(1)}%`, `${llmAnalyzed.toLocaleString()} reseñas procesadas`, llmCoverage >= 80 ? "good" : llmCoverage ? "warn" : ""),
     metric("Fuentes", new Set(rows.map((row) => row.source_label)).size.toLocaleString(), "Canales conectados", ""),
     metric("Segmentos", new Set(rows.map((row) => row.trip_type)).size.toLocaleString(), "Tipos de viaje", ""),
     metric("Palabras promedio", average(rows.map((row) => row.word_count)).toFixed(1), "Profundidad de feedback", "")
@@ -356,7 +382,7 @@ function renderMetrics(rows) {
   for (const card of cards) grid.appendChild(card);
   renderPanelInsight(
     "kpiInsight",
-    `Fuente: ${rows.length.toLocaleString()} reseñas filtradas. El rating promedio visible es ${ratingAvg.toFixed(2)}, con ${promoters.toFixed(1)}% de promotores 4-5, ${recovery.toLocaleString()} casos de recuperación y ${llmCoverage.toFixed(1)}% de cobertura LLM. Esta vista resume salud reputacional, riesgo operativo y profundidad disponible para diagnóstico.`,
+    `Fuente: ${rows.length.toLocaleString()} reseñas filtradas. El rating promedio visible es ${ratingAvg.toFixed(2)}, con ${promoters.toFixed(1)}% de promotores 4-5, ${recovery.toLocaleString()} casos de recuperación y ${llmCoverage.toFixed(1)}% de cobertura de IA. Esta vista resume salud reputacional, riesgo operativo y profundidad disponible para diagnóstico.`,
     "#doc-kpis",
     "Cómo analizar KPIs"
   );
@@ -429,13 +455,13 @@ function renderTopics(rows) {
     const entries = Object.entries(counts).sort((a, b) => b[1] - a[1]).slice(0, 10);
     renderBars("topicBars", entries, "");
     const note = $("#topicMode");
-    if (note) note.textContent = `${llmRows.length.toLocaleString()} con LLM`;
+    if (note) note.textContent = `${llmRows.length.toLocaleString()} con IA`;
     const top = entries[0];
     renderPanelInsight(
       "topicInsight",
       top
-        ? `Fuente: etiquetas temáticas generadas por LLM en ${llmRows.length.toLocaleString()} reseñas. El tema dominante es ${top[0]} con ${top[1].toLocaleString()} menciones, por lo que este bloque explica dónde se concentra la conversación operativa actual.`
-        : `Fuente: etiquetas temáticas generadas por LLM. No hay temas suficientes con los filtros actuales.`,
+        ? `Fuente: etiquetas temáticas generadas por IA en ${llmRows.length.toLocaleString()} reseñas. El tema dominante es ${top[0]} con ${top[1].toLocaleString()} menciones, por lo que este bloque explica dónde se concentra la conversación operativa actual.`
+        : `Fuente: etiquetas temáticas generadas por IA. No hay temas suficientes con los filtros actuales.`,
       "#doc-temas",
       "Cómo analizar temas"
     );
@@ -455,7 +481,7 @@ function renderTopics(rows) {
   renderPanelInsight(
     "topicInsight",
     top
-      ? `Fuente: palabras clave en el texto de ${rows.length.toLocaleString()} reseñas filtradas. Como respaldo sin LLM completo, el tema más frecuente es ${top[0]} con ${top[1].toLocaleString()} coincidencias; debe validarse con reseñas concretas.`
+      ? `Fuente: palabras clave en el texto de ${rows.length.toLocaleString()} reseñas filtradas. Como respaldo sin cobertura completa de IA, el tema más frecuente es ${top[0]} con ${top[1].toLocaleString()} coincidencias; debe validarse con reseñas concretas.`
       : `Fuente: palabras clave del texto de reseñas. No hay volumen suficiente para detectar temas.`,
     "#doc-temas",
     "Cómo analizar temas"
@@ -581,10 +607,26 @@ function renderRootCauseMap(rows) {
   renderPanelInsight(
     "rootCauseInsight",
     topCause
-      ? `Fuente: causas raíz inferidas por LLM y reglas de respaldo cuando falta análisis. La causa más frecuente es ${topCause[0]} con ${topCause[1].toLocaleString()} menciones; este ranking ayuda a distinguir síntomas visibles de problemas operativos repetidos.`
+      ? `Fuente: causas raíz inferidas por IA y reglas de respaldo cuando falta análisis. La causa más frecuente es ${topCause[0]} con ${topCause[1].toLocaleString()} menciones; este ranking ayuda a distinguir síntomas visibles de problemas operativos repetidos.`
       : `Fuente: causas raíz inferidas desde reseñas. No hay causas accionables con los filtros actuales.`,
     "#doc-causa-raiz",
     "Cómo analizar causa raíz"
+  );
+
+  const clusterCounts = countBy(
+    rows.filter((row) => row.llm_repeat_issue_cluster && row.llm_repeat_issue_cluster !== "none"),
+    (row) => row.llm_repeat_issue_cluster
+  );
+  const clusterEntries = topEntries(clusterCounts, 8).map(([cluster, value]) => [cluster.replaceAll("_", " "), value]);
+  renderBars("repeatClusterBars", clusterEntries.length ? clusterEntries : [["sin cluster", 0]], "warn");
+  const topCluster = clusterEntries[0];
+  renderPanelInsight(
+    "repeatClusterInsight",
+    topCluster
+      ? `Fuente: campo repeat_issue_cluster del schema de IA. El cluster recurrente dominante es ${topCluster[0]} con ${topCluster[1].toLocaleString()} reseñas, útil para detectar problemas repetidos que merecen proyecto operativo y no solo respuesta individual.`
+      : `Fuente: campo repeat_issue_cluster. No hay clusters repetidos con los filtros actuales.`,
+    "#doc-causa-raiz",
+    "Cómo analizar clusters"
   );
 
   const examples = rows
@@ -628,7 +670,7 @@ function renderExecutiveBrief(rows) {
   const staffWins = rows.filter((row) => row.llm_staff_mentions.length || inferRootCauses(row).includes("staff_recognition")).length;
 
   $("#weeklyBriefCards").innerHTML = [
-    ["IA procesada", `${analyzed.length}/${rows.length}`, "Cobertura del modelo"],
+    ["IA procesada", `${analyzed.length}/${rows.length}`, "Cobertura de análisis"],
     ["Urgencia alta", highUrgency.toLocaleString(), "SLA recomendado 4h"],
     ["Compensación", compensation.toLocaleString(), "Requiere gesto/refund"],
     ["Riesgo de ingresos", highRevenue.toLocaleString(), "Impacto alto"],
@@ -649,7 +691,7 @@ function renderExecutiveBrief(rows) {
     `Hay ${highUrgency} casos de urgencia alta y ${highRevenue} con impacto alto en ingresos.`;
   renderPanelInsight(
     "executiveInsight",
-    `Fuente: agregados LLM y métricas del dataset filtrado. La prioridad ejecutiva actual es ${causeLabel}, el dueño operativo dominante es ${ownerLabel}, hay ${highUrgency.toLocaleString()} casos de urgencia alta y ${highRevenue.toLocaleString()} reseñas con impacto alto en ingresos.`,
+    `Fuente: agregados de IA y métricas del dataset filtrado. La prioridad ejecutiva actual es ${causeLabel}, el dueño operativo dominante es ${ownerLabel}, hay ${highUrgency.toLocaleString()} casos de urgencia alta y ${highRevenue.toLocaleString()} reseñas con impacto alto en ingresos.`,
     "#doc-resumen-ejecutivo",
     "Cómo analizar prioridades"
   );
@@ -685,7 +727,7 @@ function renderCrmActionQueue(rows) {
     "crmQueueInsight",
     queue.length
       ? `Fuente: reseñas con riesgo de recuperación, acción sugerida o siguiente paso CRM. La cola muestra ${queue.length} casos priorizados por urgencia, impacto en ingresos y SLA para convertir feedback en seguimiento operativo.`
-      : `Fuente: señales CRM del LLM y reglas de recuperación. No hay casos activos con los filtros actuales.`,
+      : `Fuente: señales CRM de IA y reglas de recuperación. No hay casos activos con los filtros actuales.`,
     "#doc-crm",
     "Cómo analizar la cola CRM"
   );
@@ -699,7 +741,7 @@ function renderRevenueImpact(rows) {
   const medium = counts.medium || 0;
   renderPanelInsight(
     "revenueInsight",
-    `Fuente: clasificación de impacto comercial generada por LLM o reglas de respaldo. Hay ${high.toLocaleString()} reseñas de impacto alto y ${medium.toLocaleString()} de impacto medio; estas señales priorizan casos que pueden afectar conversión, precio, repetición o confianza del huésped.`,
+    `Fuente: clasificación de impacto comercial generada por IA o reglas de respaldo. Hay ${high.toLocaleString()} reseñas de impacto alto y ${medium.toLocaleString()} de impacto medio; estas señales priorizan casos que pueden afectar conversión, precio, repetición o confianza del huésped.`,
     "#doc-impacto-comercial",
     "Cómo analizar impacto comercial"
   );
@@ -782,8 +824,8 @@ function renderBenchmark(rows) {
   renderPanelInsight(
     "competitiveInsight",
     competitiveTop
-      ? `Fuente: señal competitiva extraída por LLM. La señal dominante es ${competitiveTop[0]} con ${competitiveTop[1].toLocaleString()} menciones, útil para distinguir ventaja, paridad o brecha frente a expectativas del mercado.`
-      : `Fuente: señal competitiva extraída por LLM. Todavía no hay suficientes menciones clasificadas.`,
+      ? `Fuente: señal competitiva extraída por IA. La señal dominante es ${competitiveTop[0]} con ${competitiveTop[1].toLocaleString()} menciones, útil para distinguir ventaja, paridad o brecha frente a expectativas del mercado.`
+      : `Fuente: señal competitiva extraída por IA. Todavía no hay suficientes menciones clasificadas.`,
     "#doc-competitivo",
     "Cómo analizar señal competitiva"
   );
@@ -809,8 +851,8 @@ function renderComplianceAndBrand(rows) {
   renderPanelInsight(
     "complianceInsight",
     complianceRows.length
-      ? `Fuente: riesgos de seguridad, salud, privacidad, fraude o disputas de cobro detectados por LLM y reglas de respaldo. Hay ${complianceRows.length} casos visibles para revisión cuidadosa y respuesta controlada.`
-      : `Fuente: riesgos legales y de seguridad detectados en texto y LLM. No hay casos visibles con los filtros actuales.`,
+      ? `Fuente: riesgos de seguridad, salud, privacidad, fraude o disputas de cobro detectados por IA y reglas de respaldo. Hay ${complianceRows.length} casos visibles para revisión cuidadosa y respuesta controlada.`
+      : `Fuente: riesgos legales y de seguridad detectados en texto e IA. No hay casos visibles con los filtros actuales.`,
     "#doc-cumplimiento",
     "Cómo analizar cumplimiento"
   );
@@ -862,10 +904,10 @@ function renderComplianceAndBrand(rows) {
         <strong>${count.toLocaleString()}</strong>
       </div>
     `).join("")
-    : '<p class="empty-state">El LLM no ha detectado nombres de staff en los filtros actuales.</p>';
+    : '<p class="empty-state">La capa de IA no ha detectado nombres de staff en los filtros actuales.</p>';
   renderPanelInsight(
     "brandInsight",
-    `Fuente: borradores de respuesta, señales de marketing, brechas de promesa y menciones de personal generadas por LLM. Hay ${responseRows.length.toLocaleString()} respuestas sugeridas, ${marketingRows.length.toLocaleString()} señales de marca y ${staffEntries.length.toLocaleString()} reconocimientos de personal visibles.`,
+    `Fuente: borradores de respuesta, señales de marketing, brechas de promesa y menciones de personal generadas por IA. Hay ${responseRows.length.toLocaleString()} respuestas sugeridas, ${marketingRows.length.toLocaleString()} señales de marca y ${staffEntries.length.toLocaleString()} reconocimientos de personal visibles.`,
     "#doc-marca",
     "Cómo analizar voz de marca"
   );
@@ -877,12 +919,13 @@ function renderLlmInsights(rows) {
   $("#aiCoverage").textContent = `${analyzed.length.toLocaleString()} / ${rows.length.toLocaleString()} reseñas | ${coverage.toFixed(1)}% de cobertura`;
 
   if (!analyzed.length) {
-    $("#aiSentimentBars").innerHTML = '<p class="empty-state">Ejecuta el enriquecimiento con Ollama para activar sentimiento, routing y acciones sugeridas.</p>';
-    $("#departmentBars").innerHTML = '<p class="empty-state">Sin routing LLM todavia.</p>';
+    $("#aiSentimentBars").innerHTML = '<p class="empty-state">Ejecuta el enriquecimiento de IA para activar sentimiento, routing y acciones sugeridas.</p>';
+    $("#departmentBars").innerHTML = '<p class="empty-state">Sin routing de IA todavia.</p>';
     $("#aiInsightList").innerHTML = '<p class="empty-state">No hay insights IA para los filtros actuales.</p>';
-    renderPanelInsight("aiInsightExplanation", `Fuente: reseñas enriquecidas por LLM. No hay análisis IA disponible para el filtro actual.`, "#doc-insights-ia", "Cómo analizar insights IA");
-    renderPanelInsight("sentimentInsight", `Fuente: sentimiento LLM. No hay cobertura suficiente para clasificar el filtro actual.`, "#doc-sentimiento", "Cómo analizar sentimiento");
-    renderPanelInsight("departmentInsight", `Fuente: routing LLM por departamento. No hay cobertura suficiente para asignar responsables.`, "#doc-departamentos", "Cómo analizar departamentos");
+    renderPanelInsight("aiInsightExplanation", `Fuente: reseñas enriquecidas por IA. No hay análisis disponible para el filtro actual.`, "#doc-insights-ia", "Cómo analizar insights IA");
+    renderPanelInsight("sentimentInsight", `Fuente: sentimiento generado por IA. No hay cobertura suficiente para clasificar el filtro actual.`, "#doc-sentimiento", "Cómo analizar sentimiento");
+    renderPanelInsight("departmentInsight", `Fuente: routing de IA por departamento. No hay cobertura suficiente para asignar responsables.`, "#doc-departamentos", "Cómo analizar departamentos");
+    renderPanelInsight("analysisQualityInsight", `Fuente: intención del huésped, alineación rating-texto y confianza. No hay cobertura suficiente para auditar calidad semántica.`, "#doc-insights-ia", "Cómo auditar la lectura");
     return;
   }
 
@@ -913,10 +956,29 @@ function renderLlmInsights(rows) {
   renderPanelInsight(
     "departmentInsight",
     topDepartment
-      ? `Fuente: departamentos responsables sugeridos por LLM. El mayor volumen se asigna a ${topDepartment[0]} con ${topDepartment[1].toLocaleString()} menciones, lo que indica dónde debe concentrarse el seguimiento operativo.`
-      : `Fuente: routing LLM por departamento. No hay responsables suficientes en el filtro actual.`,
+      ? `Fuente: departamentos responsables sugeridos por IA. El mayor volumen se asigna a ${topDepartment[0]} con ${topDepartment[1].toLocaleString()} menciones, lo que indica dónde debe concentrarse el seguimiento operativo.`
+      : `Fuente: routing de IA por departamento. No hay responsables suficientes en el filtro actual.`,
     "#doc-departamentos",
     "Cómo analizar departamentos"
+  );
+
+  const intentEntries = topEntries(countBy(analyzed.filter((row) => row.llm_guest_intent), (row) => row.llm_guest_intent), 8)
+    .map(([intent, value]) => [labelFromMap(intent, GUEST_INTENT_LABELS), value]);
+  renderBars("guestIntentBars", intentEntries.length ? intentEntries : [["Sin intención", 0]], "");
+
+  const alignmentEntries = topEntries(countBy(analyzed.filter((row) => row.llm_rating_alignment), (row) => row.llm_rating_alignment), 4)
+    .map(([alignment, value]) => [labelFromMap(alignment, RATING_ALIGNMENT_LABELS), value]);
+  renderBars("ratingAlignmentBars", alignmentEntries.length ? alignmentEntries : [["Sin alineación", 0]], "warn");
+
+  const confidenceRows = analyzed.filter((row) => row.llm_confidence > 0);
+  const avgConfidence = average(confidenceRows.map((row) => row.llm_confidence)) * 100;
+  const topIntent = intentEntries[0];
+  const topAlignment = alignmentEntries[0];
+  renderPanelInsight(
+    "analysisQualityInsight",
+    `Fuente: guest_intent, rating_alignment y confidence del schema de IA. La intención dominante es ${topIntent ? topIntent[0] : "n/a"}; la alineación más frecuente es ${topAlignment ? topAlignment[0] : "n/a"}; la confianza promedio visible es ${confidenceRows.length ? `${avgConfidence.toFixed(1)}%` : "n/a"}. Estos campos ayudan a auditar si el texto confirma, contradice o matiza la calificación.`,
+    "#doc-insights-ia",
+    "Cómo auditar intención y confianza"
   );
 
   const insightRows = analyzed
@@ -947,8 +1009,8 @@ function renderLlmInsights(rows) {
   renderPanelInsight(
     "aiInsightExplanation",
     insightRows.length
-      ? `Fuente: resúmenes y acciones generadas por LLM, ordenadas por urgencia y fecha. Se muestran ${insightRows.length} insights accionables para que el CRM convierta reseñas en tareas concretas.`
-      : `Fuente: resúmenes y acciones LLM. No hay acciones sugeridas con los filtros actuales.`,
+      ? `Fuente: resúmenes y acciones generadas por IA, ordenadas por urgencia y fecha. Se muestran ${insightRows.length} insights accionables para que el CRM convierta reseñas en tareas concretas.`
+      : `Fuente: resúmenes y acciones de IA. No hay acciones sugeridas con los filtros actuales.`,
     "#doc-insights-ia",
     "Cómo analizar insights IA"
   );
@@ -1015,7 +1077,7 @@ function renderWorkflow(rows) {
   const ai = rows.filter((row) => row.has_llm_analysis && ["high", "medium"].includes(row.llm_urgency)).length;
   renderPanelInsight(
     "workflowInsight",
-    `Fuente: fechas de reseña, owner response, riesgo de recuperación y urgencia LLM. La operación actual muestra ${collection.toLocaleString()} candidatos recientes para colección, ${recovery.toLocaleString()} casos de recuperación, ${response.toLocaleString()} reseñas sin respuesta detectada y ${ai.toLocaleString()} tareas de triage IA.`,
+    `Fuente: fechas de reseña, owner response, riesgo de recuperación y urgencia de IA. La operación actual muestra ${collection.toLocaleString()} candidatos recientes para colección, ${recovery.toLocaleString()} casos de recuperación, ${response.toLocaleString()} reseñas sin respuesta detectada y ${ai.toLocaleString()} tareas de triage IA.`,
     "#doc-automatizacion",
     "Cómo automatizar el flujo"
   );
@@ -1053,7 +1115,7 @@ function renderRiskReviews(rows) {
     "riskReviewsInsight",
     risk.length
       ? `Fuente: reseñas clasificadas como recuperación por rating bajo o sentimiento negativo, ordenadas por urgencia, fecha y calificación. Se muestran ${risk.length} casos para intervención prioritaria.`
-      : `Fuente: rating, sentimiento y urgencia LLM. No hay reseñas de recuperación con los filtros actuales.`,
+      : `Fuente: rating, sentimiento y urgencia de IA. No hay reseñas de recuperación con los filtros actuales.`,
     "#doc-resenas-recuperacion",
     "Cómo analizar recuperación"
   );
@@ -1067,6 +1129,9 @@ function renderTable(rows) {
       <td>${escapeHtml(row.source_label)}</td>
       <td>${escapeHtml(row.rating ?? "")}</td>
       <td>${row.llm_sentiment ? `<span class="sentiment-pill ${escapeHtml(row.llm_sentiment)}">${escapeHtml(row.llm_sentiment)}</span>` : ""}</td>
+      <td>${escapeHtml(labelFromMap(row.llm_guest_intent, GUEST_INTENT_LABELS))}</td>
+      <td>${escapeHtml(labelFromMap(row.llm_rating_alignment, RATING_ALIGNMENT_LABELS))}</td>
+      <td>${row.llm_confidence ? `${Math.round(row.llm_confidence * 100)}%` : ""}</td>
       <td>${escapeHtml(row.review_title || row.review_text.slice(0, 80))}</td>
       <td>${escapeHtml(row.llm_action || "")}</td>
       <td>${escapeHtml(row.trip_type)}</td>
@@ -1106,7 +1171,7 @@ function renderServiceAnalysis() {
     ].forEach((id) => renderAnalysisList(id, []));
     renderPanelInsight(
       "serviceAnalysisInsight",
-      "Fuente: archivo meta del dataset. Todavía no existe dashboard_analysis para el filtro actual, por lo que este panel queda pendiente hasta ejecutar la etapa de enriquecimiento profundo con LLM.",
+      "Fuente: archivo meta del dataset. Todavía no existe dashboard_analysis para el filtro actual, por lo que este panel queda pendiente hasta ejecutar la etapa de enriquecimiento profundo con IA.",
       "#doc-analisis-profundo",
       "Cómo interpretar el análisis profundo"
     );
@@ -1117,7 +1182,7 @@ function renderServiceAnalysis() {
   $("#serviceAnalysisHeadline").textContent = analysis.headline_es || "Análisis generado desde los datos";
   $("#serviceAnalysisMeta").textContent = [
     `${Number(aggregate.reviews_total || 0).toLocaleString()} reseñas`,
-    `${Number(aggregate.reviews_analyzed_by_llm || 0).toLocaleString()} analizadas por LLM`,
+    `${Number(aggregate.reviews_analyzed_by_llm || 0).toLocaleString()} analizadas por IA`,
     `${Number(aggregate.coverage_pct || 0).toFixed(1)}% de cobertura`,
     analysis.generated_at ? `generado ${String(analysis.generated_at).slice(0, 10)}` : ""
   ].filter(Boolean).join(" | ");
@@ -1132,7 +1197,7 @@ function renderServiceAnalysis() {
   renderAnalysisList("serviceLimitations", analysis.data_limitations_es);
   renderPanelInsight(
     "serviceAnalysisInsight",
-    `Fuente: dashboard_analysis del archivo meta, generado por LLM desde métricas reales y evidencia del dataset. Este diagnóstico cubre ${Number(aggregate.reviews_total || 0).toLocaleString()} reseñas y ${Number(aggregate.reviews_analyzed_by_llm || 0).toLocaleString()} enriquecidas, por lo que su fuerza depende de la cobertura indicada.`,
+    `Fuente: dashboard_analysis del archivo meta, generado por IA desde métricas reales y evidencia del dataset. Este diagnóstico cubre ${Number(aggregate.reviews_total || 0).toLocaleString()} reseñas y ${Number(aggregate.reviews_analyzed_by_llm || 0).toLocaleString()} enriquecidas, por lo que su fuerza depende de la cobertura indicada.`,
     "#doc-analisis-profundo",
     "Cómo interpretar el análisis profundo"
   );
@@ -1175,7 +1240,7 @@ function applyFilters() {
     if (urgency !== "all" && row.llm_urgency !== urgency) return false;
     if (
       query &&
-      !`${row.review_title} ${row.review_text} ${row.reviewer_name} ${row.llm_summary} ${row.llm_action} ${row.llm_topics.join(" ")} ${row.llm_root_causes.join(" ")} ${row.llm_crm_next_step} ${row.llm_marketing_gap} ${row.llm_staff_mentions.join(" ")}`
+      !`${row.review_title} ${row.review_text} ${row.reviewer_name} ${row.llm_summary} ${row.llm_action} ${row.llm_topics.join(" ")} ${row.llm_root_causes.join(" ")} ${row.llm_departments.join(" ")} ${row.llm_crm_next_step} ${row.llm_marketing_gap} ${row.llm_marketing_amplification} ${row.llm_staff_mentions.join(" ")} ${row.llm_guest_intent} ${row.llm_rating_alignment} ${row.llm_repeat_issue_cluster} ${row.llm_competitive_detail} ${row.llm_compensation_reason}`
         .toLowerCase()
         .includes(query)
     ) return false;
@@ -1273,11 +1338,13 @@ function toCsv(rows) {
     "source_label",
     "rating",
     "llm_sentiment",
+    "llm_rating_alignment",
     "llm_urgency",
     "llm_topics",
     "llm_departments",
     "llm_root_causes",
     "llm_recommended_owner",
+    "llm_guest_intent",
     "llm_sla_hours",
     "llm_compensation_needed",
     "llm_compensation_reason",
@@ -1295,6 +1362,7 @@ function toCsv(rows) {
     "llm_summary",
     "llm_action",
     "llm_response_draft",
+    "llm_confidence",
     "review_title",
     "review_text",
     "reviewer_name",
