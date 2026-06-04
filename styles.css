@@ -105,6 +105,26 @@ select {
   font-weight: 700;
 }
 
+.docs-local-nav {
+  display: grid;
+  gap: 4px;
+  margin-bottom: 10px;
+}
+
+.docs-local-nav a {
+  color: #cdd5e1;
+  text-decoration: none;
+  padding: 7px 8px;
+  border-radius: 6px;
+  font-size: 12px;
+}
+
+.docs-local-nav a.active,
+.docs-local-nav a:hover {
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.1);
+}
+
 .sidebar-panel input {
   width: 100%;
   min-width: 0;
