@@ -96,6 +96,7 @@
           <p>Resumen del dataset filtrado: calificación promedio, volumen, promotores, casos de recuperación, tasa de respuesta, cobertura LLM, fuentes conectadas, segmentos y profundidad del feedback.</p>
         </section>
         <section id="overview" class="metric-grid" aria-label="KPIs principales"></section>
+        <div id="kpiInsight" class="panel-insight"></div>
       </section>
 
       <section id="overviewPanel" class="dashboard-panel">
@@ -139,6 +140,7 @@
               <span id="topicMode" class="panel-note"></span>
             </div>
             <div id="topicBars"></div>
+            <div id="topicInsight" class="panel-insight"></div>
           </article>
 
           <article class="panel operations-right">
@@ -150,6 +152,7 @@
               </div>
             </div>
             <div id="segmentBars"></div>
+            <div id="segmentInsight" class="panel-insight"></div>
           </article>
         </section>
       </section>
@@ -166,6 +169,7 @@
             </div>
             <div id="weeklyBriefCards" class="brief-grid"></div>
             <p id="weeklyNarrative" class="brief-narrative"></p>
+            <div id="executiveInsight" class="panel-insight"></div>
           </article>
 
           <article class="panel strategy-right">
@@ -177,6 +181,7 @@
               </div>
             </div>
             <div id="revenueImpactBars"></div>
+            <div id="revenueInsight" class="panel-insight"></div>
           </article>
         </section>
       </section>
@@ -196,6 +201,7 @@
               </div>
             </div>
             <div id="serviceExecutiveSummary" class="analysis-list"></div>
+            <div id="serviceAnalysisInsight" class="panel-insight"></div>
           </article>
 
           <article class="panel">
@@ -274,6 +280,7 @@
               </div>
             </div>
             <div id="rootCauseBars"></div>
+            <div id="rootCauseInsight" class="panel-insight"></div>
           </article>
 
           <article class="panel wide ai-right">
@@ -285,6 +292,7 @@
               </div>
             </div>
             <div id="rootCauseExamples" class="compact-list"></div>
+            <div id="rootEvidenceInsight" class="panel-insight"></div>
           </article>
         </section>
       </section>
@@ -301,6 +309,7 @@
               <span id="aiCoverage" class="panel-note"></span>
             </div>
             <div id="aiInsightList" class="insight-list"></div>
+            <div id="aiInsightExplanation" class="panel-insight"></div>
           </article>
 
           <article class="panel">
@@ -312,6 +321,7 @@
               </div>
             </div>
             <div id="aiSentimentBars"></div>
+            <div id="sentimentInsight" class="panel-insight"></div>
             <div class="panel-divider"></div>
             <div class="panel-heading compact">
               <div>
@@ -321,6 +331,7 @@
               </div>
             </div>
             <div id="departmentBars"></div>
+            <div id="departmentInsight" class="panel-insight"></div>
           </article>
         </section>
       </section>
@@ -336,6 +347,7 @@
               </div>
             </div>
             <div id="crmActionQueue" class="action-grid"></div>
+            <div id="crmQueueInsight" class="panel-insight"></div>
           </article>
 
           <article class="panel benchmark-right">
@@ -347,6 +359,7 @@
               </div>
             </div>
             <div id="revenueImpactList" class="compact-list"></div>
+            <div id="revenueListInsight" class="panel-insight"></div>
           </article>
         </section>
       </section>
@@ -376,6 +389,7 @@
                 <tbody id="benchmarkTable"></tbody>
               </table>
             </div>
+            <div id="benchmarkInsight" class="panel-insight"></div>
           </article>
 
           <article class="panel brand-right">
@@ -387,6 +401,7 @@
               </div>
             </div>
             <div id="competitiveSignalBars"></div>
+            <div id="competitiveInsight" class="panel-insight"></div>
           </article>
         </section>
       </section>
@@ -402,6 +417,7 @@
               </div>
             </div>
             <div id="complianceRiskList" class="compact-list"></div>
+            <div id="complianceInsight" class="panel-insight"></div>
           </article>
 
           <article class="panel wide sources-right">
@@ -422,6 +438,7 @@
                 <div id="staffRecognitionList" class="recognition-list"></div>
               </div>
             </div>
+            <div id="brandInsight" class="panel-insight"></div>
           </article>
         </section>
       </section>
@@ -454,6 +471,7 @@
             <p>Resenas con prioridad alta o media detectadas por Ollama.</p>
           </article>
         </section>
+        <div id="workflowInsight" class="panel-insight"></div>
 
         <section class="layout-grid reviews-layout">
           <article class="panel">
@@ -465,6 +483,7 @@
               </div>
             </div>
             <div id="riskReviews" class="review-list"></div>
+            <div id="riskReviewsInsight" class="panel-insight"></div>
           </article>
 
           <article class="panel wide">
@@ -492,6 +511,7 @@
                 <tbody id="reviewsTable"></tbody>
               </table>
             </div>
+            <div id="tableInsight" class="panel-insight"></div>
           </article>
         </section>
       </section>
@@ -515,6 +535,14 @@
             <strong>Cómo analizar</strong>
             <p>Guía para interpretar KPIs, diagnóstico IA, estrategia, CRM, marca y riesgos.</p>
           </a>
+          <a class="docs-card docs-link-card" href="#doc-kpis">
+            <strong>KPIs del negocio</strong>
+            <p>Rating, promotores, recuperación, respuesta, cobertura LLM y profundidad del feedback.</p>
+          </a>
+          <a class="docs-card docs-link-card" href="#doc-temas">
+            <strong>Temas y segmentos</strong>
+            <p>Lectura operativa de conversación, perfil del huésped y concentración de problemas.</p>
+          </a>
           <a class="docs-card docs-link-card" href="#doc-tendencia">
             <strong>Tendencia mensual</strong>
             <p>Cómo leer volumen, rating promedio mensual, color de alerta y estabilidad temporal.</p>
@@ -526,6 +554,14 @@
           <a class="docs-card docs-link-card" href="#doc-automatizacion">
             <strong>Automatización CRM</strong>
             <p>Cómo una reseña pasa a cola de seguimiento, SLA, respuesta y exportación.</p>
+          </a>
+          <a class="docs-card docs-link-card" href="#doc-analisis-profundo">
+            <strong>Diagnóstico IA</strong>
+            <p>Análisis profundo, causa raíz, evidencia, sentimiento, departamentos y acciones.</p>
+          </a>
+          <a class="docs-card docs-link-card" href="#doc-impacto-comercial">
+            <strong>Impacto comercial</strong>
+            <p>Priorización de riesgos para conversión, precio, retención y promesa de valor.</p>
           </a>
           <a class="docs-card docs-link-card" href="#doc-comparables">
             <strong>Comparables</strong>
@@ -587,6 +623,200 @@
             <article id="doc-limitaciones" class="docs-copy">
               <h4>Limitaciones</h4>
               <p>Las métricas de rating y volumen cubren todo el dataset; sentimiento, causa raíz, routing y análisis profundo dependen de la cobertura LLM disponible.</p>
+            </article>
+          </div>
+        </section>
+
+        <section id="doc-kpis" class="docs-section">
+          <div class="docs-section-head">
+            <p class="eyebrow">KPIs</p>
+            <h3>Salud reputacional y cobertura de análisis</h3>
+          </div>
+          <div class="docs-columns">
+            <article class="docs-copy">
+              <h4>Fuente</h4>
+              <p>Los KPIs usan todas las reseñas filtradas: calificación, fecha, respuesta del propietario, fuente, segmento, conteo de palabras y campos enriquecidos por LLM.</p>
+            </article>
+            <article class="docs-copy">
+              <h4>Interpretación</h4>
+              <p>Rating promedio y promotores miden reputación pública; service recovery mide presión de recuperación; response rate mide disciplina de respuesta; cobertura LLM indica cuánto diagnóstico semántico está disponible.</p>
+            </article>
+            <article class="docs-copy">
+              <h4>Uso comercial</h4>
+              <p>Un rating alto con baja respuesta o cobertura incompleta requiere completar operación antes de vender conclusiones definitivas. Un rating alto con pocos casos recovery valida fortaleza reputacional.</p>
+            </article>
+          </div>
+        </section>
+
+        <section id="doc-temas" class="docs-section">
+          <div class="docs-section-head">
+            <p class="eyebrow">Temas</p>
+            <h3>Concentración de conversación operativa</h3>
+          </div>
+          <div class="docs-columns">
+            <article class="docs-copy">
+              <h4>Fuente</h4>
+              <p>Cuando hay cobertura LLM, el panel usa etiquetas temáticas por reseña. Si no hay LLM suficiente, usa palabras clave del texto como respaldo conservador.</p>
+            </article>
+            <article class="docs-copy">
+              <h4>Interpretación</h4>
+              <p>El tema dominante no siempre es un problema: puede ser fortaleza o fricción. Debe cruzarse con sentimiento, rating, causa raíz y ejemplos textuales.</p>
+            </article>
+            <article id="doc-segmentos" class="docs-copy">
+              <h4>Segmentos</h4>
+              <p>Los segmentos provienen del tipo de viaje o perfil disponible. Permiten ver si la experiencia cambia para parejas, familias, viajeros de negocio, amigos o huéspedes solos.</p>
+            </article>
+          </div>
+        </section>
+
+        <section id="doc-resumen-ejecutivo" class="docs-section">
+          <div class="docs-section-head">
+            <p class="eyebrow">Resumen ejecutivo</p>
+            <h3>Prioridades de reputación para gerencia</h3>
+          </div>
+          <div class="docs-columns">
+            <article class="docs-copy">
+              <h4>Fuente</h4>
+              <p>El resumen combina conteos LLM, urgencia, compensación, impacto de ingresos, brechas de marca, reconocimientos y dueños operativos.</p>
+            </article>
+            <article class="docs-copy">
+              <h4>Interpretación</h4>
+              <p>Sirve para decidir qué problema merece comité ejecutivo, qué área debe liderar la respuesta y qué casos requieren recuperación inmediata.</p>
+            </article>
+          </div>
+        </section>
+
+        <section id="doc-impacto-comercial" class="docs-section">
+          <div class="docs-section-head">
+            <p class="eyebrow">Ingresos</p>
+            <h3>Impacto comercial y protección de demanda</h3>
+          </div>
+          <div class="docs-columns">
+            <article class="docs-copy">
+              <h4>Fuente</h4>
+              <p>El impacto comercial se deriva del LLM cuando existe y de reglas de respaldo basadas en rating, limpieza, seguridad, cobros y severidad del texto.</p>
+            </article>
+            <article class="docs-copy">
+              <h4>Interpretación</h4>
+              <p>Alto impacto apunta a reseñas que pueden afectar conversión, confianza en precio, repetición del huésped o percepción de valor. Medio indica seguimiento preventivo.</p>
+            </article>
+            <article class="docs-copy">
+              <h4>Uso práctico</h4>
+              <p>Revenue, gerencia y guest relations pueden usar esta vista para priorizar respuestas públicas, compensaciones, revisión de producto y ajustes de comunicación comercial.</p>
+            </article>
+          </div>
+        </section>
+
+        <section id="doc-analisis-profundo" class="docs-section">
+          <div class="docs-section-head">
+            <p class="eyebrow">Diagnóstico IA</p>
+            <h3>Análisis profundo generado durante enriquecimiento</h3>
+          </div>
+          <div class="docs-columns">
+            <article class="docs-copy">
+              <h4>Fuente</h4>
+              <p>La sección usa `dashboard_analysis` del archivo meta generado por Ollama. El análisis se produce desde agregados reales, cobertura LLM, distribuciones y evidencia seleccionada.</p>
+            </article>
+            <article class="docs-copy">
+              <h4>Interpretación</h4>
+              <p>Debe leerse como una hipótesis ejecutiva sustentada en los datos cargados. Su precisión aumenta conforme crece la cobertura de reseñas enriquecidas.</p>
+            </article>
+            <article id="doc-causa-raiz" class="docs-copy">
+              <h4>Causa raíz</h4>
+              <p>Agrupa reseñas por causa probable: servicio, habitación, ruido, limpieza, alimentos, cobros, seguridad, mantenimiento, ubicación, amenidades o promesa de marca.</p>
+            </article>
+            <article id="doc-evidencia" class="docs-copy">
+              <h4>Evidencia</h4>
+              <p>Los ejemplos muestran reseñas priorizadas por urgencia, impacto comercial y SLA. Sirven para validar que el patrón agregado aparece en textos concretos.</p>
+            </article>
+          </div>
+        </section>
+
+        <section id="doc-insights-ia" class="docs-section">
+          <div class="docs-section-head">
+            <p class="eyebrow">Insights IA</p>
+            <h3>Acciones y triage semántico</h3>
+          </div>
+          <div class="docs-columns">
+            <article class="docs-copy">
+              <h4>Fuente</h4>
+              <p>Los insights provienen de campos enriquecidos por Ollama: resumen, acción recomendada, urgencia, sentimiento, departamentos, SLA y respuesta sugerida.</p>
+            </article>
+            <article id="doc-sentimiento" class="docs-copy">
+              <h4>Sentimiento</h4>
+              <p>El sentimiento complementa el rating. Una reseña de alta puntuación puede ser mixta, y una reseña baja puede contener elogios que conviene preservar.</p>
+            </article>
+            <article id="doc-departamentos" class="docs-copy">
+              <h4>Departamentos</h4>
+              <p>El routing asigna responsables probables para seguimiento: recepción, housekeeping, alimentos y bebidas, habitaciones, mantenimiento, ingresos, seguridad o gerencia.</p>
+            </article>
+          </div>
+        </section>
+
+        <section id="doc-crm" class="docs-section">
+          <div class="docs-section-head">
+            <p class="eyebrow">CRM</p>
+            <h3>Cola operativa y seguimiento</h3>
+          </div>
+          <div class="docs-columns">
+            <article class="docs-copy">
+              <h4>Fuente</h4>
+              <p>La cola CRM usa riesgo de recuperación, urgencia, impacto comercial, SLA, dueño operativo, compensación y siguiente acción generada por LLM.</p>
+            </article>
+            <article class="docs-copy">
+              <h4>Interpretación</h4>
+              <p>Los primeros casos son los más sensibles por daño potencial, urgencia o necesidad de respuesta. La cola está pensada para asignar trabajo y medir cierre.</p>
+            </article>
+          </div>
+        </section>
+
+        <section id="doc-benchmark" class="docs-section">
+          <div class="docs-section-head">
+            <p class="eyebrow">Benchmark</p>
+            <h3>Comparación por negocio o canal</h3>
+          </div>
+          <div class="docs-columns">
+            <article class="docs-copy">
+              <h4>Fuente</h4>
+              <p>Si hay varios negocios, compara por negocio. Si solo hay uno, compara por fuente o canal disponible, usando volumen, rating, recovery e IA positiva.</p>
+            </article>
+            <article id="doc-competitivo" class="docs-copy">
+              <h4>Señal competitiva</h4>
+              <p>La señal competitiva clasifica menciones de ventaja, paridad, desventaja o expectativa poco clara frente al mercado o competidores mencionados.</p>
+            </article>
+          </div>
+        </section>
+
+        <section id="doc-cumplimiento" class="docs-section">
+          <div class="docs-section-head">
+            <p class="eyebrow">Cumplimiento</p>
+            <h3>Riesgos legales, seguridad y salud</h3>
+          </div>
+          <div class="docs-columns">
+            <article class="docs-copy">
+              <h4>Fuente</h4>
+              <p>El panel usa riesgos marcados por LLM y reglas de respaldo para seguridad, salud, privacidad, fraude, discriminación y disputas de cobro.</p>
+            </article>
+            <article class="docs-copy">
+              <h4>Interpretación</h4>
+              <p>No reemplaza revisión legal. Su función es alertar casos que requieren respuesta controlada, documentación interna y posible escalamiento.</p>
+            </article>
+          </div>
+        </section>
+
+        <section id="doc-marca" class="docs-section">
+          <div class="docs-section-head">
+            <p class="eyebrow">Marca</p>
+            <h3>Respuesta pública, marketing y reconocimiento</h3>
+          </div>
+          <div class="docs-columns">
+            <article class="docs-copy">
+              <h4>Fuente</h4>
+              <p>La sección usa borradores de respuesta, señales para amplificación, brechas de promesa comercial y menciones de staff detectadas por LLM.</p>
+            </article>
+            <article class="docs-copy">
+              <h4>Interpretación</h4>
+              <p>Permite convertir reseñas positivas en prueba social, reseñas mixtas en respuesta pública coherente y menciones de personal en reconocimiento interno.</p>
             </article>
           </div>
         </section>
@@ -654,6 +884,23 @@
             <li>Usar la cola CRM para recuperación de servicio, respuesta pública y seguimiento interno.</li>
             <li>Exportar JSON o CSV para reporting e integraciones.</li>
           </ol>
+        </section>
+
+        <section id="doc-resenas-recuperacion" class="docs-section">
+          <div class="docs-section-head">
+            <p class="eyebrow">Recuperación</p>
+            <h3>Reseñas que requieren intervención</h3>
+          </div>
+          <div class="docs-columns">
+            <article class="docs-copy">
+              <h4>Fuente</h4>
+              <p>La lista usa reseñas con rating bajo, sentimiento negativo o señales LLM de urgencia. Se ordena por urgencia, fecha y calificación.</p>
+            </article>
+            <article id="doc-tabla" class="docs-copy">
+              <h4>Tabla normalizada</h4>
+              <p>La tabla muestra hasta 250 filas filtradas con campos normalizados y enriquecidos. Es útil para auditoría, búsqueda, exportación y revisión de evidencia.</p>
+            </article>
+          </div>
         </section>
 
         <section id="doc-comparables" class="docs-section">

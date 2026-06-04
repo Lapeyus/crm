@@ -100,6 +100,16 @@ function escapeHtml(value) {
     .replaceAll("'", "&#039;");
 }
 
+function renderPanelInsight(containerId, text, docHref, linkText = "Profundizar en documentación") {
+  const container = $(`#${containerId}`);
+  if (!container) return;
+  container.innerHTML = `
+    <strong>Fuente e interpretación actual</strong>
+    <p>${escapeHtml(text)}</p>
+    <a href="${escapeHtml(docHref)}">${escapeHtml(linkText)}</a>
+  `;
+}
+
 function parseDate(value) {
   if (!value) return null;
   const parsed = new Date(value);
@@ -344,6 +354,12 @@ function renderMetrics(rows) {
   ];
 
   for (const card of cards) grid.appendChild(card);
+  renderPanelInsight(
+    "kpiInsight",
+    `Fuente: ${rows.length.toLocaleString()} reseñas filtradas. El rating promedio visible es ${ratingAvg.toFixed(2)}, con ${promoters.toFixed(1)}% de promotores 4-5, ${recovery.toLocaleString()} casos de recuperación y ${llmCoverage.toFixed(1)}% de cobertura LLM. Esta vista resume salud reputacional, riesgo operativo y profundidad disponible para diagnóstico.`,
+    "#doc-kpis",
+    "Cómo analizar KPIs"
+  );
 }
 
 function barRow(label, value, max, tone = "") {
@@ -414,6 +430,15 @@ function renderTopics(rows) {
     renderBars("topicBars", entries, "");
     const note = $("#topicMode");
     if (note) note.textContent = `${llmRows.length.toLocaleString()} con LLM`;
+    const top = entries[0];
+    renderPanelInsight(
+      "topicInsight",
+      top
+        ? `Fuente: etiquetas temáticas generadas por LLM en ${llmRows.length.toLocaleString()} reseñas. El tema dominante es ${top[0]} con ${top[1].toLocaleString()} menciones, por lo que este bloque explica dónde se concentra la conversación operativa actual.`
+        : `Fuente: etiquetas temáticas generadas por LLM. No hay temas suficientes con los filtros actuales.`,
+      "#doc-temas",
+      "Cómo analizar temas"
+    );
     return;
   }
   const textRows = rows.map((row) => row.review_text.toLowerCase());
@@ -426,6 +451,15 @@ function renderTopics(rows) {
   renderBars("topicBars", entries, "");
   const note = $("#topicMode");
   if (note) note.textContent = "Respaldo por palabras clave";
+  const top = entries[0];
+  renderPanelInsight(
+    "topicInsight",
+    top
+      ? `Fuente: palabras clave en el texto de ${rows.length.toLocaleString()} reseñas filtradas. Como respaldo sin LLM completo, el tema más frecuente es ${top[0]} con ${top[1].toLocaleString()} coincidencias; debe validarse con reseñas concretas.`
+      : `Fuente: palabras clave del texto de reseñas. No hay volumen suficiente para detectar temas.`,
+    "#doc-temas",
+    "Cómo analizar temas"
+  );
 }
 
 function renderSegments(rows) {
@@ -435,6 +469,15 @@ function renderSegments(rows) {
     .slice(0, 8)
     .map(([label, value]) => [label.replace(/\b\w/g, (c) => c.toUpperCase()), value]);
   renderBars("segmentBars", entries, "good");
+  const top = entries[0];
+  renderPanelInsight(
+    "segmentInsight",
+    top
+      ? `Fuente: campo de tipo de viaje o segmento disponible en cada reseña. El segmento dominante es ${top[0]} con ${top[1].toLocaleString()} reseñas; úsalo para leer si la reputación actual está más influida por parejas, familias, negocios u otros perfiles.`
+      : `Fuente: metadatos de segmento de la reseña. No hay segmentos visibles con los filtros actuales.`,
+    "#doc-segmentos",
+    "Cómo analizar segmentos"
+  );
 }
 
 function inferRootCauses(row) {
@@ -534,6 +577,15 @@ function renderRootCauseMap(rows) {
   const counts = countMany(rows, inferRootCauses);
   const entries = topEntries(counts, 10).map(([cause, value]) => [labelFromMap(cause, ROOT_CAUSE_LABELS), value]);
   renderBars("rootCauseBars", entries.length ? entries : [["Unclassified", 0]], "");
+  const topCause = entries[0];
+  renderPanelInsight(
+    "rootCauseInsight",
+    topCause
+      ? `Fuente: causas raíz inferidas por LLM y reglas de respaldo cuando falta análisis. La causa más frecuente es ${topCause[0]} con ${topCause[1].toLocaleString()} menciones; este ranking ayuda a distinguir síntomas visibles de problemas operativos repetidos.`
+      : `Fuente: causas raíz inferidas desde reseñas. No hay causas accionables con los filtros actuales.`,
+    "#doc-causa-raiz",
+    "Cómo analizar causa raíz"
+  );
 
   const examples = rows
     .filter((row) => urgencyForRow(row) !== "low" || row.rating <= 3)
@@ -555,6 +607,14 @@ function renderRootCauseMap(rows) {
       </article>
     `).join("")
     : '<p class="empty-state">No hay causas raíz accionables con los filtros actuales.</p>';
+  renderPanelInsight(
+    "rootEvidenceInsight",
+    examples.length
+      ? `Fuente: reseñas priorizadas por urgencia, impacto comercial y SLA. Se muestran ${examples.length} ejemplos para sustentar los patrones del mapa de causa raíz con evidencia textual específica.`
+      : `Fuente: reseñas con señales de urgencia o rating bajo. No hay ejemplos accionables en el filtro actual.`,
+    "#doc-evidencia",
+    "Cómo usar la evidencia"
+  );
 }
 
 function renderExecutiveBrief(rows) {
@@ -587,6 +647,12 @@ function renderExecutiveBrief(rows) {
   $("#weeklyNarrative").textContent =
     `Prioridad ejecutiva: ${causeLabel}. Dueño operativo principal: ${ownerLabel}. ` +
     `Hay ${highUrgency} casos de urgencia alta y ${highRevenue} con impacto alto en ingresos.`;
+  renderPanelInsight(
+    "executiveInsight",
+    `Fuente: agregados LLM y métricas del dataset filtrado. La prioridad ejecutiva actual es ${causeLabel}, el dueño operativo dominante es ${ownerLabel}, hay ${highUrgency.toLocaleString()} casos de urgencia alta y ${highRevenue.toLocaleString()} reseñas con impacto alto en ingresos.`,
+    "#doc-resumen-ejecutivo",
+    "Cómo analizar prioridades"
+  );
 }
 
 function renderCrmActionQueue(rows) {
@@ -615,12 +681,28 @@ function renderCrmActionQueue(rows) {
       </article>
     `).join("")
     : '<p class="empty-state">No hay acciones de CRM con los filtros actuales.</p>';
+  renderPanelInsight(
+    "crmQueueInsight",
+    queue.length
+      ? `Fuente: reseñas con riesgo de recuperación, acción sugerida o siguiente paso CRM. La cola muestra ${queue.length} casos priorizados por urgencia, impacto en ingresos y SLA para convertir feedback en seguimiento operativo.`
+      : `Fuente: señales CRM del LLM y reglas de recuperación. No hay casos activos con los filtros actuales.`,
+    "#doc-crm",
+    "Cómo analizar la cola CRM"
+  );
 }
 
 function renderRevenueImpact(rows) {
   const counts = countBy(rows, revenueImpactForRow);
   const entries = ["high", "medium", "low"].map((impact) => [impact.replace(/\b\w/g, (c) => c.toUpperCase()), counts[impact] || 0]);
   renderImpactBars("revenueImpactBars", entries);
+  const high = counts.high || 0;
+  const medium = counts.medium || 0;
+  renderPanelInsight(
+    "revenueInsight",
+    `Fuente: clasificación de impacto comercial generada por LLM o reglas de respaldo. Hay ${high.toLocaleString()} reseñas de impacto alto y ${medium.toLocaleString()} de impacto medio; estas señales priorizan casos que pueden afectar conversión, precio, repetición o confianza del huésped.`,
+    "#doc-impacto-comercial",
+    "Cómo analizar impacto comercial"
+  );
 
   const risks = rows
     .filter((row) => revenueImpactForRow(row) !== "low")
@@ -642,6 +724,14 @@ function renderRevenueImpact(rows) {
       </article>
     `).join("")
     : '<p class="empty-state">No hay riesgos comerciales fuertes en los filtros actuales.</p>';
+  renderPanelInsight(
+    "revenueListInsight",
+    risks.length
+      ? `Fuente: reseñas con impacto comercial distinto de bajo. Se listan ${risks.length} riesgos prioritarios para revisar narrativa de valor, compensación, retención y posible fricción de compra.`
+      : `Fuente: impacto comercial por reseña. No hay riesgos comerciales fuertes en el filtro actual.`,
+    "#doc-impacto-comercial",
+    "Cómo priorizar riesgos de ingresos"
+  );
 }
 
 function renderBenchmark(rows) {
@@ -675,10 +765,28 @@ function renderBenchmark(rows) {
       </tr>
     `).join("")
     : '<tr><td colspan="5">Sin datos para benchmark.</td></tr>';
+  const leader = groups[0];
+  renderPanelInsight(
+    "benchmarkInsight",
+    leader
+      ? `Fuente: agrupación por ${businesses.length > 1 ? "negocio" : "canal"} usando volumen, rating, recovery e IA positiva. El grupo mejor posicionado actualmente es ${leader.label} con rating ${leader.rating.toFixed(2)} y ${leader.volume.toLocaleString()} reseñas.`
+      : `Fuente: agrupación por negocio o canal. No hay datos suficientes para comparar.`,
+    "#doc-benchmark",
+    "Cómo analizar benchmark"
+  );
 
   const competitiveCounts = countBy(rows.filter((row) => row.llm_competitive_signal), (row) => row.llm_competitive_signal);
   const competitiveEntries = topEntries(competitiveCounts, 6).map(([signal, value]) => [signal.replaceAll("_", " "), value]);
   renderBars("competitiveSignalBars", competitiveEntries.length ? competitiveEntries : [["unclear", 0]], "");
+  const competitiveTop = competitiveEntries[0];
+  renderPanelInsight(
+    "competitiveInsight",
+    competitiveTop
+      ? `Fuente: señal competitiva extraída por LLM. La señal dominante es ${competitiveTop[0]} con ${competitiveTop[1].toLocaleString()} menciones, útil para distinguir ventaja, paridad o brecha frente a expectativas del mercado.`
+      : `Fuente: señal competitiva extraída por LLM. Todavía no hay suficientes menciones clasificadas.`,
+    "#doc-competitivo",
+    "Cómo analizar señal competitiva"
+  );
 }
 
 function renderComplianceAndBrand(rows) {
@@ -698,6 +806,14 @@ function renderComplianceAndBrand(rows) {
       </article>
     `).join("")
     : '<p class="empty-state">No hay riesgos legales/compliance detectados.</p>';
+  renderPanelInsight(
+    "complianceInsight",
+    complianceRows.length
+      ? `Fuente: riesgos de seguridad, salud, privacidad, fraude o disputas de cobro detectados por LLM y reglas de respaldo. Hay ${complianceRows.length} casos visibles para revisión cuidadosa y respuesta controlada.`
+      : `Fuente: riesgos legales y de seguridad detectados en texto y LLM. No hay casos visibles con los filtros actuales.`,
+    "#doc-cumplimiento",
+    "Cómo analizar cumplimiento"
+  );
 
   const responseRows = rows
     .filter((row) => row.llm_response_draft)
@@ -747,6 +863,12 @@ function renderComplianceAndBrand(rows) {
       </div>
     `).join("")
     : '<p class="empty-state">El LLM no ha detectado nombres de staff en los filtros actuales.</p>';
+  renderPanelInsight(
+    "brandInsight",
+    `Fuente: borradores de respuesta, señales de marketing, brechas de promesa y menciones de personal generadas por LLM. Hay ${responseRows.length.toLocaleString()} respuestas sugeridas, ${marketingRows.length.toLocaleString()} señales de marca y ${staffEntries.length.toLocaleString()} reconocimientos de personal visibles.`,
+    "#doc-marca",
+    "Cómo analizar voz de marca"
+  );
 }
 
 function renderLlmInsights(rows) {
@@ -758,6 +880,9 @@ function renderLlmInsights(rows) {
     $("#aiSentimentBars").innerHTML = '<p class="empty-state">Ejecuta el enriquecimiento con Ollama para activar sentimiento, routing y acciones sugeridas.</p>';
     $("#departmentBars").innerHTML = '<p class="empty-state">Sin routing LLM todavia.</p>';
     $("#aiInsightList").innerHTML = '<p class="empty-state">No hay insights IA para los filtros actuales.</p>';
+    renderPanelInsight("aiInsightExplanation", `Fuente: reseñas enriquecidas por LLM. No hay análisis IA disponible para el filtro actual.`, "#doc-insights-ia", "Cómo analizar insights IA");
+    renderPanelInsight("sentimentInsight", `Fuente: sentimiento LLM. No hay cobertura suficiente para clasificar el filtro actual.`, "#doc-sentimiento", "Cómo analizar sentimiento");
+    renderPanelInsight("departmentInsight", `Fuente: routing LLM por departamento. No hay cobertura suficiente para asignar responsables.`, "#doc-departamentos", "Cómo analizar departamentos");
     return;
   }
 
@@ -765,6 +890,13 @@ function renderLlmInsights(rows) {
     .sort((a, b) => b[1] - a[1])
     .map(([label, value]) => [label.replace(/\b\w/g, (c) => c.toUpperCase()), value]);
   renderSentimentBars("aiSentimentBars", sentimentEntries);
+  const topSentiment = sentimentEntries[0];
+  renderPanelInsight(
+    "sentimentInsight",
+    `Fuente: clasificación semántica de ${analyzed.length.toLocaleString()} reseñas enriquecidas. El sentimiento dominante es ${topSentiment ? topSentiment[0] : "n/a"} con ${topSentiment ? topSentiment[1].toLocaleString() : "0"} casos; úsalo junto con rating para detectar reseñas mixtas o negativas ocultas por puntuaciones altas.`,
+    "#doc-sentimiento",
+    "Cómo analizar sentimiento"
+  );
 
   const departmentCounts = {};
   for (const row of analyzed) {
@@ -777,6 +909,15 @@ function renderLlmInsights(rows) {
     .sort((a, b) => b[1] - a[1])
     .slice(0, 10);
   renderBars("departmentBars", departmentEntries, "");
+  const topDepartment = departmentEntries[0];
+  renderPanelInsight(
+    "departmentInsight",
+    topDepartment
+      ? `Fuente: departamentos responsables sugeridos por LLM. El mayor volumen se asigna a ${topDepartment[0]} con ${topDepartment[1].toLocaleString()} menciones, lo que indica dónde debe concentrarse el seguimiento operativo.`
+      : `Fuente: routing LLM por departamento. No hay responsables suficientes en el filtro actual.`,
+    "#doc-departamentos",
+    "Cómo analizar departamentos"
+  );
 
   const insightRows = analyzed
     .filter((row) => row.llm_action || row.llm_summary)
@@ -803,6 +944,14 @@ function renderLlmInsights(rows) {
       </article>
     `).join("")
     : '<p class="empty-state">No hay acciones sugeridas en los filtros actuales.</p>';
+  renderPanelInsight(
+    "aiInsightExplanation",
+    insightRows.length
+      ? `Fuente: resúmenes y acciones generadas por LLM, ordenadas por urgencia y fecha. Se muestran ${insightRows.length} insights accionables para que el CRM convierta reseñas en tareas concretas.`
+      : `Fuente: resúmenes y acciones LLM. No hay acciones sugeridas con los filtros actuales.`,
+    "#doc-insights-ia",
+    "Cómo analizar insights IA"
+  );
 }
 
 function renderTimeline(rows) {
@@ -860,6 +1009,16 @@ function renderWorkflow(rows) {
     .filter((row) => row.has_llm_analysis && ["high", "medium"].includes(row.llm_urgency))
     .length
     .toLocaleString();
+  const collection = dated.slice(-30).length;
+  const recovery = rows.filter((row) => row.risk_level === "recovery").length;
+  const response = rows.filter((row) => !row.has_owner_response).length;
+  const ai = rows.filter((row) => row.has_llm_analysis && ["high", "medium"].includes(row.llm_urgency)).length;
+  renderPanelInsight(
+    "workflowInsight",
+    `Fuente: fechas de reseña, owner response, riesgo de recuperación y urgencia LLM. La operación actual muestra ${collection.toLocaleString()} candidatos recientes para colección, ${recovery.toLocaleString()} casos de recuperación, ${response.toLocaleString()} reseñas sin respuesta detectada y ${ai.toLocaleString()} tareas de triage IA.`,
+    "#doc-automatizacion",
+    "Cómo automatizar el flujo"
+  );
 }
 
 function renderRiskReviews(rows) {
@@ -890,6 +1049,14 @@ function renderRiskReviews(rows) {
       </article>
     `).join("")
     : '<p class="empty-state">No hay reseñas de recuperación con los filtros actuales.</p>';
+  renderPanelInsight(
+    "riskReviewsInsight",
+    risk.length
+      ? `Fuente: reseñas clasificadas como recuperación por rating bajo o sentimiento negativo, ordenadas por urgencia, fecha y calificación. Se muestran ${risk.length} casos para intervención prioritaria.`
+      : `Fuente: rating, sentimiento y urgencia LLM. No hay reseñas de recuperación con los filtros actuales.`,
+    "#doc-resenas-recuperacion",
+    "Cómo analizar recuperación"
+  );
 }
 
 function renderTable(rows) {
@@ -905,6 +1072,12 @@ function renderTable(rows) {
       <td>${escapeHtml(row.trip_type)}</td>
     </tr>
   `).join("");
+  renderPanelInsight(
+    "tableInsight",
+    `Fuente: tabla normalizada de reseñas filtradas. Se muestran hasta 250 de ${rows.length.toLocaleString()} filas visibles con fecha, fuente, rating, sentimiento, título, acción IA y segmento para auditoría, búsqueda y exportación.`,
+    "#doc-tabla",
+    "Cómo usar la tabla"
+  );
 }
 
 function renderAnalysisList(containerId, items, emptyText = "No hay análisis disponible para esta sección.") {
@@ -931,6 +1104,12 @@ function renderServiceAnalysis() {
       "serviceNextSteps",
       "serviceLimitations"
     ].forEach((id) => renderAnalysisList(id, []));
+    renderPanelInsight(
+      "serviceAnalysisInsight",
+      "Fuente: archivo meta del dataset. Todavía no existe dashboard_analysis para el filtro actual, por lo que este panel queda pendiente hasta ejecutar la etapa de enriquecimiento profundo con LLM.",
+      "#doc-analisis-profundo",
+      "Cómo interpretar el análisis profundo"
+    );
     return;
   }
 
@@ -951,6 +1130,12 @@ function renderServiceAnalysis() {
   renderAnalysisList("serviceEvidence", analysis.evidence_es);
   renderAnalysisList("serviceNextSteps", analysis.recommended_next_steps_es);
   renderAnalysisList("serviceLimitations", analysis.data_limitations_es);
+  renderPanelInsight(
+    "serviceAnalysisInsight",
+    `Fuente: dashboard_analysis del archivo meta, generado por LLM desde métricas reales y evidencia del dataset. Este diagnóstico cubre ${Number(aggregate.reviews_total || 0).toLocaleString()} reseñas y ${Number(aggregate.reviews_analyzed_by_llm || 0).toLocaleString()} enriquecidas, por lo que su fuerza depende de la cobertura indicada.`,
+    "#doc-analisis-profundo",
+    "Cómo interpretar el análisis profundo"
+  );
 }
 
 function populateSelect(id, values, allLabel) {
@@ -1175,16 +1360,16 @@ function wireEvents() {
     });
   });
 
-  document.querySelectorAll('a[href^="#doc-"]').forEach((link) => {
-    link.addEventListener("click", (event) => {
-      event.preventDefault();
-      const targetId = link.getAttribute("href").slice(1);
-      activateSection(["documentationPanel"]);
-      window.setTimeout(() => {
-        document.getElementById(targetId)?.scrollIntoView({ behavior: "smooth", block: "start" });
-        history.replaceState(null, "", `#${targetId}`);
-      }, 0);
-    });
+  document.addEventListener("click", (event) => {
+    const link = event.target.closest('a[href^="#doc-"]');
+    if (!link) return;
+    event.preventDefault();
+    const targetId = link.getAttribute("href").slice(1);
+    activateSection(["documentationPanel"]);
+    window.setTimeout(() => {
+      document.getElementById(targetId)?.scrollIntoView({ behavior: "smooth", block: "start" });
+      history.replaceState(null, "", `#${targetId}`);
+    }, 0);
   });
 
   const initialPanel = window.location.hash.replace("#", "");
