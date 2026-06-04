@@ -17,18 +17,11 @@
       </div>
 
       <nav class="nav">
-        <a class="active" href="#kpisPanel" data-panel="kpisPanel">KPIs</a>
-        <a href="#overviewPanel" data-panel="overviewPanel">Resumen</a>
-        <a href="#operationsPanel" data-panel="operationsPanel">Operaciones</a>
-        <a href="#strategyPanel" data-panel="strategyPanel">Estrategia</a>
-        <a href="#serviceAnalysisPanel" data-panel="serviceAnalysisPanel">Análisis profundo</a>
-        <a href="#aiPanel" data-panel="aiPanel">Análisis IA</a>
-        <a href="#crmPanel" data-panel="crmPanel">CRM</a>
-        <a href="#benchmarkPanel" data-panel="benchmarkPanel">Benchmark</a>
-        <a href="#brandPanel" data-panel="brandPanel">Marca</a>
-        <a href="#sourcesPanel" data-panel="sourcesPanel">Fuentes</a>
-        <a href="#automationPanel" data-panel="automationPanel">Automatización</a>
-        <a href="#reviewsPanel" data-panel="reviewsPanel">Reseñas</a>
+        <a class="active" href="#kpisPanel" data-panels="kpisPanel,overviewPanel">KPIs y tendencia</a>
+        <a href="#serviceAnalysisPanel" data-panels="serviceAnalysisPanel,operationsPanel,aiPanel">Diagnóstico IA</a>
+        <a href="#strategyPanel" data-panels="strategyPanel,brandPanel">Estrategia y benchmark</a>
+        <a href="#crmPanel" data-panels="crmPanel,benchmarkPanel,reviewsPanel">CRM y reseñas</a>
+        <a href="#sourcesPanel" data-panels="sourcesPanel">Marca y riesgos</a>
         <a href="./documentacion.html">Documentación</a>
       </nav>
 
@@ -422,55 +415,10 @@
               <div>
                 <div id="marketingSignalList" class="compact-list"></div>
                 <div class="panel-divider"></div>
-                <h4>Staff recognition</h4>
+                <h4>Reconocimiento al personal</h4>
                 <p class="panel-description tight">Nombres o roles mencionados positivamente para reconocimiento interno y aprendizaje operativo.</p>
                 <div id="staffRecognitionList" class="recognition-list"></div>
               </div>
-            </div>
-          </article>
-        </section>
-      </section>
-
-      <section id="automationPanel" class="dashboard-panel">
-        <section id="sources" class="layout-grid automation-layout">
-          <article class="panel wide automation-top">
-            <div class="panel-heading">
-              <div>
-                <p class="eyebrow">Fuentes y método</p>
-                <h3>Qué información representa este panel</h3>
-                <p class="panel-description">Parte de un export de TripAdvisor para Hotel Grano de Oro y lo enriquece con Ollama local. La lectura combina estrellas, texto libre, fechas, segmentos, sentimiento semántico, causas raíz y señales operativas.</p>
-              </div>
-              <a class="inline-link" href="./docs/user-guide.md" target="_blank" rel="noreferrer">Abrir guía completa</a>
-            </div>
-            <div class="source-grid">
-              <article class="source-card">
-                <strong>Fuente principal</strong>
-                <p>TripAdvisor Hotel Grano de Oro. La unidad de análisis es la reseña individual con rating, texto, fecha y metadatos asociados.</p>
-              </article>
-              <article class="source-card">
-                <strong>Enriquecimiento</strong>
-                <p>Ollama `qwen3.5:9b` convierte texto libre en sentimiento, urgencia, causa raíz, dueño recomendado, SLA, riesgo comercial y borradores de respuesta.</p>
-              </article>
-              <article class="source-card">
-                <strong>Uso operativo</strong>
-                <p>El objetivo no es solo analizar reputación. Es convertir reseñas en colas de trabajo para CRM, operaciones, ingresos y cumplimiento.</p>
-              </article>
-            </div>
-          </article>
-
-          <article class="panel automation-bottom">
-            <div class="panel-heading">
-              <div>
-                <p class="eyebrow">Servicios comparables</p>
-                <h3>Cómo se compara con la industria</h3>
-                <p class="panel-description">Las plataformas líderes unifican reseñas, analizan sentimiento y ayudan a responder. Esta versión añade una capa específica para hotelería, local, con enrutamiento y causa raíz.</p>
-              </div>
-            </div>
-            <div class="comparison-list">
-              <div class="comparison-row"><span>TrustYou</span><p>Gestión de reputación, CXP, sentimiento con IA, benchmark competitivo y respuesta automática.</p></div>
-              <div class="comparison-row"><span>Shiji ReviewPro</span><p>Análisis semántico, benchmark de experiencia del huésped, voz de marca y agregación de reseñas.</p></div>
-              <div class="comparison-row"><span>Birdeye</span><p>Monitoreo de reseñas, resúmenes con IA, respuestas con voz de marca, alertas e insights.</p></div>
-              <div class="comparison-row"><span>ReviewTrackers</span><p>Analítica de experiencia, sentimiento NLP, detección de tendencias, inteligencia competitiva y compliance.</p></div>
             </div>
           </article>
         </section>

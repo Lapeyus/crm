@@ -1116,28 +1116,32 @@ function wireEvents() {
   });
 
   const sectionPanels = [...document.querySelectorAll(".dashboard-panel")];
-  const navLinks = [...document.querySelectorAll(".nav a[data-panel]")];
-  const activateSection = (panelId) => {
+  const navLinks = [...document.querySelectorAll(".nav a[data-panels]")];
+  const activateSection = (panelIds) => {
+    const activePanelIds = Array.isArray(panelIds) ? panelIds : [panelIds];
+    const primaryPanelId = activePanelIds[0] || "kpisPanel";
     navLinks.forEach((link) => {
-      const active = link.dataset.panel === panelId;
+      const linkPanels = (link.dataset.panels || "").split(",").filter(Boolean);
+      const active = linkPanels.includes(primaryPanelId);
       link.classList.toggle("active", active);
     });
     sectionPanels.forEach((panel) => {
-      panel.classList.toggle("active", panel.id === panelId);
+      panel.classList.toggle("active", activePanelIds.includes(panel.id));
     });
-    history.replaceState(null, "", `#${panelId}`);
+    history.replaceState(null, "", `#${primaryPanelId}`);
   };
 
   navLinks.forEach((link) => {
     link.addEventListener("click", (event) => {
       event.preventDefault();
-      activateSection(link.dataset.panel);
+      activateSection((link.dataset.panels || "").split(",").filter(Boolean));
     });
   });
 
   const initialPanel = window.location.hash.replace("#", "");
-  const defaultPanel = "kpisPanel";
-  activateSection([defaultPanel, ...sectionPanels.map((panel) => panel.id)].includes(initialPanel) ? initialPanel : defaultPanel);
+  const defaultPanels = ["kpisPanel", "overviewPanel"];
+  const matchingLink = navLinks.find((link) => (link.dataset.panels || "").split(",").includes(initialPanel));
+  activateSection(matchingLink ? matchingLink.dataset.panels.split(",").filter(Boolean) : defaultPanels);
 }
 
 wireEvents();

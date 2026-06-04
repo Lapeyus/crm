@@ -308,18 +308,6 @@ select {
   grid-template-columns: minmax(0, 1fr) minmax(360px, 0.46fr);
 }
 
-.automation-layout {
-  grid-template-columns: 1fr;
-}
-
-.automation-top {
-  order: 1;
-}
-
-.automation-bottom {
-  order: 2;
-}
-
 .metric-card,
 .panel,
 .workflow-card {
@@ -1005,6 +993,10 @@ th {
 .docs-section-head h3 {
   margin: 0 0 8px;
   font-size: 22px;
+}
+
+.docs-subhead {
+  margin-top: 18px;
 }
 
 .docs-columns {
