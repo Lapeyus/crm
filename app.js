@@ -1140,8 +1140,16 @@ function wireEvents() {
 
   const initialPanel = window.location.hash.replace("#", "");
   const defaultPanels = ["kpisPanel", "overviewPanel"];
-  const matchingLink = navLinks.find((link) => (link.dataset.panels || "").split(",").includes(initialPanel));
-  activateSection(matchingLink ? matchingLink.dataset.panels.split(",").filter(Boolean) : defaultPanels);
+  if (initialPanel.startsWith("doc-")) {
+    activateSection(["documentationPanel"]);
+    window.setTimeout(() => {
+      document.getElementById(initialPanel)?.scrollIntoView({ behavior: "smooth", block: "start" });
+      history.replaceState(null, "", `#${initialPanel}`);
+    }, 0);
+  } else {
+    const matchingLink = navLinks.find((link) => (link.dataset.panels || "").split(",").includes(initialPanel));
+    activateSection(matchingLink ? matchingLink.dataset.panels.split(",").filter(Boolean) : defaultPanels);
+  }
 }
 
 wireEvents();

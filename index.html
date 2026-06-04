@@ -22,7 +22,7 @@
         <a href="#strategyPanel" data-panels="strategyPanel,brandPanel">Estrategia y benchmark</a>
         <a href="#crmPanel" data-panels="crmPanel,benchmarkPanel,reviewsPanel">CRM y reseñas</a>
         <a href="#sourcesPanel" data-panels="sourcesPanel">Marca y riesgos</a>
-        <a href="./documentacion.html">Documentación</a>
+        <a href="#documentationPanel" data-panels="documentationPanel">Documentación</a>
       </nav>
 
       <section class="sidebar-panel">
@@ -491,6 +491,122 @@
               </table>
             </div>
           </article>
+        </section>
+      </section>
+
+      <section id="documentationPanel" class="dashboard-panel">
+        <section class="section-explainer">
+          <strong>Documentación del sistema</strong>
+          <p>Guía operativa del panel: fuente de datos, enriquecimiento LLM, análisis presentados, automatización CRM y comparación con plataformas de reputación hotelera.</p>
+        </section>
+
+        <section class="docs-grid docs-index" aria-label="Índice de documentación">
+          <a class="docs-card docs-link-card" href="#doc-fuente">
+            <strong>Fuente de datos</strong>
+            <p>Origen, alcance, metadatos disponibles y qué representa cada reseña.</p>
+          </a>
+          <a class="docs-card docs-link-card" href="#doc-enriquecimiento">
+            <strong>Enriquecimiento LLM</strong>
+            <p>Qué agrega Ollama a cada reseña y cómo se usa el meta de análisis profundo.</p>
+          </a>
+          <a class="docs-card docs-link-card" href="#doc-lectura">
+            <strong>Cómo analizar</strong>
+            <p>Guía para interpretar KPIs, diagnóstico IA, estrategia, CRM, marca y riesgos.</p>
+          </a>
+          <a class="docs-card docs-link-card" href="#doc-automatizacion">
+            <strong>Automatización CRM</strong>
+            <p>Cómo una reseña pasa a cola de seguimiento, SLA, respuesta y exportación.</p>
+          </a>
+          <a class="docs-card docs-link-card" href="#doc-comparables">
+            <strong>Comparables</strong>
+            <p>Relación del enfoque con TrustYou, ReviewPro, Birdeye y ReviewTrackers.</p>
+          </a>
+          <a class="docs-card docs-link-card" href="#doc-limitaciones">
+            <strong>Limitaciones</strong>
+            <p>Diferencia entre métricas de todo el dataset y campos dependientes de cobertura LLM.</p>
+          </a>
+        </section>
+
+        <section id="doc-fuente" class="docs-section">
+          <div class="docs-section-head">
+            <p class="eyebrow">Fuente</p>
+            <h3>Origen y alcance de la información</h3>
+          </div>
+          <section class="docs-grid">
+            <article class="docs-card">
+              <strong>Fuente principal</strong>
+              <p>El dataset base contiene reseñas públicas de TripAdvisor para Hotel Grano de Oro. La unidad de análisis es la reseña individual con calificación, texto, fecha, autor, URL y metadatos disponibles.</p>
+            </article>
+            <article id="doc-enriquecimiento" class="docs-card">
+              <strong>Enriquecimiento LLM</strong>
+              <p>Ollama `qwen3.5:9b` procesa cada reseña para extraer sentimiento, urgencia, causa raíz, departamento responsable, SLA, riesgo comercial, compensación y respuesta sugerida.</p>
+            </article>
+            <article class="docs-card">
+              <strong>Análisis profundo</strong>
+              <p>El archivo meta del dataset contiene una lectura agregada generada por LLM desde métricas reales, distribuciones, cobertura y evidencia seleccionada.</p>
+            </article>
+          </section>
+        </section>
+
+        <section id="doc-lectura" class="docs-section">
+          <div class="docs-section-head">
+            <p class="eyebrow">Lectura del dashboard</p>
+            <h3>Cómo interpretar cada grupo</h3>
+          </div>
+          <div class="docs-columns">
+            <article class="docs-copy">
+              <h4>KPIs y tendencia</h4>
+              <p>Resume reputación, volumen, promotores, recuperación de servicio, respuestas, cobertura LLM y evolución mensual. Es la vista de salud general.</p>
+            </article>
+            <article class="docs-copy">
+              <h4>Diagnóstico IA</h4>
+              <p>Concentra análisis profundo, temas, segmentos, causas raíz y evidencia. Es la vista para explicar por qué ocurren los cambios de reputación.</p>
+            </article>
+            <article class="docs-copy">
+              <h4>Estrategia y benchmark</h4>
+              <p>Une prioridades ejecutivas, impacto comercial, benchmark e inteligencia competitiva. Sirve para decisiones de dirección, revenue y posicionamiento.</p>
+            </article>
+            <article class="docs-copy">
+              <h4>CRM y reseñas</h4>
+              <p>Convierte reseñas en trabajo: insights accionables, colas de seguimiento, SLA, riesgos prioritarios y tabla exportable.</p>
+            </article>
+            <article class="docs-copy">
+              <h4>Marca y riesgos</h4>
+              <p>Muestra cumplimiento, seguridad, respuesta pública, marketing, brechas de promesa comercial y reconocimiento al personal.</p>
+            </article>
+            <article id="doc-limitaciones" class="docs-copy">
+              <h4>Limitaciones</h4>
+              <p>Las métricas de rating y volumen cubren todo el dataset; sentimiento, causa raíz, routing y análisis profundo dependen de la cobertura LLM disponible.</p>
+            </article>
+          </div>
+        </section>
+
+        <section id="doc-automatizacion" class="docs-section">
+          <div class="docs-section-head">
+            <p class="eyebrow">Automatización</p>
+            <h3>De reseña a acción CRM</h3>
+          </div>
+          <ol class="docs-steps">
+            <li>Cargar exportes o conectar fuentes de reseñas.</li>
+            <li>Ejecutar enriquecimiento local con Ollama.</li>
+            <li>Generar análisis agregado del dashboard desde el meta del dataset.</li>
+            <li>Priorizar casos por urgencia, riesgo comercial, departamento y SLA.</li>
+            <li>Usar la cola CRM para recuperación de servicio, respuesta pública y seguimiento interno.</li>
+            <li>Exportar JSON o CSV para reporting e integraciones.</li>
+          </ol>
+        </section>
+
+        <section id="doc-comparables" class="docs-section">
+          <div class="docs-section-head">
+            <p class="eyebrow">Comparables</p>
+            <h3>Servicios similares de la industria</h3>
+          </div>
+          <div class="comparison-list docs-comparison">
+            <div class="comparison-row"><span>TrustYou</span><p>Gestión de reputación hotelera, CXP, análisis de sentimiento, benchmark competitivo y respuesta con IA.</p></div>
+            <div class="comparison-row"><span>Shiji ReviewPro</span><p>Análisis semántico, benchmark de experiencia del huésped, voz de marca y agregación de reseñas.</p></div>
+            <div class="comparison-row"><span>Birdeye</span><p>Monitoreo de reseñas, resúmenes con IA, respuestas con voz de marca, alertas e insights.</p></div>
+            <div class="comparison-row"><span>ReviewTrackers</span><p>Analítica de experiencia, sentimiento NLP, detección de tendencias, inteligencia competitiva y cumplimiento.</p></div>
+          </div>
         </section>
       </section>
 
